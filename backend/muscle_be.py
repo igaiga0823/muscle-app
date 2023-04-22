@@ -1,21 +1,23 @@
 # -*- coding: utf-8 -*-
 from flask import Flask , render_template, request
-from flask_cores import CORS
+from flask_cors import CORS
+
+import json
+
 
 from LoginStart import LoginStart
 
 app = Flask(__name__)
 CORS(app)
 
-@api.after_request
-def after_request(response):
-  response.headers.add('Access-Control-Allow-Origin', '*')
-  response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
-  response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
-  return response
-import json
+# @api.after_request
+# def after_request(response):
+#   response.headers.add('Access-Control-Allow-Origin', '*')
+#   response.headers.add('Access-Control-Allow-Headers', 'Content-Type,Authorization')
+#   response.headers.add('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,OPTIONS')
+#   return response
+# import json
 
-app = Flask(__name__)
 
 
 @app.route('/')
