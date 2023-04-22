@@ -10,18 +10,13 @@ import Fetch from './Fetch';
 import Fetch1 from './Fetch1';
 
 
-const num = 1 + 2
-
 function App() {
   return (
     <div className="App">
       <h1>hello world</h1>
-      <h2>{num}</h2>
       <BrowserRouter>
-        <Routes>
-          <Route path="/" element={  <One />}/>
-          <Route path="/login" element={  <Two />}/>
-          <Route path="login" elemet={<log_form/>}/>
+        <Routes> 
+          <Route path="/login" elemet={<log_form/>}/>
         </Routes>
       </BrowserRouter>
       <div></div>
