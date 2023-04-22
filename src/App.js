@@ -21,8 +21,8 @@ function App() {
         <Routes>
           <Route path="/" element={  <One />}/>
           <Route path="/login" element={  <Two />}/>
+          <Route path="login" elemet={<log_form/>}/>
         </Routes>
-
       </BrowserRouter>
       <div></div>
       <Fetch /> 
