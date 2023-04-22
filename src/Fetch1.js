@@ -15,7 +15,7 @@ const Fetch1 = () => {
     return (
         <div>
             <ul>
-            fdas
+            {posts.name}
             </ul>
             
         </div>
