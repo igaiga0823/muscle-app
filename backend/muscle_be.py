@@ -2,6 +2,8 @@
 from flask import Flask , render_template, request
 from flask_cores import CORS
 
+from LoginStart import LoginStart
+
 app = Flask(__name__)
 CORS(app)
 
@@ -18,18 +20,33 @@ app = Flask(__name__)
 
 @app.route('/')
 def hello():
+    
     return 'ok'
 
 
 @app.route('/confirm')
 def confirm():
-
     return  '{ "sessionId": 12, "name": "admin",}'
 
 
+@app.route('/loginstart', methods=["GET","POST"])
+def loginstart():
+    fromip = request.remote_addr
+    responce = LoginStart(fromip)
+    return responce
+
 @app.route('/id', methods=["GET"])
 def hello1():
-        return '{id:1;}'
+    return '{id:1;}'
+
+@app.route('/signup',methods=["GET","POST"])
+def signup():
+    return "hello"
+
+@app.route('/signin',methods=["GET","POST"])
+def signup():
+    return 'ok'
+
 
 
 @app.route('/render')
