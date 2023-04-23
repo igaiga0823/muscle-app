@@ -15,7 +15,7 @@ const Fetch1 = () => {
     return (
         <div>
             <ul>
-            {posts.name}
+            {posts.SESSION_ID}
             </ul>
             
         </div>
