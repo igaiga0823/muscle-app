@@ -8,7 +8,8 @@ import json
 import sqlite3
 from collections import defaultdict
 import sys
-imoprt session
+
+
 
 conn = MySQLdb.connect(
 host = 'mysql213.phy.lolipop.lan',
@@ -19,20 +20,26 @@ charset = 'utf8')
 cur = conn.cursor()
 
 def signin(user_id,after_password):
-    sql = "select PASSWORD from USER where USI_ID =%s;"
-    cur.execute(sql,(user_id))
+    sql = "select PASSWORD,NICK_NAME from USER where USER_ID =%s;"
+    cur.execute(sql,(user_id,))
+    data = cur.fetchall()
+    if len(data)==0:#もしユーザーが存在しない
+        return "{"+"loginStatus"+":"+"Null"+"}"
+    password=data[0][0]
+    nick_name=data[0][1]
+ 
     #ここでrandomの変数をrand
-    cur=cur
-    #hashか
-    if after_password==cur:
-        session["user_id"]=user_id
-        return {}
+    #passward hashか
+    if after_password==password:
+        return "{"+"loginStatus"+":"+"True"+"}"
     else:
-        return 
-
-
-
+        return "{"+"loginStatus"+":"+"False"+"}"
+    
+        #return "{"+"loginStatus"+":"+"False"+"}"
 
 #    sql3 = "select * from users where id = %s;"
 #    cur.execute(sql3, (user_id, ))
 
+if __name__ == "__main__": 
+    signin(1,"daidai")
+    
