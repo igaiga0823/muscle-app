@@ -1,10 +1,13 @@
 # -*- coding: utf-8 -*-
 from flask import Flask , render_template, request, jsonify
 
-from Signin import signin
+from Signin import Signin
 import json
 from LoginStart import LoginStart
 from flask_cors import CORS
+
+
+# MD5のハッシュ値
 
 app = Flask(__name__)
 CORS(app)
@@ -45,9 +48,8 @@ def signin():
     after_password = req.get("after_password")
     session_id = req.get("session_id")
     # response = {"user_name": user_name, "after_password": after_password, "session_id": session_id }
-
-    response = signin(user_name, after_password, session_id)
-    response = jsonify(response)
+    response = Signin(user_name,after_password,session_id)
+    response=jsonify(response)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
     
