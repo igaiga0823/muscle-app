@@ -40,7 +40,6 @@ def loginstart():
 def signup():
     #request_data = request.get_json()
     response=signin(1,"daidai")
-    print(response)
     json_response=jsonify(response)
     return json_response
 
