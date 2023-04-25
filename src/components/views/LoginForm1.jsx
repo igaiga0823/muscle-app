@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes, Link} from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 import md5 from 'md5';
-import '../css/Login.css'
+import '../../css/Login.css'
 
 const LoginForm1 = () => {
     const [posts, setPosts] = useState([])
@@ -9,7 +9,6 @@ const LoginForm1 = () => {
     const [password, setText2] = useState("")
     const [after_password, setText3] = useState("")
     const [complete_password, setText4] = useState("")
-
 
     useEffect(() => {
         fetch('https://iganami1106.com/muscle_api/index.cgi/loginstart', {method: 'GET'})
@@ -21,14 +20,21 @@ const LoginForm1 = () => {
 
     const onClickText = (word) => {
         setText3(md5(word));
-        console.log(word);
+
     }
 
     const onClickText2 = (word) => {
         setText4(md5(word));
     } 
 
-    const dataSend = () => {
+    const dataSend = (initialPassword) => {
+        onClickText(initialPassword);
+        const firsthashPass = after_password;
+        console.log(firsthashPass);
+        onClickText2(initialPassword + posts.RANDOM_ID);
+        const secondhashPass = complete_password;
+        console.log(secondhashPass);
+        console.log(after_password);
         fetch(`https://iganami1106.com/muscle_api/index.cgi/signin?user_name=${user_name}&after_password=${after_password}&session_id=${posts.SESSION_ID}`, {method: 'GET'})
           .then(res => res.json())
           .then(data => {
@@ -60,7 +66,7 @@ const LoginForm1 = () => {
                 <p>{complete_password}</p>
             </div>
             <div>
-                <button onClick={() => dataSend()}>send</button>
+                <button onClick={() => dataSend(password)}>send</button>
             </div>
         </div>
     )
