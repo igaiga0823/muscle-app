@@ -9,6 +9,7 @@ import Fetch1 from './Fetch1';
 import Home from './components/Home';
 import Test from './components/test';
 import LoginForm1 from './components/LoginForm1';
+import SendPass from './components/SendPass';
 
 function App() {
   return (
@@ -22,7 +23,7 @@ function App() {
           {/* <Route path="/login1" element={<LoginForm1 />} /> */}
           <Route path="/test" element={<Test />} />
           <Route path="/fetch" element={<Fetch1 />} />
-          <Route path="/loginform" element={<LoginForm1 />} />
+          <Route path="/loginform" element={<SendPass />} />
         </Routes>
       </BrowserRouter>
 
