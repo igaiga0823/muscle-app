@@ -33,13 +33,10 @@ def Signin(user_name, after_password, session_id):
     cur.execute(sql2,(session_id, ))
     randomId=cur.fetchall()
     for i in range(len(data)):
-        print(data[i][0])
-        originPassword = data[i][0]+str(92271)
-        print(originPassword)
-        print(randomId[0][0])
-        print(after_password)
+        originPassword = data[i][0]
+
         originPassword= hashlib.md5(originPassword.encode()).hexdigest()#ハッシュ化
-        print(originPassword)
+
         user_name = data[i][1]
         user_id = data[i][3]
         #ここでrandomの変数をrand
@@ -50,7 +47,6 @@ def Signin(user_name, after_password, session_id):
             conn.commit()
             cur.close()
             conn.close()
-            print(ans)
             return ans
 
     ans =  { "loginStatus" : "False"}
@@ -58,7 +54,6 @@ def Signin(user_name, after_password, session_id):
     conn.commit()
     cur.close()
     conn.close()
-    print(ans)
     return ans
     
         #return "{"+"loginStatus"+":"+"False"+"}"
