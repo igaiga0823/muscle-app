@@ -33,12 +33,10 @@ def Signin(user_name, after_password, session_id):
     cur.execute(sql2,(session_id, ))
     randomId=cur.fetchall()
     for i in range(len(data)):
-        originPassword = data[i][0]
-
-        originPassword= hashlib.md5(originPassword.encode()).hexdigest()#ハッシュ化
-
+        originPassword = f"{data[i][0]}{randomId[0][0]}"
         user_name = data[i][1]
         user_id = data[i][3]
+        originPassword= hashlib.md5(originPassword.encode('utf-8')).hexdigest()#ハッシュ化
         #ここでrandomの変数をrand
         #passward hashか
         if after_password == originPassword:
@@ -62,5 +60,5 @@ def Signin(user_name, after_password, session_id):
 #    cur.execute(sql3, (user_id, ))
 
 if __name__ == "__main__": 
-    Signin("test","d361929a67002c408013674f0459441f",254)
+    Signin("test","b59c67bf196a4758191e42f76670ceba",4)
     
