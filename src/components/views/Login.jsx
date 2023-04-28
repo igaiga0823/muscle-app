@@ -3,7 +3,7 @@ import React, { useState, useEffect } from "react";
 import md5 from 'md5';
 import '../../css/Login.css'
 
-const LoginForm1 = () => {
+const Login = () => {
     const [posts, setPosts] = useState([])
     const [user_name, setText] = useState("")
     const [password, setText2] = useState("")
@@ -33,12 +33,16 @@ const LoginForm1 = () => {
         // onClickText(initialPassword);
         const after_password = md5(initialPassword);
         console.log(after_password);
-        console.log(posts.SESSION_ID)
-        console.log(posts.RANDOM_ID)
-        const complete_password = md5(after_password + posts.RANDOM_ID);
+
+        const sessionID = posts.SESSION_ID;
+        const randomID = posts.RANDOM_ID;
+
+        const complete_password = md5(after_password + String(randomID));
+        console.log(sessionID)
+        console.log(randomID)
         console.log(complete_password);
         console.log(after_password);
-        fetch(`https://iganami1106.com/muscle_api/index.cgi/signin?user_name=${user_name}&after_password=${complete_password}&session_id=${posts.SESSION_ID}`, {method: 'GET'})
+        fetch(`https://iganami1106.com/muscle_api/index.cgi/signin?user_name=${user_name}&after_password=${complete_password}&session_id=${sessionID}`, {method: 'GET'})
           .then(res => res.json())
           .then(data => {
             setPosts(data)
@@ -75,6 +79,6 @@ const LoginForm1 = () => {
     )
 }
 
-export default LoginForm1;
+export default Login;
 
 
