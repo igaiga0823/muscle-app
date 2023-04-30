@@ -13,6 +13,7 @@ import Test from './components/test';
 
 import Login from './components/views/Login';
 import AppBar from './components/parts/AppBar';
+import AppBar1 from './components/parts/AppBar1';
 
 function App() {
   return (
@@ -26,7 +27,7 @@ function App() {
           <Route path="/test" element={<Test />} />
           <Route path="/fetch" element={<Fetch1 />} />
           <Route path="/loginform" element={<Login />} />
-          <Route path="/appbar" element={<AppBar />} />
+          <Route path="/appbar1" element={<AppBar1 />} />
         </Routes>
       </BrowserRouter>
 
