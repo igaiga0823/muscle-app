@@ -20,6 +20,7 @@ import Avatar from '@mui/material/Avatar';
 import Icon from '@mdi/react';
 import { mdiArmFlex, mdiAccount, mdiChartBar } from '@mdi/js';
 
+import './../../css/AppBar.css';
 
 
 const AppBar1 = (props) => {
@@ -29,20 +30,20 @@ const AppBar1 = (props) => {
 
   return (
     <div>
-    <Box sx={{ pb: 7 }} ref={ref}>
+    <Box sx={{ pb: 7,   }} ref={ref}>
       <CssBaseline />
-      <Paper sx={{ position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={3}>
-        <BottomNavigation
+      <Paper sx={{ border: '1px solid #00ced1',position: 'fixed', bottom: 0, left: 0, right: 0,  }} elevation={3}>
+        <BottomNavigation 
           showLabels
           value={value}
           onChange={(event, newValue) => {
             setValue(newValue);
           }}
         >
-          <BottomNavigationAction label="Home" icon={<HomeIcon  />} />
-          <BottomNavigationAction label="Trainging" icon={<Icon path = {mdiArmFlex} size={1}/>} />
-          <BottomNavigationAction label="Weight" icon={<Icon path={mdiChartBar} size={1}/>} />
-          <BottomNavigationAction label="MyPage" icon={<Icon path = {mdiAccount} size={1} />} />
+          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Home" icon={<HomeIcon  />} />
+          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Trainging" icon={<Icon path = {mdiArmFlex} size={1}/>} />
+          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Weight" icon={<Icon path={mdiChartBar} size={1}/>} />
+          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="MyPage" icon={<Icon path = {mdiAccount} size={1} />} />
         </BottomNavigation>
       </Paper>
     </Box>
