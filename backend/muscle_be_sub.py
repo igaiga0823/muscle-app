@@ -37,7 +37,7 @@ def loginstart():
     return response
 
 @app.route('/signin',methods=["GET","POST"])
-def signup():
+def signip():
     #request_data = request.get_json()
     response=signin(1,"daidai")
     json_response=jsonify(response)
