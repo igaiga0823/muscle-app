@@ -2,15 +2,27 @@
 from flask import Flask , render_template, request, jsonify
 
 from Signin import Signin
+from Signup import Signup
 import json
 from LoginStart import LoginStart
 from flask_cors import CORS
+from flask_mail import Mail, Message
 
 
 # MD5のハッシュ値
 
 app = Flask(__name__)
 CORS(app)
+app.config['MAIL_SERVER'] = 'smtp.gmail.com'
+app.config['MAIL_PORT'] = 587                             # TLSは587、SSLなら465
+app.config['MAIL_USERNAME'] = 'muscle15app@gmail.com'
+app.config['MAIL_PASSWORD'] = 'wftbwbmuugljmrnn'        # GmailのApp用のmパスワード設定をしておく必要あり
+app.config['MAIL_USE_TLS'] = True
+app.config['MAIL_USE_SSL'] = False
+app.config['MAIL_DEFAULT_SENDER'] = 'muscle15app@gmail.com'    # これがあるとsender設定が不要になる
+mail = Mail(app)
+
+
 
 # @api.after_request
 # def after_request(response):
@@ -70,11 +82,16 @@ def signin():
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 
-@app.route('/signup/',methods=["GET","POST"])
+@app.route('/signup',methods=["GET","POST"])
 def signup():
     req = request.args
-    user_id = req.get("user_id")
-    return 
+    email_address = req.get("email_address")
+    user_name = req.get("user_name")
+    origin_password = req.get("origin_password")
+    Signup(email_address,user_name,origin_password)
+    response = jsonify({"status":"successful"})
+    response.headers.add('Access-Control-Allow-Origin', '*')
+    return response
 
 @app.route('/render')
 def index():

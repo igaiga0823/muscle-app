@@ -1,28 +1,31 @@
 import React, { useRef, useEffect } from 'react';
 import Chart from 'chart.js/auto';
+import RATEGRAPH from './GraphUI.jsx';
 
-const Graph = () => {
+const RateGraph = () => {
   const chartRef = useRef(null);
+
+  function objectToArray(obj) {
+    const keys = Object.keys(obj);
+    const values = Object.values(obj);
+    return [keys, values];
+  }
 
   useEffect(() => {
     const chartCanvas = chartRef.current.getContext('2d');
-
+    const data = {腕: 25, 肩: 30, 背中: 21, 胸: 12, 脚: 10};
+    const [keys, values] = objectToArray(data);
     const lineConfig = {
         type: "pie",
         data: {
-            labels: ["docomo", "au", "softbank", "other"],
+            labels: keys,
             datasets: [{
-                data: [39.9, 27.4, 22.3, 10.4],
-                backgroundColor: [
-                    "rgba(255, 99, 132,0.5)",
-                    "rgba(255, 159, 64,0.5)",
-                    "rgba(240, 240, 240,0.5)",
-                    "rgba(54, 162, 235,0.5)"
-                ]
+                data: values,
+                backgroundColor: RATEGRAPH.backgroundColor
             }],
         },
         options: {
-            responsive: false
+            responsive: false,
         } 
     };
 
@@ -40,4 +43,4 @@ const Graph = () => {
   );
 };
 
-export default Graph;
+export default RateGraph;
