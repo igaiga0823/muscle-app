@@ -18,10 +18,13 @@ db = 'LAA1475865-muscle',
 charset = 'utf8')
 cur = conn.cursor()
 
-def signup(email_address,origin_password,username):
+def Signup(email_address,user_name,origin_password):
     sql = "INSERT INTO USER (EMAIL_ADDRESS,PASSWORD,USER_NAME) VALUES(%s,%s,%s);"
-    cur.execute(sql, (email_address,origin_password,username))
+    cur.execute(sql, (email_address,origin_password,user_name))
     conn.commit()
     cur.close()
     conn.close()
+
+if __name__ == "__main__": 
+    Signup("dai3258sa@gmail.com","b59c67bf196a4758191e42f76670ceba","dai")
 

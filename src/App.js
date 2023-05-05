@@ -11,22 +11,23 @@ import Test from './components/test';
 
 import Login from './components/views/Login'; 
 import AppBar from './components/parts/AppBar';
-import Graph from './components/views/Graph';
+import RateGraph from './components/views/graphs/RateGraph';
+import Register from './components/views/Register';
 
 function App() {
   return (
     <div className="App">
 
-      {/* <AppBar /> */}
+      {/* <AppBar />  */}
       <BrowserRouter>
         <Routes> 
-        <Route path="/" element={<None />} />
-          {/* <Route path="/login1" element={<LoginForm1 />} /> */}
+          <Route path="/" element={<None />} />
+          <Route path="/register" element={<Register />} /> 
           <Route path="/test" element={<Test />} />
           <Route path="/fetch" element={<Fetch1 />} />
           <Route path="/loginform" element={<Login />} />
           <Route path="/appbar" element={<AppBar />} />
-          <Route path="/graph" element={<Graph />} />
+          <Route path="/rategraph" element={<RateGraph />} />
         </Routes>
       </BrowserRouter>
 
