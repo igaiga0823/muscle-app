@@ -25,6 +25,7 @@ def Signup(email_address,user_name,origin_password):
     cur.close()
     conn.close()
 
+
 if __name__ == "__main__": 
     Signup("dai3258sa@gmail.com","b59c67bf196a4758191e42f76670ceba","dai")
 

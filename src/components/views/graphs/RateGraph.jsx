@@ -15,7 +15,7 @@ const RateGraph = () => {
     const chartCanvas = chartRef.current.getContext('2d');
     const data = {腕: 25, 肩: 30, 背中: 21, 胸: 12, 脚: 10};
     const [keys, values] = objectToArray(data);
-    const lineConfig = {
+    const Config = {
         type: "pie",
         data: {
             labels: keys,
@@ -29,7 +29,7 @@ const RateGraph = () => {
         } 
     };
 
-    const chart = new Chart(chartCanvas, lineConfig);
+    const chart = new Chart(chartCanvas, Config);
 
     return () => {
       chart.destroy();

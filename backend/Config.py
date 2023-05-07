@@ -7,5 +7,4 @@ class Config:
     MAIL_USE_SSL = False
     MAIL_DEFAULT_SENDER= 'muscle15app@gmail.com'
 
-#メールのメッセージ
-mail_message="muscle"
+
