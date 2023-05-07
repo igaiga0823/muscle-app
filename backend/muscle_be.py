@@ -4,7 +4,8 @@ import json
 from Signin import Signin
 from Signup import Signup
 from Email import Email
-from Config import Config,mail_message
+from Check import Check
+from Config import Config
 from LoginStart import LoginStart
 from flask_cors import CORS
 from flask_mail import  Message,Mail
@@ -26,12 +27,11 @@ mail = Mail(app)
 
 @app.route('/')
 def hello():
-    return 'ok'
+    return 'あ'
 
 
 @app.route('/confirm')
 def confirm():
-
     response = jsonify({"SESSION_ID": 11232, "name": "admin"})
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
@@ -80,18 +80,37 @@ def signup():
     email_address = req.get("email_address")
     user_name = req.get("user_name")
     origin_password = req.get("origin_password")
-    Signup(email_address,user_name,origin_password)
-    response = jsonify({"status":"successful"})
-    response.headers.add('Access-Control-Allow-Origin', '*')
-    return response
+    try:
+        Signup(email_address,user_name,origin_password)
+        # 'https:url/validate?email_address=ooo'   
+        mail_message=f"{user_name}ご登録ありがとうございます\nhttps://main.itigo.jp/main.itigo.jp/muscle_api/index.cgi/check/{email_address}"
+        with app.app_context():
+            msg = Message('muscle-app', recipients=[email_address])
+            msg.body = mail_message.encode("utf-8")
+            mail.send(msg)
+        response = jsonify({"status":"successful"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    
+    except:
+        response = jsonify({"status":"failed"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
 
 @app.route('/render')
 def index():
     return render_template('render.html')
 
-@app.route('/email')
+@app.route('/check/<email_address>')
+def check(email_address):
+    response=Check(email_address)
+    return response
+
+#メールが正常に機能しているかどうか
+@app.route('/emailtest')
 def email():
     data=Email()
+    mail_message="ああ\nあ"
     with app.app_context():
         for email_address in data:
             msg = Message('muscle-app', recipients=["daidevelop289@gmail.com"])
@@ -104,3 +123,8 @@ import os
 
 if __name__ == '__main__':
     app.run(debug=True)
+
+
+    
+    
+

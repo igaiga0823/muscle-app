@@ -1,6 +1,5 @@
 #!/usr/local/bin/python3.7
 # coding: utf-8
-#このセクションではデータを送ることのみ実行する
 import MySQLdb
 import requests
 import os
@@ -26,13 +25,8 @@ def Email():
     sql1 = "select EMAIL_ADDRESS from USER where VALID_ACCOUNT =%s;"
     cur.execute(sql1,(0,))
     data = cur.fetchall()
-    rightdata=[]
-    for email_address in data:
-        if email
-
     return data
-    
-    
+
 if __name__ == "__main__": 
     Email()
 
