@@ -1,27 +1,19 @@
 # -*- coding: utf-8 -*-
-from flask import Flask , render_template, request, jsonify
-
+from flask import Flask , render_template, request, jsonify,current_app
+import json
 from Signin import Signin
 from Signup import Signup
-import json
+from Email import Email
+from Config import Config,mail_message
 from LoginStart import LoginStart
 from flask_cors import CORS
-from flask_mail import Mail, Message
+from flask_mail import  Message,Mail
 
-
-# MD5のハッシュ値
 
 app = Flask(__name__)
 CORS(app)
-app.config['MAIL_SERVER'] = 'smtp.gmail.com'
-app.config['MAIL_PORT'] = 587                             # TLSは587、SSLなら465
-app.config['MAIL_USERNAME'] = 'muscle15app@gmail.com'
-app.config['MAIL_PASSWORD'] = 'wftbwbmuugljmrnn'        # GmailのApp用のmパスワード設定をしておく必要あり
-app.config['MAIL_USE_TLS'] = True
-app.config['MAIL_USE_SSL'] = False
-app.config['MAIL_DEFAULT_SENDER'] = 'muscle15app@gmail.com'    # これがあるとsender設定が不要になる
+app.config.from_object(Config)
 mail = Mail(app)
-
 
 
 # @api.after_request
@@ -96,6 +88,17 @@ def signup():
 @app.route('/render')
 def index():
     return render_template('render.html')
+
+@app.route('/email')
+def email():
+    data=Email()
+    with app.app_context():
+        for email_address in data:
+            msg = Message('muscle-app', recipients=["daidevelop289@gmail.com"])
+            msg.body = mail_message.encode("utf-8")
+            mail.send(msg)
+    return "OK"
+    
 
 import os
 
