@@ -1,5 +1,6 @@
 #!/usr/local/bin/python3.7
 # coding: utf-8
+#このセクションではデータを送ることのみ実行する
 import MySQLdb
 import requests
 import os
@@ -7,8 +8,9 @@ import json
 import sqlite3
 from collections import defaultdict
 import sys
-from muscle_be import mail
-from flask_mail import  Message
+from flask import Flask,current_app
+from flask_mail import  Message,Mail
+
 
 
 conn = MySQLdb.connect(
@@ -24,12 +26,13 @@ def Email():
     sql1 = "select EMAIL_ADDRESS from USER where VALID_ACCOUNT =%s;"
     cur.execute(sql1,(0,))
     data = cur.fetchall()
+    rightdata=[]
     for email_address in data:
-        msg = Message('Test Mail', recipients=[email_address[0]])
-        msg.body = "Hello Flask message sent from Flask-Mail"
-        mail.send(msg)
-    return "Sent"
+        if email
 
+    return data
+    
+    
 if __name__ == "__main__": 
     Email()
 
