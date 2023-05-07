@@ -24,7 +24,7 @@ cur = conn.cursor()
 
 
 def Signin(user_name, after_password, session_id):
-    sql1 = "select PASSWORD, USER_NAME,EMAIL_ADDRESS,USER_ID from USER where USER_NAME =%s;"
+    sql1 = "select PASSWORD, USER_NAME,EMAIL_ADDRESS,USER_ID,VALID_ACCOUNT from USER where USER_NAME =%s;"
     cur.execute(sql1,(user_name,))
     data = cur.fetchall()
     if len(data)==0:#もしユーザーが存在しない
@@ -36,10 +36,11 @@ def Signin(user_name, after_password, session_id):
         originPassword = f"{data[i][0]}{randomId[0][0]}"
         user_name = data[i][1]
         user_id = data[i][3]
+        valid_account=data[i][4]
         originPassword= hashlib.md5(originPassword.encode('utf-8')).hexdigest()#ハッシュ化
         #ここでrandomの変数をrand
         #passward hashか
-        if after_password == originPassword:
+        if after_password == originPassword and valid_account==1:
             ans =  { "loginStatus" : "True", "userId" : user_id, "userName" : user_name }
 
             conn.commit()
