@@ -6,9 +6,6 @@ export const RateGraph ={
         "rgba(54, 162, 235,0.5)",
         "rgba(150, 162, 10,0.5)",
     ],
-
-
-
 };
 
 export default RateGraph
