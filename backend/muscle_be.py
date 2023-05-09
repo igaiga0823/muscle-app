@@ -1,15 +1,17 @@
 # -*- coding: utf-8 -*-
 from flask import Flask , render_template, request, jsonify,current_app
 import json
+from flask_cors import CORS
+from flask_mail import  Message,Mail
+
+
 from Signin import Signin
 from Signup import Signup
 from Email import Email
 from Check import Check
 from Config import Config
 from LoginStart import LoginStart
-from flask_cors import CORS
-from flask_mail import  Message,Mail
-
+from TrainDataPOST import TrainDataPOST
 
 app = Flask(__name__)
 CORS(app)
@@ -117,8 +119,30 @@ def email():
             msg.body = mail_message.encode("utf-8")
             mail.send(msg)
     return "OK"
-    
 
+@app.route("/test", methods=["POST","GET"])
+def test():
+    if not request.is_json:
+        return jsonify({"error": "Missing JSON in request"}), 400
+
+    data = request.json # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
+    return jsonify(data) # サンプルのためそのまま返す
+   
+    
+@app.route("/traindata/post", methods=["POST","GET"])
+def traindatapost():
+    if not request.is_json:
+        return jsonify({"error": "Missing JSON in request"}), 400
+
+    try:
+        data = request.json # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
+        output = TrainDataPOST(data)
+        response = jsonify(output)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    
+    except:
+        return jsonify({"error": "Missing JSON in request"}), 400
 import os
 
 if __name__ == '__main__':
