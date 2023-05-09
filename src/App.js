@@ -6,15 +6,16 @@ import React, { useState, useEffect } from "react";
 
 import None from './components/pages/None';
 
-import Fetch1 from './Fetch1';
+import Fetch from './Fetch';
 import Test from './components/test';
 
 import Login from './components/views/Login'; 
 import AppBar from './components/parts/AppBar';
 import RateGraph from './components/views/graphs/RateGraph';
 import Register from './components/views/Register';
+import Info from './components/parts/DateSend';
 
-function App() {
+const  App = () => {
   return (
     <div className="App">
 
@@ -24,10 +25,11 @@ function App() {
           <Route path="/" element={<None />} />
           <Route path="/register" element={<Register />} /> 
           <Route path="/test" element={<Test />} />
-          <Route path="/fetch" element={<Fetch1 />} />
+          <Route path="/fetch" element={<Fetch />} />
           <Route path="/loginform" element={<Login />} />
           <Route path="/appbar" element={<AppBar />} />
           <Route path="/rategraph" element={<RateGraph />} />
+          <Route path='/info' element={<Info />} />
         </Routes>
       </BrowserRouter>
 
