@@ -44,9 +44,9 @@ const AppBar = (props) => {
   return (
     <div>
       {pages[value]}
-    <Box sx={{ pb: 10, }} ref={ref}>
+    <Box sx={{  pb: 12 }} ref={ref}>
       <CssBaseline />
-      <Paper sx={{ border: '4px solid #ff6347', borderRadius: '4px' ,position: 'fixed', bottom: 0, left: 0, right: 0, height: 60 }} elevation={3}>
+      <Paper sx={{ border: '4px solid #ff6347', borderRadius: '4px' ,position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={5}>
         <BottomNavigation 
           showLabels
           value={value}
@@ -54,10 +54,10 @@ const AppBar = (props) => {
             setValue(newValue);
           }}
         >
-          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Home" icon={<Icon path={mdiHome} size={2} />} />
-          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Trainging" icon={<Icon path = {mdiArmFlex} size={2}/>} />
-          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Weight" icon={<Icon path={mdiChartBar} size={2}/>} />
-          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Friend" icon={<Icon path = {mdiAccount} size={2} />} />
+          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Home" icon={<Icon path={mdiHome} size={1} />} />
+          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Trainging" icon={<Icon path = {mdiArmFlex} size={1}/>} />
+          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Weight" icon={<Icon path={mdiChartBar} size={1}/>} />
+          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Friend" icon={<Icon path = {mdiAccount} size={1} />} />
         </BottomNavigation>
       </Paper>
     </Box>

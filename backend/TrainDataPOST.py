@@ -32,10 +32,10 @@ def TrainDataPOST(json):
     user_name = json["user_name"]
     
     # ID計算
-    sql1 = "select * from TRAINDATA where 1;"
+    sql1 = "select count(*) from TRAINDATA where 1;"
     cur.execute(sql1,())
     data = cur.fetchall()
-    start_ID = len(data) + 1
+    start_ID = data[0][0]+1
     
     # 当日のその種目のセット数を取得する
     sql1 = "select * from TRAINDATA where USER_ID =%s and DATE=%s and MENU=%s;"

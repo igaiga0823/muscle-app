@@ -1,17 +1,30 @@
 import React, { useRef, useEffect } from 'react';
 import Chart from 'chart.js/auto';
-const LineChart = () => {
+
+const WeightGraph = () => {
   const chartRef = useRef();
 
   useEffect(() => {
-    const labels = Array.from({ length: 7 }, (_, i) => new Date().toLocaleDateString('en', { month: 'short', year: 'numeric', month: 'long', day: 'numeric' }));
-    
+    // サンプルデータ
+    const sampleData = [
+      { date: '2023-05-01', weight: 70 },
+      { date: '2023-05-02', weight: 69.5 },
+      { date: '2023-05-03', weight: 69 },
+      { date: '2023-05-04', weight: 68.5 },
+      { date: '2023-05-05', weight: 68 },
+      { date: '2023-05-06', weight: 67.5 },
+      { date: '2023-05-07', weight: 67 },
+    ];
+
+    const labels = sampleData.map((data) => data.date);
+    const weights = sampleData.map((data) => data.weight);
+
     const data = {
       labels: labels,
       datasets: [
         {
-          label: 'My First Dataset',
-          data: [65, 59, 80, 81, 56, 55, 40],
+          label: '体重 (kg)',
+          data: weights,
           fill: false,
           borderColor: 'rgb(75, 192, 192)',
           tension: 0.1,
@@ -22,6 +35,13 @@ const LineChart = () => {
     const config = {
       type: 'line',
       data: data,
+      options: {
+        scales: {
+          y: {
+            min: 0,
+          },
+        },
+      },
     };
 
     if (chartRef && chartRef.current) {
@@ -32,9 +52,9 @@ const LineChart = () => {
 
   return (
     <div>
-      <canvas ref={chartRef} />
+      <canvas ref={chartRef} width="300" height="150" />
     </div>
   );
 };
 
-export default LineChart;
+export default WeightGraph;
