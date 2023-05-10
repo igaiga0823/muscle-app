@@ -5,8 +5,17 @@ const Fetch = () => {
   const requestOptions ={
     method: 'POST',
     headers:{'Content-Type': 'application/json'},
-    body: JSON.stringify({menu: "hogehoge"})
-  };
+    body: JSON.stringify({
+        "user_id": "1",
+        "user_name":"並木",
+        "length":"3",
+        "menu_id":"4",
+        "menu":"サイドレイズ",
+        "kgData": ['60','65','70'],
+        "repData":['10','8','5'],
+        "date":"2023-05-10",
+        "time":"30"
+    })};
 
   useEffect(() => {
     fetch(url, requestOptions)

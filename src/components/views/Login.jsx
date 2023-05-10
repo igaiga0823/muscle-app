@@ -9,6 +9,8 @@ const Login = () => {
     const [posts, setPosts] = useState([])
     const [user_name, setText] = useState("")
     const [password, setText2] = useState("")
+
+
     // const [after_password, setText3] = useState("")
     // const [complete_password, setText4] = useState("")
 

@@ -14,6 +14,7 @@ import AppBar from './components/parts/AppBar';
 import RateGraph from './components/views/graphs/RateGraph';
 import Register from './components/views/Register';
 import Info from './components/parts/DateSend';
+import LineChart from './components/views/graphs/WeightGraph';
 
 const  App = () => {
   return (
@@ -30,6 +31,7 @@ const  App = () => {
           <Route path="/appbar" element={<AppBar />} />
           <Route path="/rategraph" element={<RateGraph />} />
           <Route path='/info' element={<Info />} />
+          <Route path='/weight' element={<LineChart />} />
         </Routes>
       </BrowserRouter>
 
