@@ -18,13 +18,13 @@ import ListItemText from '@mui/material/ListItemText';
 import Avatar from '@mui/material/Avatar';
 
 import Icon from '@mdi/react';
-import { mdiArmFlex, mdiAccount, mdiChartBar } from '@mdi/js';
+import { mdiHome, mdiArmFlex, mdiAccount, mdiChartBar } from '@mdi/js';
 
 import '../../css/AppBar.css';
 import Home from '../pages/Home';
 
 import Training from '../pages/Training';
-import MyPage from '../pages/MyPage';
+import Friend from '../pages/Friend';
 import Weight from '../pages/Weight';
 
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
@@ -38,15 +38,15 @@ const AppBar = (props) => {
       <Home />,
       <Training />,
       <Weight />,
-      <MyPage />,
+      <Friend />,
     ];
 
   return (
     <div>
       {pages[value]}
-    <Box sx={{ pb: 7, }} ref={ref}>
+    <Box sx={{ pb: 10, }} ref={ref}>
       <CssBaseline />
-      <Paper sx={{ border: '2px solid #00ced1', borderRadius: '4px' ,position: 'fixed', bottom: 0, left: 0, right: 0,  }} elevation={3}>
+      <Paper sx={{ border: '4px solid #ff6347', borderRadius: '4px' ,position: 'fixed', bottom: 0, left: 0, right: 0, height: 60 }} elevation={3}>
         <BottomNavigation 
           showLabels
           value={value}
@@ -54,10 +54,10 @@ const AppBar = (props) => {
             setValue(newValue);
           }}
         >
-          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Home" icon={<HomeIcon  />} />
-          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Trainging" icon={<Icon path = {mdiArmFlex} size={1}/>} />
-          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Weight" icon={<Icon path={mdiChartBar} size={1}/>} />
-          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="MyPage" icon={<Icon path = {mdiAccount} size={1} />} />
+          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Home" icon={<Icon path={mdiHome} size={2} />} />
+          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Trainging" icon={<Icon path = {mdiArmFlex} size={2}/>} />
+          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Weight" icon={<Icon path={mdiChartBar} size={2}/>} />
+          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Friend" icon={<Icon path = {mdiAccount} size={2} />} />
         </BottomNavigation>
       </Paper>
     </Box>
