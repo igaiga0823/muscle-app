@@ -29,40 +29,47 @@ import Weight from '../pages/Weight';
 
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
-const AppBar = (props) => {
+/**
+ * @component
+ */
+function AppBar(props) {
 
-    const [value, setValue] = React.useState(0);
-    const ref = React.useRef(null);
+  const [value, setValue] = React.useState(0);
+  const ref = React.useRef(null);
 
-    const pages = [
-      <Home />,
-      <Training />,
-      <Weight />,
-      <Friend />,
-    ];
+  const pages = [
+    <Home />,
+    <Training />,
+    <Weight />,
+    <Friend />,
+  ];
 
   return (
     <div>
       {pages[value]}
-    <Box sx={{  pb: 12 }} ref={ref}>
-      <CssBaseline />
-      <Paper sx={{ border: '4px solid #ff6347', borderRadius: '4px' ,position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={5}>
-        <BottomNavigation 
-          showLabels
-          value={value}
-          onChange={(event, newValue) => {
-            setValue(newValue);
-          }}
-        >
-          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Home" icon={<Icon path={mdiHome} size={1} />} />
-          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Trainging" icon={<Icon path = {mdiArmFlex} size={1}/>} />
-          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Weight" icon={<Icon path={mdiChartBar} size={1}/>} />
-          <BottomNavigationAction sx={{backgroundColor: '#f0f8ff'}} label="Friend" icon={<Icon path = {mdiAccount} size={1} />} />
-        </BottomNavigation>
-      </Paper>
-    </Box>
+      <Box sx={{ pb: 12 }} ref={ref}>
+        <CssBaseline />
+        <Paper sx={{ border: '4px solid #ff6347', borderRadius: '4px', position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={5}>
+          <BottomNavigation
+            showLabels
+            value={value}
+            onChange={(event, newValue) => {
+              setValue(newValue);
+            } }
+          >
+            <BottomNavigationAction sx={{ backgroundColor: '#f0f8ff' }} label="Home" icon={<Icon path={mdiHome} size={1} />} />
+            <BottomNavigationAction sx={{ backgroundColor: '#f0f8ff' }} label="Trainging" icon={<Icon path={mdiArmFlex} size={1} />} />
+            <BottomNavigationAction sx={{ backgroundColor: '#f0f8ff' }} label="Weight" icon={<Icon path={mdiChartBar} size={1} />} />
+            <BottomNavigationAction sx={{ backgroundColor: '#f0f8ff' }} label="Friend" icon={<Icon path={mdiAccount} size={1} />} />
+          </BottomNavigation>
+        </Paper>
+      </Box>
     </div>
   );
+};
+
+AppBar.propTypes = {
+  // ...
 };
 
 export default AppBar;

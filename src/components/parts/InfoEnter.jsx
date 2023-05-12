@@ -8,8 +8,6 @@ import '../../css/reset.css'
 
 const InfoEnter = () => {
 
-    // const { sharedState, setSharedState } = useContext(Oyacontext);
-
     const [sendData, sendDataFunc] = useState({
         user_id: "",
         user_name: "",
@@ -30,7 +28,7 @@ const InfoEnter = () => {
           const timeString = `${hour.toString().padStart(2, '0')}:${minute.toString().padStart(2, '0')}`;
           return { value: hour * 60 + minute, label: timeString };
         }
-      );
+    );
     
     return (
         <div className=''>
