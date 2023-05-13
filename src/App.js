@@ -1,7 +1,5 @@
 import './css/App.css';
 import './css/reset.css'
-import { ChakraProvider } from "@chakra-ui/react"
-import { extendTheme } from "@chakra-ui/react"
 
 import { BrowserRouter, Route, Routes, Link} from 'react-router-dom';
 import React, { useState, useEffect } from "react";
