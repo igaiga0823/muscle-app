@@ -49,18 +49,24 @@ function AppBar(props) {
       {pages[value]}
       <Box sx={{ pb: 12 }} ref={ref}>
         <CssBaseline />
-        <Paper sx={{ border: '4px solid #ff6347', borderRadius: '4px', position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={5}>
+        <Paper sx={{ border: '0px solid #4a4a4a', opacity: "0.9", borderRadius: '20px', position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={5}>
           <BottomNavigation
             showLabels
             value={value}
             onChange={(event, newValue) => {
               setValue(newValue);
             } }
+            sx={{
+              color: "#00ff7f" ,
+              "& .Mui-selected": {
+                color: "#00ff7f" // ボタンが選択された時のアイコン・テキストの色を白色に設定
+              }
+            }}
           >
-            <BottomNavigationAction sx={{ backgroundColor: '#f0f8ff' }} label="Home" icon={<Icon path={mdiHome} size={1} />} />
-            <BottomNavigationAction sx={{ backgroundColor: '#f0f8ff' }} label="Trainging" icon={<Icon path={mdiArmFlex} size={1} />} />
-            <BottomNavigationAction sx={{ backgroundColor: '#f0f8ff' }} label="Weight" icon={<Icon path={mdiChartBar} size={1} />} />
-            <BottomNavigationAction sx={{ backgroundColor: '#f0f8ff' }} label="Friend" icon={<Icon path={mdiAccount} size={1} />} />
+            <BottomNavigationAction sx={{ backgroundColor: '#4a4a4a' , color: "#f2f2f2" ,padding:"5px", borderRadius: "10px 0 0 10px" }} label="Home" icon={<Icon path={mdiHome} size={2} />} />
+            <BottomNavigationAction sx={{ backgroundColor: '#4a4a4a' , color: "#f2f2f2" ,padding:"5px", borderRadius: "0 0 0 0"}} label="Trainging" icon={<Icon path={mdiArmFlex} size={2} />} />
+            <BottomNavigationAction sx={{ backgroundColor: '#4a4a4a' , color: "#f2f2f2" ,padding:"5px", borderRadius: "0 0 0 0"}} label="Weight" icon={<Icon path={mdiChartBar} size={2} />} />
+            <BottomNavigationAction sx={{ backgroundColor: '#4a4a4a' , color: "#f2f2f2" ,padding:"5px", borderRadius: "0 10px 10px 0"}} label="Friend" icon={<Icon path={mdiAccount} size={2} />} />
           </BottomNavigation>
         </Paper>
       </Box>
