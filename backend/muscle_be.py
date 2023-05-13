@@ -12,6 +12,7 @@ from Check import Check
 from Config import Config
 from LoginStart import LoginStart
 from TrainDataPOST import TrainDataPOST
+from WeightGraph import WeightGraph
 
 app = Flask(__name__)
 CORS(app)
@@ -144,6 +145,23 @@ def traindatapost():
     except:
         return jsonify({"error": "Missing JSON in request"}), 400
 import os
+
+@app.route("/weightgraph/post", methods=["POST","GET"])
+def weightgraph():
+    if not request.is_json:
+        return jsonify({"error": "Missing JSON in request"}), 400
+    try:
+        data = request.json # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
+        user_id=data["user_id"]
+        output = WeightGraph(user_id)
+        response = jsonify(output)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    
+    except:
+        return jsonify({"error": "Missing JSON in request"}), 400
+
+
 
 
 

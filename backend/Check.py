@@ -24,7 +24,7 @@ def Check(email_address):
     conn.commit()
     cur.close()
     conn.close()
-    return "<center><h3>認証しました</h3></center>"
+    return "<center><h1>認証しました</h1></center>"
 
 if __name__ == "__main__": 
     Check("dai3258sa@gmail.com")
