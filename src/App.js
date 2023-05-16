@@ -16,6 +16,23 @@ import Register from './components/views/Register';
 import Info from './components/parts/test';
 import LineChart from './components/views/graphs/WeightGraph';
 
+import Home from './components/pages/Home';
+import Training from './components/pages/Training';
+import Friend from './components/pages/Friend';
+import Weight from './components/pages/Weight';
+import TestSend from './components/parts/testSend';
+
+import { ThemeProvider, createTheme } from '@mui/material/styles';
+
+const theme = createTheme({
+  palette: {
+    primary: {
+      main: '#00ff7f',
+    },
+  },
+});
+
+
 
 const  App = () => {
   return (
@@ -25,20 +42,30 @@ const  App = () => {
 
      {/* <AppBar />  */}
 
-        <BrowserRouter>
+      <BrowserRouter>
+      <ThemeProvider theme={theme}>
+      <AppBar />
+      </ ThemeProvider>
           <Routes> 
             <Route path="/" element={<None />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/training" element={<Training />} />
+            <Route path="/friend" element={<Friend />} />
+            <Route path="/weight" element={<Weight />} />
             <Route path="/register" element={<Register />} /> 
             <Route path="/test" element={<Test />} />
             <Route path="/fetch" element={<Fetch />} />
-            <Route path="/loginform" element={<Login />} />
+            <Route path="/login" element={<Login />} />
+
             <Route path="/appbar" element={<AppBar />} />
+
             <Route path="/rategraph" element={<RateGraph />} />
             <Route path='/info' element={<Info />} />
             <Route path='/weight' element={<LineChart />} />
+            <Route path='/testsend' element={<TestSend />} />
           </Routes>
         </BrowserRouter>
-
+ 
       </div>
 
 
