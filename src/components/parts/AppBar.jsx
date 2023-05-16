@@ -20,7 +20,7 @@ import Avatar from '@mui/material/Avatar';
 import Icon from '@mdi/react';
 import { mdiHome, mdiArmFlex, mdiAccount, mdiChartBar } from '@mdi/js';
 
-import '../../css/AppBar.css';
+import '../../css/Appbar.css';
 import Home from '../pages/Home';
 
 import Training from '../pages/Training';
