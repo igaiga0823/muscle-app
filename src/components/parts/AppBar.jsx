@@ -29,6 +29,7 @@ import Weight from '../pages/Weight';
 
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
+
 /**
  * @component
  */
@@ -46,27 +47,41 @@ function AppBar(props) {
 
   return (
     <div>
-      {pages[value]}
-      <Box sx={{ pb: 12 }} ref={ref}>
+      {/* {pages[value]} */}
+      <Box sx={{ pb: 12,  }} ref={ref}>
         <CssBaseline />
-        <Paper sx={{ border: '0px solid #4a4a4a', opacity: "0.9", borderRadius: '20px', position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={5}>
+        <Paper sx={{ color: "#00ff7f" , background: 'transparent', position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={5}>
           <BottomNavigation
-            showLabels
+              showLabels
+            sx={{
+
+              "& .Mui-selected": {
+                color: "#00ff7f" // ボタンが選択された時のアイコン・テキストの色を白色に設定
+              }
+              ,background: 'transparent'
+
+            }}
             value={value}
             onChange={(event, newValue) => {
               setValue(newValue);
             } }
-            sx={{
-              color: "#00ff7f" ,
-              "& .Mui-selected": {
-                color: "#00ff7f" // ボタンが選択された時のアイコン・テキストの色を白色に設定
-              }
-            }}
           >
-            <BottomNavigationAction sx={{ backgroundColor: '#4a4a4a' , color: "#f2f2f2" ,padding:"5px", borderRadius: "10px 0 0 10px" }} label="Home" icon={<Icon path={mdiHome} size={2} />} />
-            <BottomNavigationAction sx={{ backgroundColor: '#4a4a4a' , color: "#f2f2f2" ,padding:"5px", borderRadius: "0 0 0 0"}} label="Trainging" icon={<Icon path={mdiArmFlex} size={2} />} />
-            <BottomNavigationAction sx={{ backgroundColor: '#4a4a4a' , color: "#f2f2f2" ,padding:"5px", borderRadius: "0 0 0 0"}} label="Weight" icon={<Icon path={mdiChartBar} size={2} />} />
-            <BottomNavigationAction sx={{ backgroundColor: '#4a4a4a' , color: "#f2f2f2" ,padding:"5px", borderRadius: "0 10px 10px 0"}} label="Friend" icon={<Icon path={mdiAccount} size={2} />} />
+            <BottomNavigationAction   
+                component={Link}
+                to="/home"
+              sx={{ color: value === 0 ? "#00ff7f" : "#f2f2f2", backgroundColor: '#4f4f4f' , padding:"2px", borderRadius: "15px 0 0 15px" }} label="Home" size={2} icon={<Icon path={mdiHome}  />} />
+            <BottomNavigationAction 
+                component={Link}
+                to="/training"
+                sx={{ color: value === 1 ? "#00ff7f" : "#f2f2f2", backgroundColor: '#4f4f4f'  ,padding:"2px", borderRadius: "0 0 0 0"}} label="Trainging" icon={<Icon path={mdiArmFlex} size={2} />} />
+            <BottomNavigationAction
+                component={Link}
+                to="/weight"
+                sx={{ color: value === 2 ? "#00ff7f" : "#f2f2f2", backgroundColor: '#4f4f4f'  ,padding:"2px", borderRadius: "0 0 0 0"}} label="Weight" icon={<Icon path={mdiChartBar} size={2} />} />
+            <BottomNavigationAction
+                component={Link}
+                to="/weight"
+                sx={{ color: value === 3 ? "#00ff7f" : "#f2f2f2", backgroundColor: '#4f4f4f'  ,padding:"2px", borderRadius: "0 15px 15px 0"}} label="Friend" icon={<Icon path={mdiAccount} size={2} />} />
           </BottomNavigation>
         </Paper>
       </Box>

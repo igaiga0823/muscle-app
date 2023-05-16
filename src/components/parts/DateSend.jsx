@@ -9,12 +9,14 @@ import '../../css/reset.css'
 
 const DateSend = () => {
     
-    const options = ["push up", "incline"];
-    const [value, setValue] = React.useState(options[0]);
-    const [inputValue, setInputValue] = useState('');
+    const [date, setDates] = React.useState(options[0])
     const today = new Date()
     const dates = [today.getFullYear() + "/" + (today.getMonth() + 1) + '/' + today.getDate(), today.getFullYear() + "/" + (today.getMonth() + 1) + '/' + (today.getDate()-1)];
     
+    const setDate = (value) => {
+        setDates(value)
+    }
+
     return (
         <div className=''>
             <div>
