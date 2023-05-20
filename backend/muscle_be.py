@@ -123,11 +123,18 @@ def email():
 
 @app.route("/test", methods=["POST","GET"])
 def test():
-    if not request.is_json:
-        return jsonify({"error": "Missing JSON in request"}), 400
+    # if not request.is_json:
+    #     return jsonify({"error": "Missing JSON in request"}), 400
 
-    data = request.json # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
-    return jsonify(data) # サンプルのためそのまま返す
+    try:
+        data = request.json # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
+        output = TrainDataPOST(data)
+        # output = data
+        response = jsonify(output)
+        return response, 200
+    
+    except:
+        return jsonify({"error": "Missing JSON in request"}), 200
    
     
 @app.route("/traindata/post", methods=["POST","GET"])
@@ -135,15 +142,9 @@ def traindatapost():
     if not request.is_json:
         return jsonify({"error": "Missing JSON in request"}), 400
 
-    try:
-        data = request.json # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
-        output = TrainDataPOST(data)
-        response = jsonify(output)
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
-    
-    except:
-        return jsonify({"error": "Missing JSON in request"}), 400
+    data = request.json # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
+    return jsonify(data) # サンプルのためそのまま返す
+
 import os
 
 @app.route("/weightgraph/post", methods=["POST","GET"])

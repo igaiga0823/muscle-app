@@ -7,13 +7,12 @@ import React, { useState, useEffect } from "react";
 import None from './components/pages/None';
 
 import Fetch from './Fetch';
-import Test from './components/test';
 
 import Login from './components/views/Login'; 
 import AppBar from './components/parts/AppBar';
 import RateGraph from './components/views/graphs/RateGraph';
 import Register from './components/views/Register';
-import Info from './components/parts/test';
+import Test from './components/parts/test';
 import LineChart from './components/views/graphs/WeightGraph';
 
 import Home from './components/pages/Home';
@@ -60,7 +59,6 @@ const  App = () => {
             <Route path="/appbar" element={<AppBar />} />
 
             <Route path="/rategraph" element={<RateGraph />} />
-            <Route path='/info' element={<Info />} />
             <Route path='/weight' element={<LineChart />} />
             <Route path='/testsend' element={<TestSend />} />
           </Routes>
