@@ -23,6 +23,12 @@ function TaskForm() {
   const today = new Date()
   const dates = [today.getFullYear() + "/" + (today.getMonth() + 1) + '/' + today.getDate(), today.getFullYear() + "/" + (today.getMonth() + 1) + '/' + (today.getDate()-1)];
 
+
+  useEffect(() => {
+    setUserName("hiroki")
+    setUserId("2")
+  }, [])
+
   const addTask = () => {
     setTasks([...tasks, {
       kgData: '0',
@@ -103,13 +109,14 @@ function TaskForm() {
     }
     console.log(value_kg)
     data['user_id'] = user_id
-    data['length'] = String(z+1)
+    data['length'] = String(z)
     data['user_name'] = user_name
     data['menu'] = menu
     data['kgData'] = value_kg
     data['repData'] = value_rep
-    data['data'] = date
+    data['date'] = date
     data['time'] = time
+    data['menu_id'] = "2"
     console.log(data)
     fetch('https://iganami1106.com/muscle_api/index.cgi/test', {
       method: 'POST',
