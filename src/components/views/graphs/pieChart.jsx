@@ -1,7 +1,16 @@
-import { useEffect, useRef } from "react";
+
 import { Doughnut } from "react-chartjs-2";
+import React, { useState, useEffect } from "react";
+import ChartDataLabels from "chartjs-plugin-datalabels";
+import TextField from '@mui/material/TextField';
+import Autocomplete from '@mui/material/Autocomplete';
 
 const DoughnutChart = () => {
+  const [x, setX] = useState({});
+  const option = ["push up", "incline"];
+  const [value, setValue] = React.useState(options[0]);
+  const [inputValue, setInputValue] = useState('');
+
   useEffect(() => {
     const fetchData = async () => {
       const url =
@@ -15,8 +24,8 @@ const DoughnutChart = () => {
       };
       try {
         const response = await fetch(url, requestOptions);
-        // const data = await response.json();
-        console.log(response);
+        const data = await response.json();
+        setX(data);
       } catch (error) {
         console.log(error);
       }
@@ -24,13 +33,30 @@ const DoughnutChart = () => {
 
     fetchData();
   }, []);
+
   const data = {
-    labels: ["Red", "Blue", "Yello"],
+    labels: x["menu"],
     datasets: [
       {
-        data: [300, 50, 100],
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
-        hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+        data: x["count"],
+        backgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#33FF9E",
+          "#FF9F40",
+          "#FF66C3",
+          "#00CC99",
+        ],
+        hoverBackgroundColor: [
+          "#FF6384",
+          "#36A2EB",
+          "#FFCE56",
+          "#33FF9E",
+          "#FF9F40",
+          "#FF66C3",
+          "#00CC99",
+        ],
       },
     ],
   };
@@ -48,15 +74,65 @@ const DoughnutChart = () => {
           },
         },
       },
+      datalabels: {
+        color: "#fff",
+        font: {
+          size: 14,
+          weight: "bold",
+        },
+        formatter: (value) => value,
+      },
     },
   };
 
+
+  const chartContainerStyle = {
+    background: "#f5f5f5",
+    padding: "20px",
+    borderRadius: "10px",
+    boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
+  };
+
+
   return (
-    <div className="chart-container">
-      <h2 className="chart-title">Doughnut Chart</h2>
+    <div className="chart-container" style={chartContainerStyle}>
+      <h2 className="chart-title" >Doughnut Chart</h2>
+      <Autocomplete
+        value={value}
+        onChange={(event, newValue) => { setValue(newValue); }}
+        inputValue={inputValue}
+        onInputChange={(event, newInputValue) => { setInputValue(newInputValue); }}
+        id="controllable-states-demo"
+        options={option}
+        sx={{ width: 300 }}
+        renderInput={(params) => <TextField {...params} label="Menu" />}
+      />
       <div className="chart-wrapper">
-        <Doughnut data={data} options={options} />
+        <Doughnut data={data} options={options} plugins={[ChartDataLabels]} />
       </div>
+      <br></br>
+      <style jsx>{`
+        .chart-container {
+          width: 100%;
+          max-width: 400px;
+          margin: 0 auto;
+        }
+        .chart-title {
+          text-align: center;
+          font-size: 24px;
+          margin-bottom: 10px;
+          color: #333;
+        }
+        .chart-wrapper {
+          background-color: #fff;
+          padding: 20px;
+          border-radius: 10px;
+          box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+        }
+      `}</style>
     </div>
   );
 };

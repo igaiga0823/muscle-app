@@ -14,15 +14,12 @@ const LoginCheck = () => {
   const context = useContext(UserContext);
   const navigate = useNavigate();
 
-  const [userInfo, setUserInfo] = useState({
-    userId: "",
-    userName: "",
-  });
+
   // context.user_idでuserのIDが取れるよ
 
   // navigate.push("移動したいパス")
 
-  const setCookie = () => {
+  const setCookie = (userInfo) => {
     console.log(userInfo);
     const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 3 hours
     // userInfoオブジェクトの各プロパティをCookieに登録
@@ -46,15 +43,15 @@ const LoginCheck = () => {
       context.setuser_id(userIdCookie);
       context.setIsLogin(true);
       context.setuser_name(userNameCookie);
-      setUserInfo({ userId: userIdCookie, userName: userNameCookie });
-      setCookie();
+      const userInfo = { "userId": userIdCookie, "userName": userNameCookie };
+      setCookie(userInfo);
       console.log("ログインしています。");
     } else if (context.isLogin) {
       console.log("context.user_id");
       console.log(context.user_id);
       console.log(context.userName);
-      setUserInfo({ userId: context.user_id, userName: context.user_name });
-      setCookie();
+      const userInfo = { "userId": userIdCookie, "userName": userNameCookie };
+      setCookie(userInfo);
       console.log("ログインしています。");
     } else {
       console.log("ログインしていません。");

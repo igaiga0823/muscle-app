@@ -67,22 +67,6 @@ def signin():
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
 
-    try:
-        req = request.args
-        user_name = req.get("user_name")
-        after_password = req.get("after_password")
-        session_id = req.get("session_id")
-        # response = {"user_name": user_name, "after_password": after_password, "session_id": session_id }
-
-        response = signin(user_name, after_password, session_id)
-        response = jsonify(response)
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
-    except:
-        response = {"Message": "ok"}
-        response = jsonify(response)
-        response.headers.add('Access-Control-Allow-Origin', '*')
-        return response
 
 
 @app.route('/signup', methods=["GET", "POST"])
@@ -134,13 +118,6 @@ def email():
     return "OK"
 
 
-@app.route("/test", methods=["POST", "GET"])
-def test():
-    if not request.is_json:
-        return jsonify({"error": "Missing JSON in request"}), 400
-
-    data = request.json  # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
-    return jsonify(data)  # サンプルのためそのまま返す
 
 
 @app.route("/traindata/post", methods=["POST", "GET"])
@@ -180,7 +157,7 @@ def piechart():
     if not request.is_json:
         return jsonify({"error": "Missing JSON in request1"}), 400
     try:
-        data = request.json  # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
+        data = request.json  #request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
         user_id = data["user_id"]
         output = PieChart(user_id)
         response = jsonify(output)

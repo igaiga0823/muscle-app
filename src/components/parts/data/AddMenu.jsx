@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Box, TextField, Autocomplete, Button, Alert } from "@mui/material";
 
-import "../../../css/reset.css";
+import "css/reset.css";
 
 const MenuSend = () => {
   var data = {};

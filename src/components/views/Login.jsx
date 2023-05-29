@@ -7,9 +7,9 @@ import {
 } from "react-router-dom";
 import React, { useState, useEffect, useContext } from "react";
 import md5 from "md5";
-import "../../css/Login.css";
+import "css/Login.css";
 import { Box, Stack, Alert, Button, Input } from "@mui/material";
-import { UserContext } from "../../App.js";
+import { UserContext } from "App.js";
 
 const Login = () => {
   const context = useContext(UserContext);
@@ -43,7 +43,19 @@ const Login = () => {
   //     setText4(md5(word));
   // }
 
+
   const dataSend = (initialPassword) => {
+
+
+    const setCookie = (userInfo) => {
+      console.log(userInfo);
+      const expires = new Date(Date.now() + 24 * 60 * 60 * 1000); // 3 hours
+      // userInfoオブジェクトの各プロパティをCookieに登録
+      Object.entries(userInfo).forEach(([key, value]) => {
+        document.cookie = `${key}=${value}; expires=${expires.toUTCString()}; path=/`;
+      });
+    };
+
     console.log(initialPassword);
     // onClickText(initialPassword);
     const after_password = md5(initialPassword);
@@ -69,6 +81,11 @@ const Login = () => {
           context.setuser_name(data.userName.toString());
           context.setuser_id(data.userId.toString());
           context.setIsLogin(true);
+          const userInfo = {
+            userId: data.userId.toString(),
+            userName: data.userName.toString(),
+          };
+          setCookie(userInfo);
 
           // /home パスに遷移する
           navigate("/home");

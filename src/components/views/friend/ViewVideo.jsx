@@ -1,5 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardMedia } from '@mui/material';
+import { Card, CardMedia, Box, CardHeader, Avatar, IconButton, CardContent, Typography, CardActions } from '@mui/material';
+import { red } from '@mui/material/colors';
+import FavoriteIcon from '@mui/icons-material/Favorite';
+import ShareIcon from '@mui/icons-material/Share';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import MoreVertIcon from '@mui/icons-material/MoreVert';
 
 const ViewVideo = (props) => {
   const [videoUrl, setVideoUrl] = useState('');
@@ -11,11 +16,14 @@ const ViewVideo = (props) => {
   }, []);
 
   const cardStyle = {
-    maxWidth: 600,
+    width: "100%",
+    maxWidth: "600px",
+
     margin: "15px",
     boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.15)",
-    borderRadius: "20px", 
-    border: "2px solid {borderColor}"
+    borderRadius: "20px",
+    border: "2px solid {borderColor}",
+
   };
 
   const mediaStyle = {
@@ -23,7 +31,7 @@ const ViewVideo = (props) => {
     paddingTop: "56.25%", // 16:9のアスペクト比
     height: 0,
     overflow: "hidden",
-    
+
   };
 
   const videoStyle = {
@@ -35,12 +43,46 @@ const ViewVideo = (props) => {
   };
 
   return (
+    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: "100%" }}>
+      <Card style={cardStyle} >
+        <CardHeader
+          avatar={
+            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
+              R
+            </Avatar>
+          }
+          action={
+            <IconButton aria-label="settings">
+              <MoreVertIcon />
+            </IconButton>
+          }
+          title="Shrimp and Chorizo Paella"
+          subheader="September 14, 2016"
+        />
+        <CardMedia style={mediaStyle}>
+          <video src={videoUrl} controls style={videoStyle} />
+        </CardMedia>
+        <CardContent>
+          <Typography variant="body2" color="text.secondary">
+            This impressive paella is a perfect party dish and a fun meal to cook
+            together with your guests. Add 1 cup of frozen peas along with the mussels,
+            if you like.
+          </Typography>
+        </CardContent>
+        <CardActions disableSpacing>
+          <IconButton aria-label="add to favorites" >
+            <FavoriteIcon />
+          </IconButton>
+          <IconButton aria-label="share">
+            <ShareIcon />
+          </IconButton>
 
-    <Card style={cardStyle} >
-      <div style={mediaStyle}>
-        <video src={videoUrl} controls style={videoStyle} />
-      </div>
-    </Card>
+        </CardActions>
+
+      </Card>
+
+    </Box>
+
   );
 }
 
