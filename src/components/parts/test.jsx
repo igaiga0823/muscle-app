@@ -81,20 +81,6 @@ function TaskForm() {
     }
   );
 
-
-  const dataChange = (x) => {
-    console.log(x)
-    var value_kg = []
-    var value_rep = []
-    const z = x.length
-    console.log(z)
-    for (let i = 0; i < z; i ++){
-      console.log(x[i]["kgData"])
-      value_kg.push(x[i]["kgData"])
-      value_rep.push(x[i]["repData"])
-    }
-  }
-
   
   const sendData = (tasks) => {
     console.log(tasks)
@@ -118,7 +104,7 @@ function TaskForm() {
     data['time'] = time
     data['menu_id'] = "2"
     console.log(data)
-    fetch('https://iganami1106.com/muscle_api/index.cgi/test', {
+    fetch('https://iganami1106.com/muscle_api/index.cgi/traindata/post', {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json'

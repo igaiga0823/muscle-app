@@ -25,7 +25,7 @@ import Home from '../pages/Home';
 
 import Training from '../pages/Training';
 import Friend from '../pages/Friend';
-import Weight from '../pages/Weight';
+import Weight from '../pages/Data';
 
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
@@ -38,12 +38,6 @@ function AppBar(props) {
   const [value, setValue] = React.useState(0);
   const ref = React.useRef(null);
 
-  const pages = [
-    <Home />,
-    <Training />,
-    <Weight />,
-    <Friend />,
-  ];
 
   return (
     <div>
@@ -76,11 +70,11 @@ function AppBar(props) {
                 sx={{ color: value === 1 ? "#00ff7f" : "#f2f2f2", backgroundColor: '#4f4f4f'  ,padding:"2px", borderRadius: "0 0 0 0"}} label="Trainging" icon={<Icon path={mdiArmFlex} size={2} />} />
             <BottomNavigationAction
                 component={Link}
-                to="/weight"
-                sx={{ color: value === 2 ? "#00ff7f" : "#f2f2f2", backgroundColor: '#4f4f4f'  ,padding:"2px", borderRadius: "0 0 0 0"}} label="Weight" icon={<Icon path={mdiChartBar} size={2} />} />
+                to="/data"
+                sx={{ color: value === 2 ? "#00ff7f" : "#f2f2f2", backgroundColor: '#4f4f4f'  ,padding:"2px", borderRadius: "0 0 0 0"}} label="Data" icon={<Icon path={mdiChartBar} size={2} />} />
             <BottomNavigationAction
                 component={Link}
-                to="/weight"
+                to="/friend"
                 sx={{ color: value === 3 ? "#00ff7f" : "#f2f2f2", backgroundColor: '#4f4f4f'  ,padding:"2px", borderRadius: "0 15px 15px 0"}} label="Friend" icon={<Icon path={mdiAccount} size={2} />} />
           </BottomNavigation>
         </Paper>
@@ -94,3 +88,4 @@ AppBar.propTypes = {
 };
 
 export default AppBar;
+

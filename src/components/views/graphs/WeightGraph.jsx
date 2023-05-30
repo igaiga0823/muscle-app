@@ -7,24 +7,23 @@ const WeightGraph = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = "http://main.itigo.jp/main.itigo.jp/muscle_api/index.cgi/weightgraph/post";
+      const url = "http://main.itigo.jp/main.itigo.jp/muscle_api/index.cgi/weightgraph";
       const requestOptions = {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           "user_id": 1,
+          "data_range": 19,
         }),
       };
-
-
       try {
         const response = await fetch(url, requestOptions);
         const data = await response.json();
         console.log(data);
 
         // Chart.js グラフの作成
-        const labels = data.map((item) => item.date);
-        const weights = data.map((item) => item.weight);
+        const labels = data.date;
+        const weights = data.weight;
 
         const chartData = {
           labels: labels,
@@ -80,9 +79,12 @@ const WeightGraph = () => {
   }, []);
 
   return (
-    <div>
-      <canvas id="lineChart" ref={chartRef}></canvas>
-    </div>
+    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: 'white' }}>
+    <div style={{width: '800px', height: '600px'}}>
+      <canvas id="lineChart"
+ref={chartRef}></canvas>
+</div>
+</div>
   );
 };
 

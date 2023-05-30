@@ -13,6 +13,9 @@ from Config import Config
 from LoginStart import LoginStart
 from TrainDataPOST import TrainDataPOST
 from WeightGraph import WeightGraph
+from WeightDataPOST import WeightForm
+from UploadVideo import UploadVideo
+from menu_add import menu_add
 
 app = Flask(__name__)
 CORS(app)
@@ -123,7 +126,17 @@ def email():
 
 @app.route("/test", methods=["POST","GET"])
 def test():
-    # if not request.is_json:
+    if not request.is_json:
+            return jsonify({"error": "Missing JSON in request"}), 400
+
+    data = request.json # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
+    return jsonify(data) # サンプルのためそのまま返す
+
+   
+    
+@app.route("/traindata/post", methods=["POST","GET"])
+def traindatapost():
+        # if not request.is_json:
     #     return jsonify({"error": "Missing JSON in request"}), 400
 
     try:
@@ -135,37 +148,74 @@ def test():
     
     except:
         return jsonify({"error": "Missing JSON in request"}), 200
-   
     
-@app.route("/traindata/post", methods=["POST","GET"])
-def traindatapost():
-    if not request.is_json:
-        return jsonify({"error": "Missing JSON in request"}), 400
-
-    data = request.json # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
-    return jsonify(data) # サンプルのためそのまま返す
-
 import os
 
-@app.route("/weightgraph/post", methods=["POST","GET"])
+@app.route("/weightgraph", methods=["POST","GET"])
 def weightgraph():
     if not request.is_json:
         return jsonify({"error": "Missing JSON in request"}), 400
     try:
         data = request.json # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
         user_id=data["user_id"]
-        output = WeightGraph(user_id)
+        data_range=data["data_range"]
+        output = WeightGraph(user_id,data_range)  
         response = jsonify(output)
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
+    except:
+        return jsonify({"error": "Missing JSON in request"}), 400
     
+@app.route("/weightForm/post", methods=["POST","GET"])
+def weightForm():
+    if not request.is_json:
+        return jsonify({"error": "Missing JSON in request"}), 400
+    try:
+        data = request.json # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
+        user_id=data["user_id"]
+        weight_data=data["weight_data"]
+        WeightForm(user_id,weight_data)
+        response = jsonify({"status":"successful"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response  
     except:
         return jsonify({"error": "Missing JSON in request"}), 400
 
+@app.route('/menuadd', methods=['POST'])
+def menuadd():
+    try:
+        data = request.json
+        user_id = data["user_id"]
+        events = data["events"]
+        body_parts = data['body_parts']
+        menu_add(user_id, events, body_parts)
+        response = jsonify({"states":"successful"})
+        return response 
+    
+    except:
+        response = jsonify({"Success": "False" })
+        return response 
 
 
 
-
+@app.route('/upload', methods=['POST'])
+def upload():
+    if 'video' not in request.files:
+        return 'No video file uploaded', 400
+    try:
+        video = request.files['video']
+        
+        video.save('./video/' + video.filename)
+        user_id = request.form['user_id']  # user_idを取得する
+        UploadVideo(user_id,video.filename)
+        response = jsonify({"Success": "True" })
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response 
+    
+    except:
+        response = jsonify({"Success": "False" })
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response 
 
 
 
