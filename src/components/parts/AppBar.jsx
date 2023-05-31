@@ -42,7 +42,7 @@ function AppBar(props) {
   return (
     <div>
       {/* {pages[value]} */}
-      <Box sx={{ pb: 12,  }} ref={ref}>
+      <Box sx={{  }} ref={ref}>
         <CssBaseline />
         <Paper sx={{ color: "#00ff7f" , background: 'transparent', position: 'fixed', bottom: 0, left: 0, right: 0 }} elevation={5}>
           <BottomNavigation

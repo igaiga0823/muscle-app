@@ -15,7 +15,7 @@ const ViewUploadVideo = () => {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center' }}>
-      <Box width={isSmallScreen ? '80%' : '50%'}>
+      <br/><Box width={isSmallScreen ? '80%' : '50%'}>
         <Button variant="outlined" onClick={onClickUploadVideo}>
           動画を追加
         </Button>
