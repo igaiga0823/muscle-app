@@ -2,25 +2,6 @@ import { useEffect } from 'react';
 import { Doughnut } from 'react-chartjs-2';
 
 const DoughnutChart = () => {
-  // useEffect(() => {
-  //   // 動画のURLを取得する非同期関数
-  //   const fetchVideoUrl = async () => {
-  //     try {
-  //       const response = await fetch(url);
-  //       if (response.ok) {
-  //         const videoData = await response.json();
-  //         setVideoUrl(videoData.url);
-  //       } else {
-  //         console.log('Failed to fetch video URL');
-  //       }
-  //     } catch (error) {
-  //       console.log('Error fetching video URL:', error);
-  //     }
-  //   };
-
-  //   fetchVideoUrl();
-  // }, []);
-  // グラフに表示するデータ
   const data = {
     labels: ['Red', 'Blue', 'Yellow'],
     datasets: [
@@ -32,21 +13,32 @@ const DoughnutChart = () => {
     ],
   };
 
-  // グラフのオプション設定
   const options = {
     responsive: true,
     maintainAspectRatio: false,
     plugins: {
       legend: {
-        position: 'right',
+        position: 'bottom',
+        labels: {
+          boxWidth: 10,
+          font: {
+            size: 12,
+          },
+        },
       },
     },
   };
 
+  useEffect(() => {
+    // グラフ描画後の処理などをここに記述
+  }, []);
+
   return (
-    <div style={{ width: '300px', height: '300px' }}>
-      <h2>Doughnut Chart</h2>
-      <Doughnut data={data} options={options} />
+    <div className="chart-container">
+      <h2 className="chart-title">Doughnut Chart</h2>
+      <div className="chart-wrapper">
+        <Doughnut data={data} options={options} />
+      </div>
     </div>
   );
 };
