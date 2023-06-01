@@ -19,8 +19,14 @@ charset = 'utf8')
 cur = conn.cursor()
 
 def Menu_add(user_id, events):
+    sql = "SELECT MENU_ID FROM MENU WHERE USER_ID = %s AND MENU_NAME = %s;"
+    cur.execute(sql, (user_id, events))
+    result = cur.fetchall()
+    if result:
+        return False
     sql = "INSERT INTO MENU (USER_ID, MENU_NAME) VALUES(%s,%s);"
     cur.execute(sql, (user_id, events))
+    return True
 
 def events_add(user_id, events, body_parts):
     sql = "SELECT MENU_ID FROM MENU WHERE USER_ID = %s AND MENU_NAME = %s;"
@@ -33,14 +39,17 @@ def events_add(user_id, events, body_parts):
         cur.execute(sql, (y, user_id, body_parts[i]))
 
 def menu_add(user_id, events, body_parts):
-    Menu_add(user_id, events)
-    events_add(user_id, events, body_parts)
+    x = Menu_add(user_id, events)
+    if x == True:
+        events_add(user_id, events, body_parts)
     conn.commit()
     cur.close()
     conn.close()
-
+    if x == False:
+        return False
+    return True
 
 
 if __name__ == "__main__": 
-    menu_add( 3, "ラッドプルダウン", ["大胸筋", "大東キン"])
+    menu_add( 3, "", ["大胸筋", "大東キン"])
 

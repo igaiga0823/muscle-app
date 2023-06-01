@@ -4,7 +4,7 @@ import React, { useState, useEffect } from "react";
 import md5 from 'md5';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
-import '../../css/reset.css'
+import '../../../css/reset.css'
 
 const MenuSend = () => {
     

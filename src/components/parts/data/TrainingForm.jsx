@@ -3,7 +3,7 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 
-function TaskForm() {
+function TrainingForm() {
   
   var data = {}
 
@@ -180,4 +180,4 @@ function TaskForm() {
   );
 }
 
-export default TaskForm;
+export default TrainingForm;

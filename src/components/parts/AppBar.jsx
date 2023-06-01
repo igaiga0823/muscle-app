@@ -2,6 +2,7 @@
 import "../../css/reset.css";
 
 import * as React from "react";
+import {useContext} from "react";
 import Box from '@mui/material/Box';
 import CssBaseline from '@mui/material/CssBaseline';
 import BottomNavigation from '@mui/material/BottomNavigation';
@@ -21,14 +22,15 @@ import Icon from '@mdi/react';
 import { mdiHome, mdiArmFlex, mdiAccount, mdiChartBar } from '@mdi/js';
 
 import '../../css/Appbar.css';
-import Home from '../pages/Home';
-
-import Training from '../pages/Training';
-import Friend from '../pages/Friend';
-import Weight from '../pages/Data';
 
 import { BrowserRouter, Route, Switch, Link } from 'react-router-dom';
 
+import { UserContext } from '../../App.js'; 
+
+
+    // context.user_idでuserのIDが取れるよ
+
+    // navigate.push("移動したいパス")
 
 /**
  * @component
@@ -38,9 +40,12 @@ function AppBar(props) {
   const [value, setValue] = React.useState(0);
   const ref = React.useRef(null);
 
+  const context = useContext(UserContext)
 
   return (
-    <div>
+    <>
+    {context.isLogin ? 
+        <div>
       {/* {pages[value]} */}
       <Box sx={{  }} ref={ref}>
         <CssBaseline />
@@ -79,7 +84,10 @@ function AppBar(props) {
           </BottomNavigation>
         </Paper>
       </Box>
-    </div>
+    </div> : ""
+}
+    </>
+
   );
 };
 
