@@ -17,6 +17,7 @@ from WeightGraph import WeightGraph
 from WeightDataPOST import WeightForm
 from UploadVideo import UploadVideo
 from menu_add import menu_add
+from pie_chart import PieChart
 
 app = Flask(__name__)
 CORS(app)
@@ -174,8 +175,19 @@ def weightgraph():
         return jsonify({"error": "Missing JSON in request"}), 400
 
 
-# @app.route("/graph/piechart", methods=["POST", "GET"])
-# def
+@app.route("/graph/piechart", methods=["POST", "GET"])
+def piechart():
+    if not request.is_json:
+        return jsonify({"error": "Missing JSON in request1"}), 400
+    try:
+        data = request.json  # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
+        user_id = data["user_id"]
+        output = PieChart(user_id)
+        response = jsonify(output)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    except:
+        return jsonify({"error": "Missing JSON in request"}), 400
 
 
 @app.route("/weightForm/post", methods=["POST", "GET"])
