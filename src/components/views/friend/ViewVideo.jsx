@@ -1,29 +1,67 @@
 import React, { useState, useEffect } from "react";
-import { Card, CardMedia, Box, CardHeader, Avatar, IconButton, CardContent, Typography, CardActions } from '@mui/material';
-import { red } from '@mui/material/colors';
-import FavoriteIcon from '@mui/icons-material/Favorite';
-import ShareIcon from '@mui/icons-material/Share';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import {
+  Card,
+  CardMedia,
+  Box,
+  CardHeader,
+  Avatar,
+  IconButton,
+  CardContent,
+  Typography,
+  CardActions,
+  Stack,
+} from "@mui/material";
+
+import {
+  BrowserRouter,
+  Route,
+  Routes,
+  Link,
+  useNavigate,
+} from "react-router-dom";
+
+import { red } from "@mui/material/colors";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import ShareIcon from "@mui/icons-material/Share";
+import MoreVertIcon from "@mui/icons-material/MoreVert";
+
+import GetUserInfo from "components/function/CommonFunction";
 
 const ViewVideo = (props) => {
-  const [videoUrl, setVideoUrl] = useState('');
-  const url = "http://main.itigo.jp/main.itigo.jp/muscle_api/video/707234299.242032.mp4";
+  const navigate = useNavigate();
+
+  const [videoUrl, setVideoUrl] = useState("");
+  const url =
+    "http://main.itigo.jp/main.itigo.jp/muscle_api/video/707234299.242032.mp4";
+  const comment = "今日の腹筋";
+  const date = "2023/06/08";
+  const userId = "1";
+
+  const [userInfo, setUserInfo] = useState({});
 
   const borderColor = "34324";
+
   useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        const info = await GetUserInfo(userId);
+        setUserInfo(info);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUserInfo();
     setVideoUrl(url);
-  }, []);
+  }, []); // 空の依存配列を指定して初回のみ実行するようにする
 
   const cardStyle = {
     width: "100%",
     maxWidth: "600px",
-
     margin: "15px",
     boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.15)",
     borderRadius: "20px",
     border: "2px solid {borderColor}",
-
   };
 
   const mediaStyle = {
@@ -31,7 +69,6 @@ const ViewVideo = (props) => {
     paddingTop: "56.25%", // 16:9のアスペクト比
     height: 0,
     overflow: "hidden",
-
   };
 
   const videoStyle = {
@@ -43,12 +80,23 @@ const ViewVideo = (props) => {
   };
 
   return (
-    <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', width: "100%" }}>
-      <Card style={cardStyle} >
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        width: "100%",
+      }}
+    >
+      <Card style={cardStyle}>
         <CardHeader
           avatar={
-            <Avatar sx={{ bgcolor: red[500] }} aria-label="recipe">
-              R
+            <Avatar
+              sx={{ bgcolor: red[500] }}
+              aria-label="recipe"
+              src={userInfo.photoUrl}
+            >
+              {userInfo.userName}
             </Avatar>
           }
           action={
@@ -56,32 +104,31 @@ const ViewVideo = (props) => {
               <MoreVertIcon />
             </IconButton>
           }
-          title="Shrimp and Chorizo Paella"
-          subheader="September 14, 2016"
+          title={
+            userInfo.userNickName != ""
+              ? userInfo.userNickName
+              : userInfo.userName
+          }
+          subheader={date}
         />
         <CardMedia style={mediaStyle}>
           <video src={videoUrl} controls style={videoStyle} />
         </CardMedia>
-        <CardContent>
-          <Typography variant="body2" color="text.secondary">
-            動画っす
-          </Typography>
-        </CardContent>
-        <CardActions disableSpacing>
-          <IconButton aria-label="add to favorites" >
+
+        <Stack direction="row" alignItems={"center"} width={"100"}>
+          <IconButton aria-label="add to favorites">
             <FavoriteIcon />
           </IconButton>
           <IconButton aria-label="share">
             <ShareIcon />
           </IconButton>
-
-        </CardActions>
-
+          <Box width={"60%"} justifyContent="left" alignItems="left">
+            {comment}
+          </Box>
+        </Stack>
       </Card>
-
     </Box>
-
   );
-}
+};
 
 export default ViewVideo;

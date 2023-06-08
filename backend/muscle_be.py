@@ -19,6 +19,8 @@ from UploadVideo import UploadVideo
 from menu_add import menu_add
 from pie_chart import PieChart
 
+from GetUserInfo import GetUserInfo
+
 app = Flask(__name__)
 CORS(app)
 app.config.from_object(Config)
@@ -66,7 +68,6 @@ def signin():
     response = jsonify(response)
     response.headers.add('Access-Control-Allow-Origin', '*')
     return response
-
 
 
 @app.route('/signup', methods=["GET", "POST"])
@@ -118,8 +119,6 @@ def email():
     return "OK"
 
 
-
-
 @app.route("/traindata/post", methods=["POST", "GET"])
 def traindatapost():
     # if not request.is_json:
@@ -157,7 +156,7 @@ def piechart():
     if not request.is_json:
         return jsonify({"error": "Missing JSON in request1"}), 400
     try:
-        data = request.json  #request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
+        data = request.json  # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
         user_id = data["user_id"]
         output = PieChart(user_id)
         response = jsonify(output)
@@ -216,6 +215,22 @@ def upload():
         user_id = request.form['user_id']  # user_idを取得する
         UploadVideo(user_id, video.filename)
         response = jsonify({"Success": "True"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+
+    except:
+        response = jsonify({"Success": "False"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+
+
+@app.route('/user', methods=['POST', "GET"])
+def getuserinfo():
+    try:
+        data = request.json
+        user_id = data["user_id"]
+        output = GetUserInfo(user_id)
+        response = jsonify(output)
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
 

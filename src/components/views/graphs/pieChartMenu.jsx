@@ -1,15 +1,14 @@
-
 import { Doughnut } from "react-chartjs-2";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import TextField from '@mui/material/TextField';
-import Autocomplete from '@mui/material/Autocomplete';
+import TextField from "@mui/material/TextField";
+import Autocomplete from "@mui/material/Autocomplete";
 
-const DoughnutChart = () => {
+const PieChartMenu = (props) => {
   const [x, setX] = useState({});
   const option = ["push up", "incline"];
-  const [value, setValue] = React.useState(options[0]);
-  const [inputValue, setInputValue] = useState('');
+  const [value, setValue] = useState(0);
+  const [inputValue, setInputValue] = useState("");
 
   useEffect(() => {
     const fetchData = async () => {
@@ -85,7 +84,6 @@ const DoughnutChart = () => {
     },
   };
 
-
   const chartContainerStyle = {
     background: "#f5f5f5",
     padding: "20px",
@@ -93,15 +91,18 @@ const DoughnutChart = () => {
     boxShadow: "0 2px 4px rgba(0, 0, 0, 0.1)",
   };
 
-
   return (
     <div className="chart-container" style={chartContainerStyle}>
-      <h2 className="chart-title" >Doughnut Chart</h2>
+      <h2 className="chart-title">Doughnut Chart</h2>
       <Autocomplete
         value={value}
-        onChange={(event, newValue) => { setValue(newValue); }}
+        onChange={(event, newValue) => {
+          setValue(newValue);
+        }}
         inputValue={inputValue}
-        onInputChange={(event, newInputValue) => { setInputValue(newInputValue); }}
+        onInputChange={(event, newInputValue) => {
+          setInputValue(newInputValue);
+        }}
         id="controllable-states-demo"
         options={option}
         sx={{ width: 300 }}
@@ -137,4 +138,4 @@ const DoughnutChart = () => {
   );
 };
 
-export default DoughnutChart;
+export default PieChartMenu;

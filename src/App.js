@@ -20,19 +20,20 @@ import TrainingForm from 'components/parts/data/TrainingForm';
 import Menu from 'components/parts/data/AddMenu';
 
 import WeightGraph from 'components/views/graphs/WeightGraph';
-import PieChart from 'components/views/graphs/pieChart';
+import PieChartMenu from 'components/views/graphs/pieChartMenu';
+import PieChartParts from 'components/views/graphs/pieChartParts';
 
 import Home from 'components/pages/Home';
 import Training from 'components/pages/Training';
 import Friend from 'components/pages/Friend';
 import Data from 'components/pages/Data';
-import TestSend from 'components/parts/data/testSend';
 import ViewUploadVideo from 'components/parts/friend/ViewUploadVideo';
 
 import ViewVideo from 'components/views/friend/ViewVideo';
-
+import GetUserInfo from 'components/function/CommonFunction';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
+import Test from 'components/test';
 // 
 import { createContext, useContext } from 'react'
 import UserInfo from 'hooks/UserInfo'
@@ -78,14 +79,17 @@ const App = () => {
             <Route path="/login" element={<Login />} />
             <Route path="/Menu" element={<Menu />} />
 
+            <Route path="/test" element={<Test />} />
+
             <Route path="/appbar" element={<AppBar />} />
             <Route path="/weightForm" element={<WeightForm />} />
             <Route path="/rategraph" element={<RateGraph />} />
             <Route path='/weightgraph' element={<WeightGraph />} />
-            <Route path='/piechart' element={<PieChart />} />
-            <Route path='/testsend' element={<TestSend />} />
+            <Route path='/piechart' element={<PieChartMenu />} />
+            <Route path='/piechartparts' element={<PieChartParts />} />_
             <Route path='/viewuploadvideo' element={<ViewUploadVideo />} />
             <Route path='/viewvideo' element={<ViewVideo />} />
+            <Route path='/user' element={<GetUserInfo />} />
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>
