@@ -2,7 +2,7 @@ import { React, useState, useEffect } from "react";
 import { BrowserRouter, Route, Routes, Link } from "react-router-dom";
 import USER from "./User";
 
-import GetUserInfo from "./function/CommonFunction";
+import GetUserInfo from "./function/common/GetUserInfo";
 
 const Test = () => {
   return (

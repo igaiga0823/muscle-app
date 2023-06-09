@@ -20,6 +20,7 @@ from menu_add import menu_add
 from pie_chart import PieChart
 
 from GetUserInfo import GetUserInfo
+from UserSearch import UserSearch
 
 app = Flask(__name__)
 CORS(app)
@@ -166,6 +167,27 @@ def piechart():
         return jsonify({"error": "Missing JSON in request"}), 400
 
 
+@app.route("/graph/piechart/parts", methods=["POST", "GET"])
+def piechart():
+    if not request.is_json:
+        return jsonify({"error": "Missing JSON in request1"}), 400
+    try:
+        data = request.json  # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
+        user_id = data["user_id"]
+        start_year = data["start_year"]
+        start_month = data["start_month"]
+        start_day = data["start_day"]
+        end_year = data["end_year"]
+        end_month = data["end_month"]
+        end_day = data["end_day"]
+        output = PieChart(user_id, start_year, start_month, start_day, end_year, end_month, end_day)
+        response = jsonify(output)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    except:
+        return jsonify({"error": "Missing JSON in request"}), 400
+
+
 @app.route("/weightForm/post", methods=["POST", "GET"])
 def weightForm():
     if not request.is_json:
@@ -212,8 +234,11 @@ def upload():
         video = request.files['video']
 
         video.save('./video/' + video.filename)
-        user_id = request.form['user_id']  # user_idを取得する
-        UploadVideo(user_id, video.filename)
+        user_id = request.form['user_id']  # 
+        comment = request.form['comment']
+        
+        
+        UploadVideo(user_id, video.filename,comment)
         response = jsonify({"Success": "True"})
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
@@ -238,6 +263,24 @@ def getuserinfo():
         response = jsonify({"Success": "False"})
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response
+    
+
+
+@app.route('/usersearch', methods=['POST', "GET"])
+def getusersearch():
+    try:
+        data = request.json
+        user_name = data["user_name"]
+        output = UserSearch(user_name)
+        response = jsonify(output)
+        response.headers.add('Access-Control-Allow-Origin','*')
+        return response
+
+    except:
+        response = jsonify({"Success":"False"})
+        response.headers.add('Access-Control-Allow-Origin','*')
+        return response
+
 
 
 if __name__ == '__main__':

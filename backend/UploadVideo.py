@@ -23,9 +23,9 @@ cur = conn.cursor()
 
 
 
-def UploadVideo(user_id, filename):
-    sql1 = "INSERT INTO USERVIDEO (VIDEO_NAME, USER_ID) VALUES(%s,%s);"
-    cur.execute(sql1,(filename, user_id, ))
+def UploadVideo(user_id, filename, comment):
+    sql1 = "INSERT INTO USERVIDEO (VIDEO_NAME, USER_ID, COMMENT) VALUES(%s,%s,%s);"
+    cur.execute(sql1,(filename, user_id, comment, ))
 
     ans =  { "Success" : "True"}
 

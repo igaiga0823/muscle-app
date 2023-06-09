@@ -30,7 +30,8 @@ import Data from 'components/pages/Data';
 import ViewUploadVideo from 'components/parts/friend/ViewUploadVideo';
 
 import ViewVideo from 'components/views/friend/ViewVideo';
-import GetUserInfo from 'components/function/CommonFunction';
+import UserSearch from 'components/parts/friend/UserSearch';
+
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 
 import Test from 'components/test';
@@ -89,7 +90,8 @@ const App = () => {
             <Route path='/piechartparts' element={<PieChartParts />} />_
             <Route path='/viewuploadvideo' element={<ViewUploadVideo />} />
             <Route path='/viewvideo' element={<ViewVideo />} />
-            <Route path='/user' element={<GetUserInfo />} />
+            <Route path='/usersearch' element={<UserSearch />} />
+
           </Routes>
         </BrowserRouter>
       </UserContext.Provider>

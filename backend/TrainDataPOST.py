@@ -18,7 +18,16 @@ db = 'LAA1475865-muscle',
 charset = 'utf8')
 cur = conn.cursor()
 
+def time_chenge(time):
+    # ":" を区切り文字として時間と分に分割
+    hours, minutes = time.split(":")
+    # 分を整数に変換
+    hours = int(hours)
+    minutes = int(minutes)
 
+    # 時間と分を結合して合計分数を計算
+    total_minutes = hours * 60 + minutes
+    return total_minutes
 
 def TrainDataPOST(json_data):
     
@@ -29,11 +38,10 @@ def TrainDataPOST(json_data):
     kgData = json_data["kgData"]
     repData = json_data["repData"]
     date = json_data["date"]
-    time = json_data["time"]
+    x = time_chenge(json_data["time"])
+    time = float(x)/float(length)
     status = True
     user_name = json_data["user_name"]
-    # output = {"status":status, "menu":menu, "user_name":user_name }
-    # return output
     
     # ID計算
     sql1 = "select count(*) from TRAINDATA where 1;"
@@ -48,8 +56,8 @@ def TrainDataPOST(json_data):
     start_set = len(data) + 1
 
     for i in range(int(length)):
-        sql3 = "INSERT INTO TRAINDATA (ID, USER_ID, MENU_ID, MENU, KG, REPS, DATE, SET_NUMBER) VALUES(%s,%s,%s,%s,%s,%s,%s,%s);"
-        cur.execute(sql3, (start_set + i, user_id, menu_id, menu, kgData[i], repData[i], date, start_set + i))
+        sql3 = "INSERT INTO TRAINDATA (USER_ID, MENU_ID, MENU, TIME, KG, REPS, DATE, SET_NUMBER) VALUES(%s,%s,%s,%s,%s,%s,%s,%s);"
+        cur.execute(sql3, (user_id, menu_id, menu, time, kgData[i], repData[i], date, start_set + i))
     
         
 

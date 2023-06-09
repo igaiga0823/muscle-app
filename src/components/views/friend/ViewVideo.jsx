@@ -25,7 +25,7 @@ import FavoriteIcon from "@mui/icons-material/Favorite";
 import ShareIcon from "@mui/icons-material/Share";
 import MoreVertIcon from "@mui/icons-material/MoreVert";
 
-import GetUserInfo from "components/function/CommonFunction";
+import GetUserInfo from "components/function/common/GetUserInfo";
 
 const ViewVideo = (props) => {
   const navigate = useNavigate();
