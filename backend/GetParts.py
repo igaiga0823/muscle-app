@@ -19,15 +19,18 @@ conn = MySQLdb.connect(
 cur = conn.cursor()
 
 
-def UserSearch(user_name):
-    sql1 = "select USER_ID  from USER where ( USER_NAME =%s OR USER_NICKNAME = %s ) AND DELETE_FLAG = 0;"
-    cur.execute(sql1, (str(user_name),str(user_name),))
+def GetParts(user_id):
+    sql1 = "select MUSCLE_PART_ID, USER_ID, MUSCLE_PART from MUSCLE_PART where USER_ID =%s AND DELETE_FLAG = 0;"
+    cur.execute(sql1, (str(user_id)))
     data = cur.fetchall()
-    output = []
-    for i in range(len(data)):
-        output.append(data[i][0])
-    return {"data":output}
+    output = {"musclePartId":[],"userId":[],"musclePart":[]}
+    for i in data:
+        output["musclePartId"].append(i[0])
+        output["userId"].append(i[1])
+        output["musclePart"].append(i[2])
+
+    return output
 
 
 if __name__ == "__main__":
-    print(UserSearch("daidai"))
+    print(GetParts(1))

@@ -1,5 +1,5 @@
-const GetFriendList = (userId) => {
-    const url = "http://main.itigo.jp/main.itigo.jp/muscle_api/index.cgi/getfriendlist";
+const GetMenu = (userId) => {
+    const url = "http://main.itigo.jp/main.itigo.jp/muscle_api/index.cgi/menu";
     const requestOptions = {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -9,7 +9,12 @@ const GetFriendList = (userId) => {
     };
 
     return fetch(url, requestOptions)
-        .then(response => response.json())
+        .then(response => {
+            if (!response.ok) {
+                throw new Error("Network response was not ok");
+            }
+            return response.json();
+        })
         .then(data => {
             console.log(data);
             return data;
@@ -20,4 +25,4 @@ const GetFriendList = (userId) => {
         });
 };
 
-export default GetFriendList;
+export default GetMenu;

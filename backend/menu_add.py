@@ -35,8 +35,12 @@ def events_add(user_id, events, body_parts):
     y = result[0][0]
     events_num = len(body_parts)
     for i in range(events_num):
-        sql = "INSERT INTO MUSCLE_PART (MENU_ID, USER_ID, MUSCLE_PART) VALUES(%s,%s, %s);"
-        cur.execute(sql, (y, user_id, body_parts[i]))
+        sql = "SELECT MUSCLE_PART_ID FROM MUSCLE_PART WHERE USER_ID = %s AND MUSCLE_PART = %s;"
+        cur.execute(sql, (user_id, body_parts[i]))
+        result = cur.fetchall()
+        z = result[0][0]
+        sql1 = "INSERT INTO MENU_PARTS (USER_ID, MENU_ID, MUSCLE_PART_ID) VALUES(%s,%s,%s);"
+        cur.execute(sql1, (user_id, y, z))
 
 def menu_add(user_id, events, body_parts):
     x = Menu_add(user_id, events)
@@ -51,5 +55,5 @@ def menu_add(user_id, events, body_parts):
 
 
 if __name__ == "__main__": 
-    menu_add( 3, "", ["大胸筋", "大東キン"])
+    print(menu_add( 1, "o", ["大胸筋", "大東キン"]))
 

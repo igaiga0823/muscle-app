@@ -1,17 +1,22 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { Box, TextField, Autocomplete, Button, Alert } from "@mui/material";
+import { UserContext } from 'App.js';
+import GetParts from "components/function/common/GetParts";
 
 import "css/reset.css";
 
 const MenuSend = () => {
   var data = {};
-  const options = ["二頭筋", "三頭筋", "大胸筋"];
+  const [options, setOptions] = useState([""]);
+
+  const context = useContext(UserContext)
 
   const [value, setValue] = useState("");
   const [tasks, setTasks] = useState([{ parts: "" }]);
   const [showNotification, setShowNotification] = useState(false);
   const [showError, setShowError] = useState(false);
   const [already, setAlready] = useState(false);
+  const [open, setOpen] = useState(false)
 
   const addTask = () => {
     setTasks([
@@ -32,6 +37,27 @@ const MenuSend = () => {
     setValue(event.target.value);
     console.log(value);
   };
+
+
+
+  useEffect(() => {
+    console.log(context.user_id)
+    const fetchParts = async () => {
+      try {
+        console.log(context.user_id)
+        const info = await GetParts(Number(context.user_id));
+        console.log(context.user_id)
+        console.log(info)
+        setOptions(info["musclePart"]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchParts();
+    console.log(options)
+  }, [context.user_id]);
+
 
   useEffect(() => {
     console.log(tasks);
@@ -61,7 +87,7 @@ const MenuSend = () => {
     }
     console.log(body_parts);
 
-    data["user_id"] = 3;
+    data["user_id"] = context.user_id;
     data["user_name"] = "hiroki";
     data["events"] = value;
     data["body_parts"] = body_parts;
@@ -77,13 +103,20 @@ const MenuSend = () => {
     })
       .then((response) => response.json())
       .then((data1) => {
-        console.log(data1.states);
-        if (data1.states === "already") {
+        console.log(data1);
+        if (data1.Success === "already") {
           setAlready(true);
           setTimeout(() => {
             setAlready(false);
           }, 2000);
-        } else {
+        }
+        else if (data1.Success === "False") {
+          setOpen(true);
+          setTimeout(() => {
+            setOpen(false);
+          }, 2000);
+        }
+        else {
           handleSend();
         }
       })
@@ -94,6 +127,7 @@ const MenuSend = () => {
 
   return (
     <div>
+      <h1>{context.user_id}</h1>
       {showNotification ? (
         <Alert severity="success" sx={{ m: 1 }}>
           メニューを登録しました
@@ -111,6 +145,11 @@ const MenuSend = () => {
       {already && (
         <Alert severity="error" sx={{ m: 1 }}>
           同じ名前のメニューがすでに登録されています
+        </Alert>
+      )}
+      {open && (
+        <Alert severity="error" sx={{ m: 1 }}>
+          入力されていない要素があります
         </Alert>
       )}
       <Box

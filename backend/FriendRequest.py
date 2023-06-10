@@ -7,7 +7,6 @@ import json
 import sqlite3
 from collections import defaultdict
 import sys
-from flask import Flask, current_app
 from datetime import datetime, timedelta
 
 conn = MySQLdb.connect(
@@ -19,15 +18,17 @@ conn = MySQLdb.connect(
 cur = conn.cursor()
 
 
-def UserSearch(user_name):
-    sql1 = "select USER_ID  from USER where ( USER_NAME =%s OR USER_NICKNAME = %s ) AND DELETE_FLAG = 0;"
-    cur.execute(sql1, (str(user_name),str(user_name),))
-    data = cur.fetchall()
-    output = []
-    for i in range(len(data)):
-        output.append(data[i][0])
-    return {"data":output}
+def FriendRequest(user_id,friend_id):
+    sql1 = "INSERT INTO FRIEND (USER_ID1, USER_ID2) VALUES(%s,%s);"
+    cur.execute(sql1,(user_id, friend_id, ))
+
+    ans =  { "Success" : "True"}
+
+    conn.commit()
+    cur.close()
+    conn.close()
+    return ans
 
 
 if __name__ == "__main__":
-    print(UserSearch("daidai"))
+    print(FriendRequest("daidai"))

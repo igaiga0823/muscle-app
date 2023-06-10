@@ -1,10 +1,12 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
+import GetMenu from "components/function/common/GetMenu";
+import { UserContext } from 'App.js';
 
 function TrainingForm() {
-  
+
   var data = {}
 
   const [tasks, setTasks] = useState([
@@ -15,20 +17,35 @@ function TrainingForm() {
   ]);
 
   const [time, setTimes] = useState('')
-  const options = ["push up", "incline"]
-  const [menu, setValue] = useState(options[0])
-  const [date, setDates] = useState(options[0])
+  const [options, setOptions] = useState([])
+  const [menu, setValue] = useState(null)
+  const [date, setDates] = useState(null)
   const [user_name, setUserName] = useState('')
-  const [user_id, setUserId] = useState('')
   const today = new Date()
-  const dates = [today.getFullYear() + "/" + (today.getMonth() + 1) + '/' + today.getDate(), today.getFullYear() + "/" + (today.getMonth() + 1) + '/' + (today.getDate()-1)];
-
+  const dates = [today.getFullYear() + "/" + (today.getMonth() + 1) + '/' + today.getDate(), today.getFullYear() + "/" + (today.getMonth() + 1) + '/' + (today.getDate() - 1)];
+  const context = useContext(UserContext)
+  const user_id = Number(context.user_id)
 
   useEffect(() => {
     setUserName("hiroki")
-    setUserId("2")
   }, [])
 
+  useEffect(() => {
+    const fetchMenu = async () => {
+      try {
+        const info = await GetMenu(Number(user_id));
+        console.log(info)
+        setOptions(info["menu"]);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchMenu();
+    console.log(options)
+  }, [user_id]);
+
+  console.log(data)
   const addTask = () => {
     setTasks([...tasks, {
       kgData: '0',
@@ -36,7 +53,8 @@ function TrainingForm() {
     }]);
     console.log(tasks)
   };
-  
+
+  console.log(options)
   const handleChange = (value, index, name) => {
     const newTasks = [...tasks];
     newTasks[index][name] = value ? value.label : '';
@@ -47,7 +65,7 @@ function TrainingForm() {
     setTimes(value)
 
   }
-  
+
   const setDate = (value) => {
     setDates(value)
   }
@@ -61,13 +79,13 @@ function TrainingForm() {
 
   const kgSlots = Array.from(new Array(300)).map(
     (_, index) => {
-      return { label: (index+1).toString()};
+      return { label: (index + 1).toString() };
     }
   );
 
   const repSlots = Array.from(new Array(50)).map(
     (_, index) => {
-      return { label: (index+1).toString()};
+      return { label: (index + 1).toString() };
     }
   );
 
@@ -81,14 +99,14 @@ function TrainingForm() {
     }
   );
 
-  
+
   const sendData = (tasks) => {
     console.log(tasks)
     var value_kg = []
     var value_rep = []
     const z = tasks.length
     console.log(z)
-    for (let i = 0; i < z; i ++){
+    for (let i = 0; i < z; i++) {
       console.log(tasks[i]["kgData"])
       value_kg.push(tasks[i]["kgData"])
       value_rep.push(tasks[i]["repData"])
@@ -111,49 +129,49 @@ function TrainingForm() {
       },
       body: JSON.stringify(data)
     })
-    .then(response => response.json())
-    .then(data1 => {
-      console.log('Success:', data1);
-    })
-    .catch((error) => {
-      console.error('Error:', error);
-    });
+      .then(response => response.json())
+      .then(data1 => {
+        console.log('Success:', data1);
+      })
+      .catch((error) => {
+        console.error('Error:', error);
+      });
   }
 
   return (
     <div className="task-form">
       <div className=''>
-              <div>
-                  <Autocomplete
-                      options={timeSlots.map((slot) => slot.label)}
-                      sx={{ width: 300 }}
-                      renderInput={(params) => <TextField {...params} label="time" />}
-                      onChange={(e, value) => setTime(value)}
-                  />
-              </div>
-          </div>
-          <div className=''>
-            <div>
-            <Autocomplete
-                value={menu}
-                onChange={(event, newValue) => {setValue(newValue);}}
-                id="controllable-states-demo"
-                options={options}
-                sx={{ width: 300 }}
-                renderInput={(params) => <TextField {...params} label="" />}
-            />
-            </div>
-          </div>
-          <div className=''>
-            <div>
-            <Autocomplete
-                id="free-solo-demo"
-                options={dates}
-                renderInput={(params) => <TextField {...params} label="2023/08/23" />}
-                onChange={(e, value) => setDate(value)}
-            />
-            </div>
+        <div>
+          <Autocomplete
+            options={timeSlots.map((slot) => slot.label)}
+            sx={{ width: 300 }}
+            renderInput={(params) => <TextField {...params} label="time" />}
+            onChange={(e, value) => setTime(value)}
+          />
         </div>
+      </div>
+      <div className=''>
+        <div>
+          <Autocomplete
+            value={menu}
+            onChange={(event, newValue) => { setValue(newValue); }}
+            id="controllable-states-demo"
+            options={options}
+            sx={{ width: 300 }}
+            renderInput={(params) => <TextField {...params} label="" />}
+          />
+        </div>
+      </div>
+      <div className=''>
+        <div>
+          <Autocomplete
+            id="free-solo-demo"
+            options={dates}
+            renderInput={(params) => <TextField {...params} label="2023/08/23" />}
+            onChange={(e, value) => setDate(value)}
+          />
+        </div>
+      </div>
       {tasks.map((task, index) => (
         <div key={index}>
           <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '10px' }}>
@@ -165,11 +183,11 @@ function TrainingForm() {
               onChange={(e, value) => handleChange(value, index, 'kgData')}
             />
             <Autocomplete
-                options={repSlots}
-                value={repSlots.find((slot) => slot.label === task.repData) || null}
-                sx={{ width: '40%', display: 'inline-flex' }}
-                renderInput={(params) => <TextField {...params} label="回" />}
-                onChange={(e, value) => handleChange(value, index, 'repData')}
+              options={repSlots}
+              value={repSlots.find((slot) => slot.label === task.repData) || null}
+              sx={{ width: '40%', display: 'inline-flex' }}
+              renderInput={(params) => <TextField {...params} label="回" />}
+              onChange={(e, value) => handleChange(value, index, 'repData')}
             />
           </div>
         </div>
