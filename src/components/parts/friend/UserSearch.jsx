@@ -7,7 +7,7 @@ import GetFriendList from "components/function/common/GetFriendList";
 
 
 
-const SearchUser = () => {
+const UserSearch = () => {
   const context = useContext(UserContext);
   const navigate = useNavigate();
 
@@ -18,7 +18,7 @@ const SearchUser = () => {
   const [userList, setUserList] = useState([]);
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
-
+  const [error, setError] = useState(false); // 追加
 
   const myFriendSet = new Set();
   myFriendSet.add(context.user_id)
@@ -51,8 +51,18 @@ const SearchUser = () => {
   }, [sent]);
 
   const handleSearch = () => {
+
+    if (searchStr.trim() === "") {
+      setError(true); // エラー状態をtrueにセット
+      setLoading(false);
+      setTimeout(() => {
+        setError(false); // 2秒後にエラー状態をfalseにセット
+      }, 2000);
+      return;
+    }
     setLoading(true);
     fetchData(searchStr);
+
   };
 
 
@@ -147,8 +157,8 @@ const SearchUser = () => {
   };
 
   return (
-    <div style={{ display: "flex", justifyContent: "center" }}>
-      <Stack spacing={1} width={"80%"} maxWidth={"400px"} >
+    <Box display="flex" justifyContent="center" alignItems="center">
+      <Stack spacing={1} width={"80%"} maxWidth={"400px"} justifyContent="center">
         <Input
           type="text"
           value={searchStr}
@@ -165,32 +175,39 @@ const SearchUser = () => {
             </Box>
           ) : (
             <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
-              {userList.map((friend, i) => (
-                <ListItem
-                  key={friend.id}
-                  disableGutters
-                  secondaryAction={friendList.includes(friend.id.toString()) ?
-                    <Button variant="outlined" disabled={true}>
-                      {"登録済み"}
-                    </Button>
-                    :
-
-                    <Button variant="outlined" onClick={() => handleFriendRequest(friend.id)} disabled={sent}>
-                      {sent ? "送信しました" : "リクエスト"}
-                    </Button>
-                  }
-                >
-                  <Avatar src={friend.photoUrl} />
-                  <ListItemText primary={`　${friend.userName}`} />
+              {error ? ( // エラーメッセージの表示
+                <ListItem>
+                  <Alert severity="error" onClose={() => setError(false)}>検索エラー</Alert>
                 </ListItem>
-              ))}
+              ) : (
+                userList.map((friend, i) => (
+                  <ListItem
+                    key={friend.id}
+                    disableGutters
+                    secondaryAction={friendList.includes(friend.id.toString()) ?
+                      <Button variant="outlined" disabled={true}>
+                        {"登録済み"}
+                      </Button>
+                      :
+
+                      <Button variant="outlined" onClick={() => handleFriendRequest(friend.id)} disabled={sent}>
+                        {sent ? "送信しました" : "リクエスト"}
+                      </Button>
+                    }
+                  >
+                    <Avatar src={friend.photoUrl} />
+                    <ListItemText primary={`　${friend.userName} `} />
+                  </ListItem>
+                ))
+              )
+              }
             </List>
           )}
         </Stack>
       </Stack>
-    </div>
+    </Box >
   );
 };
 
-export default SearchUser;
+export default UserSearch;
 

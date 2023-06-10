@@ -19,16 +19,18 @@ conn = MySQLdb.connect(
 cur = conn.cursor()
 
 
-def GetFriendList(user_id):
-    sql1 = "select USER_ID1, USER_ID2  from FRIEND where (USER_ID1 =%s OR USER_ID2 =%s) AND DELETE_FLAG = 0 AND VALID_FLAG = 1;"
+def GetFriendRequestList(user_id):
+    sql1 = "select FRIEND_ID, USER_ID1  from FRIEND where (USER_ID2 =%s OR USER_ID2 =%s) AND DELETE_FLAG = 0 AND VALID_FLAG = 0;"
     cur.execute(sql1, (str(user_id),str(user_id),))
     datas = cur.fetchall()
-    output = set()
+    output = []
+    friendIdList = []
     for data in datas:
-        if str(data[0]) != str(user_id): output.add(str(data[0]))
-        if str(data[1]) != str(user_id): output.add(str(data[1]))
-    return {"friendList":list(output)}
+
+        friendIdList.append(str(data[0]))
+        output.append(str(data[1]))
+    return {"requestUserList":list(output),"requestFriendIdList":list(friendIdList)}
 
 
 if __name__ == "__main__":
-    print(GetFriendList(1))
+    print(GetFriendRequestList(1))

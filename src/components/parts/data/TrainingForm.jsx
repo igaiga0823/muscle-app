@@ -3,7 +3,11 @@ import TextField from '@mui/material/TextField';
 import Autocomplete from '@mui/material/Autocomplete';
 import Button from '@mui/material/Button';
 import GetMenu from "components/function/common/GetMenu";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import { UserContext } from 'App.js';
+import dayjs from "dayjs";
 
 function TrainingForm() {
 
@@ -21,10 +25,8 @@ function TrainingForm() {
   const [menu, setValue] = useState(null)
   const [date, setDates] = useState(null)
   const [user_name, setUserName] = useState('')
-  const today = new Date()
-  const dates = [today.getFullYear() + "/" + (today.getMonth() + 1) + '/' + today.getDate(), today.getFullYear() + "/" + (today.getMonth() + 1) + '/' + (today.getDate() - 1)];
   const context = useContext(UserContext)
-  const user_id = Number(context.user_id)
+
 
   useEffect(() => {
     setUserName("hiroki")
@@ -33,7 +35,7 @@ function TrainingForm() {
   useEffect(() => {
     const fetchMenu = async () => {
       try {
-        const info = await GetMenu(Number(user_id));
+        const info = await GetMenu(Number(context.user_id));
         console.log(info)
         setOptions(info["menu"]);
       } catch (error) {
@@ -43,9 +45,8 @@ function TrainingForm() {
 
     fetchMenu();
     console.log(options)
-  }, [user_id]);
+  }, [context.user_id]);
 
-  console.log(data)
   const addTask = () => {
     setTasks([...tasks, {
       kgData: '0',
@@ -55,6 +56,15 @@ function TrainingForm() {
   };
 
   console.log(options)
+
+  const handleDateChange1 = (dates) => {
+    const year = dayjs(dates).year()
+    const month = dayjs(dates).month() + 1
+    const day = dayjs(dates).date()
+    const value = year + "/" + month + "/" + day
+    setDates(value)
+  };
+
   const handleChange = (value, index, name) => {
     const newTasks = [...tasks];
     newTasks[index][name] = value ? value.label : '';
@@ -112,7 +122,7 @@ function TrainingForm() {
       value_rep.push(tasks[i]["repData"])
     }
     console.log(value_kg)
-    data['user_id'] = user_id
+    data['user_id'] = context.user_id
     data['length'] = String(z)
     data['user_name'] = user_name
     data['menu'] = menu
@@ -164,12 +174,9 @@ function TrainingForm() {
       </div>
       <div className=''>
         <div>
-          <Autocomplete
-            id="free-solo-demo"
-            options={dates}
-            renderInput={(params) => <TextField {...params} label="2023/08/23" />}
-            onChange={(e, value) => setDate(value)}
-          />
+          <LocalizationProvider dateAdapter={AdapterDayjs}>
+            <DatePicker value={date} onChange={handleDateChange1} />
+          </LocalizationProvider>
         </div>
       </div>
       {tasks.map((task, index) => (

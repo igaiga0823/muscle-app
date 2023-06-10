@@ -19,13 +19,11 @@ conn = MySQLdb.connect(
 cur = conn.cursor()
 
 
-def PieChartParts(user_id, start_year, start_month, start_day, end_year, end_month, end_day):
-    start_date = start_year + "-" + start_month + "-" + start_day
-    end_date = end_year + "-" + end_month + "-" + end_day
+def PieChartParts(user_id, start_date, end_date):
     sql1 = "select MENU_ID, TIME from TRAINDATA where USER_ID =%s AND DATE >= %s AND DATE <= %s;"
     cur.execute(sql1, (str(user_id),start_date,end_date,))
     values = cur.fetchall() 
-    data = {"parts":[],"time":[]}
+    data = {"parts_id":[],"time":[]}
     menus = {}
    
     for i, value in enumerate(values, 0):
@@ -37,22 +35,22 @@ def PieChartParts(user_id, start_year, start_month, start_day, end_year, end_mon
     ans = {}
 
     for menu_id, time in menus.items():
-        sql2 = "select MUSCLE_PART from MUSCLE_PART where USER_ID=%s AND MENU_ID=%s;"
+        sql2 = "select MUSCLE_PART_ID from MENU_PARTS where USER_ID=%s AND MENU_ID=%s;"
         cur.execute(sql2, (str(user_id), str(menu_id)))
         values = cur.fetchall()
         for value in values:
             if value[0] not in ans:
                 ans[value[0]] = time
-                data["parts"].append(value[0])
+                data["parts_id"].append(value[0])
             else:
                 ans[value[0]] += time
     
+    for time in ans.values():
+        data["time"].append(time)
     
-
-                
-
-    return menus
+    return data
 
 
 if __name__ == "__main__":
-    print(PieChartParts(1, "2023", "04", "30", "2023", "06", "09"))
+    print(PieChartParts(1, "2023-04-30", "2023-06-09"))
+

@@ -1,0 +1,10 @@
+.area {
+
+    background: radial-gradient(rgb(24, 36, 86), rgb(29, 28, 62));
+    /* グラデーション指定 */
+    width: 101%;
+    bottom: 0;
+    position: fixed;
+    top: 0;
+    z-index: -1;
+}

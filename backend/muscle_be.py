@@ -17,6 +17,7 @@ from WeightGraph import WeightGraph
 from WeightDataPOST import WeightForm
 from UploadVideo import UploadVideo
 from menu_add import menu_add
+from parts_add import parts_add
 from pie_chart import PieChart
 
 from GetUserInfo import GetUserInfo
@@ -25,6 +26,7 @@ from GetParts import GetParts
 from UserSearch import UserSearch
 from FriendRequest import FriendRequest
 from GetFriendList import GetFriendList
+from GetFriendRequestList import GetFriendRequestList
 
 app = Flask(__name__)
 CORS(app)
@@ -171,25 +173,21 @@ def piechart():
         return jsonify({"error": "Missing JSON in request"}), 400
 
 
-# @app.route("/graph/piechart/parts", methods=["POST", "GET"])
-# def piechart():
-#     if not request.is_json:
-#         return jsonify({"error": "Missing JSON in request1"}), 400
-#     try:
-#         data = request.json  # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
-#         user_id = data["user_id"]
-#         start_year = data["start_year"]
-#         start_month = data["start_month"]
-#         start_day = data["start_day"]
-#         end_year = data["end_year"]
-#         end_month = data["end_month"]
-#         end_day = data["end_day"]
-#         output = PieChart(user_id, start_year, start_month, start_day, end_year, end_month, end_day)
-#         response = jsonify(output)
-#         response.headers.add('Access-Control-Allow-Origin', '*')
-#         return response
-#     except:
-#         return jsonify({"error": "Missing JSON in request"}), 400
+@app.route("/graph/piechart/parts", methods=["POST", "GET"])
+def piechart():
+    if not request.is_json:
+        return jsonify({"error": "Missing JSON in request1"}), 400
+    try:
+        data = request.json  # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
+        user_id = data["user_id"]
+        start_date = data["start_date"]
+        end_date = data["end_date"]
+        output = PieChart(user_id, start_date, end_date)
+        response = jsonify(output)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    except:
+        return jsonify({"error": "Missing JSON in request"}), 400
 
 
 @app.route("/weightForm/post", methods=["POST", "GET"])
@@ -220,9 +218,29 @@ def menuadd():
             return response
         x = menu_add(user_id, events, body_parts)
         if x == False:
-            response = jsonify({"states": "already"})
+            response = jsonify({"Success": "already"})
         else:
-            response = jsonify({"states": "successful"})
+            response = jsonify({"Succcess": "successful"})
+        return response
+
+    except:
+        response = jsonify({"Success": "False"})
+        return response
+
+@app.route('/partsadd', methods=['POST'])
+def partsadd():
+    try:
+        data = request.json
+        user_id = data["user_id"]
+        events = data["events"]
+        if events == '':
+            response = jsonify({"Success": "False"})
+            return response
+        x = parts_add(user_id, events)
+        if x == False:
+            response = jsonify({"Success": "already"})
+        else:
+            response = jsonify({"Success": "successful"})
         return response
 
     except:
@@ -338,6 +356,21 @@ def getfriendlist():
         data = request.json
         user_id = data["user_id"]
         output = GetFriendList(user_id)
+        response = jsonify(output)
+        response.headers.add('Access-Control-Allow-Origin','*')
+        return response
+
+    except:
+        response = jsonify({"Success":"False"})
+        response.headers.add('Access-Control-Allow-Origin','*')
+        return response
+    
+@app.route('/getfriendrequest', methods=['POST', "GET"])
+def getfriendrequest():
+    try:
+        data = request.json
+        user_id = data["user_id"]
+        output = GetFriendRequestList(user_id)
         response = jsonify(output)
         response.headers.add('Access-Control-Allow-Origin','*')
         return response
