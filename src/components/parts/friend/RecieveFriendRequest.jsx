@@ -29,10 +29,23 @@ const RecieveFriendRequest = () => {
         setLoading(false);
     };
 
+
+
     const handleOkFriendRequest = (friend_id) => {
-        setSent(true);
         console.log(friend_id);
-    }
+        setRequestUserList((prevList) => {
+            return prevList.map((friend) => {
+                if (friend.id === friend_id) {
+                    return { ...friend, sent: true };
+                }
+                return friend;
+            });
+        });
+
+        fetchOkRequest(friend_id);
+
+    };
+
 
 
 
@@ -83,12 +96,31 @@ const RecieveFriendRequest = () => {
                 data["requestUserList"].map(async (friend) => {
                     const userName = await getUserName(friend);
                     const userPhoto = await getUserPhoto(friend);
-                    return { id: friend, userName: userName, photoUrl: userPhoto };
+                    return { id: friend, userName: userName, photoUrl: userPhoto, sent: false };
                 })
             );
 
             setRequestUserList(friendListWithUserName);
 
+            console.log(data);
+        } catch (error) {
+            console.log(error);
+        }
+    };
+
+
+    const fetchOkRequest = async (friend_id) => {
+        const url = "http://main.itigo.jp/main.itigo.jp/muscle_api/index.cgi/requirefriendrequest";
+        const requestOptions = {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                friend_id: friend_id,
+            }),
+        };
+        try {
+            const response = await fetch(url, requestOptions);
+            const data = await response.json();
             console.log(data);
         } catch (error) {
             console.log(error);
@@ -109,20 +141,23 @@ const RecieveFriendRequest = () => {
                             <CircularProgress />
                         </Box>
                     ) : (
-                        <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+                        <List sx={{ width: '100%', maxWidth: 360 }}>
                             {error ? ( // エラーメッセージの表示
                                 <ListItem>
                                     <Alert severity="error" onClose={() => setError(false)}>検索エラー</Alert>
                                 </ListItem>
                             ) : (
-                                requestUserList.map((friend, i) => (
+                                requestUserList.map((friend) => (
                                     <ListItem
                                         key={friend.id}
                                         disableGutters
                                         secondaryAction={
-
-                                            <Button variant="outlined" onClick={() => handleOkFriendRequest(data["requestFriendIdList"][i])} disabled={sent}>
-                                                {sent ? "送信しました" : "承諾"}
+                                            <Button
+                                                variant="outlined"
+                                                onClick={() => handleOkFriendRequest(friend.id)}
+                                                disabled={friend.sent}
+                                            >
+                                                {friend.sent ? "送信しました" : "承諾"}
                                             </Button>
                                         }
                                     >

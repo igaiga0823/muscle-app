@@ -164,6 +164,7 @@ const UserSearch = () => {
           value={searchStr}
           onChange={(e) => setSearchStr(e.target.value)}
           placeholder="検索キーワードを入力してください"
+          style={{ color: 'white' }}
         />
         <Button variant="contained" onClick={handleSearch} >
           検索
@@ -174,7 +175,7 @@ const UserSearch = () => {
               <CircularProgress />
             </Box>
           ) : (
-            <List sx={{ width: '100%', maxWidth: 360, bgcolor: 'background.paper' }}>
+            <List sx={{ width: '100%', maxWidth: 360 }}>
               {error ? ( // エラーメッセージの表示
                 <ListItem>
                   <Alert severity="error" onClose={() => setError(false)}>検索エラー</Alert>

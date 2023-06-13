@@ -9,10 +9,8 @@ import ChartDataLabels from "chartjs-plugin-datalabels";
 import Button from "@mui/material/Button";
 import dayjs from "dayjs";
 
-const PieChartParts = () => {
-  var ans = {};
-  const [selectedDate1, setSelectedDate1] = useState(null);
-  const [selectedDate2, setSelectedDate2] = useState(null);
+const PieChartParts = (props) => {
+  var ans = {}
   const [showNotification, setShowNotification] = useState(false);
   const context = useContext(UserContext)
   const [datas, setDatas] = useState({})
@@ -20,43 +18,41 @@ const PieChartParts = () => {
   const [options, setOptions] = useState({})
   const [chartContainerStyle, setChartContainerStyle] = useState({})
 
-  const handleDateChange1 = (date) => {
-    setSelectedDate1(date);
-  };
-
-  const handleDateChange2 = (date) => {
-    setSelectedDate2(date);
-  };
-
-  const handleSend = () => {
+  const handleSend = (props) => {
     setShowNotification(true);
-    setTimeout(() => {
-      setShowNotification(false);
-    }, 2000);
   };
 
-  const fetchData = async (start_date, end_date) => {
-    const url =
-      "http://main.itigo.jp/main.itigo.jp/muscle_api/index.cgi/graph/piechart";
-    ans["user_id"] = context.user_id
-    ans["start_date"] = start_date
-    ans["end_date"] = end_date
+  const fetchData = () => {
+    const url = "http://main.itigo.jp/main.itigo.jp/muscle_api/index.cgi/graph/piechart/parts";
+
+    ans["user_id"] = context.user_id;
+    ans["start_date"] = props.startDate;
+    ans["end_date"] = props.endDate;
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        ans
-      }),
+      body: JSON.stringify(ans),
     };
-    try {
-      const response = await fetch(url, requestOptions);
-      const d = await response.json();
-      setDatas(d)
-      handleSend()
-    } catch (error) {
-      console.log(error);
-    }
+
+    console.log(ans);
+    fetch(url, requestOptions)
+      .then(response => {
+        if (response.ok) {
+          return response.json();
+        } else {
+          throw new Error("Request failed with status: " + response.status);
+        }
+      })
+      .then(d => {
+        setDatas(d);
+        console.log("hello")
+        console.log(d);
+      })
+      .catch(error => {
+        console.log(error);
+      });
   };
+
 
   const pieChartCraft = (datas) => {
     setData({
@@ -118,33 +114,20 @@ const PieChartParts = () => {
     });
   }
 
-  const sendData = () => {
-    console.log(selectedDate1)
-    const start_year = dayjs(selectedDate1).year();
-    const start_month = dayjs(selectedDate1).month() + 1; // 月は0から始まるため、+1する
-    const start_day = dayjs(selectedDate1).date();
-    const end_year = dayjs(selectedDate2).year();
-    const end_month = dayjs(selectedDate2).month() + 1; // 月は0から始まるため、+1する
-    const end_day = dayjs(selectedDate2).date();
+  useEffect(() => {
+    if (props.startDate !== "") {
+      fetchData();
+    }
+    console.log(props.startDate)
+  }, [props.startDate]);
 
-    const start_date = start_year + "-" + start_month + "-" + start_day
-    const end_date = end_year + "-" + end_month + "-" + end_day
-    fetchData(start_date, end_date)
-    pieChartCraft(datas)
-  };
+  useEffect(() => {
+    pieChartCraft(datas);
+    handleSend()
+  }, [datas]);
 
   return (
     <div>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker value={selectedDate1} onChange={handleDateChange1} />
-      </LocalizationProvider>
-      <LocalizationProvider dateAdapter={AdapterDayjs}>
-        <DatePicker value={selectedDate2} onChange={handleDateChange2} />
-      </LocalizationProvider>
-      <Button onClick={sendData} variant="contained">
-        グラフ生成
-      </Button>
-
       {showNotification && (
         <div className="chart-wrapper">
           <Doughnut data={data} options={options} plugins={[ChartDataLabels]} />

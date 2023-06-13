@@ -6,9 +6,10 @@ import { IntlProvider } from 'react-intl';
 import reportWebVitals from './reportWebVitals';
 
 
+
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-    <IntlProvider locale="ja">
+  <IntlProvider locale="ja">
     <App />
   </IntlProvider>,
 

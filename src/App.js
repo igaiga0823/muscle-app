@@ -29,6 +29,8 @@ import Home from 'components/pages/Home';
 import Training from 'components/pages/Training';
 import Friend from 'components/pages/Friend';
 import Data from 'components/pages/Data';
+
+
 import ViewUploadVideo from 'components/parts/friend/ViewUploadVideo';
 
 import ViewVideo from 'components/views/friend/ViewVideo';
@@ -60,53 +62,56 @@ const theme = createTheme({
 
 
 const App = () => {
+
   return (
 
 
-    <div className="App">
-      <Box>
 
-        <UserContext.Provider value={UserInfo()}>
-          <BrowserRouter>
-            <LoginCheck />
-            <Logout />
 
-            <ThemeProvider theme={theme}>
-              <AppBar />
-            </ ThemeProvider>
+    <Box textAlign={"center"}>
 
-            <Routes>
+      <UserContext.Provider value={UserInfo()}>
+        <BrowserRouter>
+          <LoginCheck />
+          <Logout />
 
-              <Route path="/" element={<None />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/training" element={<Training />} />
-              <Route path="/friend" element={<Friend />} />
-              <Route path="/data" element={<Data />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/trainingform" element={<TrainingForm />} />
-              <Route path="/fetch" element={<Fetch />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/Menu" element={<Menu />} />
-              <Route path="/parts" element={<Parts />} />
+          <ThemeProvider theme={theme}>
+            <AppBar />
+          </ ThemeProvider>
 
-              <Route path="/test" element={<Test />} />
+          <Routes>
 
-              <Route path="/appbar" element={<AppBar />} />
-              <Route path="/weightForm" element={<WeightForm />} />
-              <Route path="/rategraph" element={<RateGraph />} />
-              <Route path='/weightgraph' element={<WeightGraph />} />
-              <Route path='/piechart' element={<PieChartMenu />} />
-              <Route path='/piechartparts' element={<PieChartParts />} />_
-              <Route path='/viewuploadvideo' element={<ViewUploadVideo />} />
-              <Route path='/viewvideo' element={<ViewVideo />} />
-              <Route path='/usersearch' element={<UserSearch />} />
-              <Route path='/recievefriendrequest' element={<  RecieveFriendRequest />} />
+            <Route path="/" element={<None />} />
+            <Route path="/home" element={<Home />} />
+            <Route path="/data" element={<Data />} />
+            <Route path="/training" element={<Training />} />
+            <Route path="/friend" element={<Friend />} />
 
-            </Routes>
-          </BrowserRouter>
-        </UserContext.Provider>
-      </Box>
-    </div>
+            <Route path="/register" element={<Register />} />
+            <Route path="/trainingform" element={<TrainingForm />} />
+            <Route path="/fetch" element={<Fetch />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/Menu" element={<Menu />} />
+            <Route path="/parts" element={<Parts />} />
+
+            <Route path="/test" element={<Test />} />
+
+            <Route path="/appbar" element={<AppBar />} />
+            <Route path="/weightForm" element={<WeightForm />} />
+            <Route path="/rategraph" element={<RateGraph />} />
+            <Route path='/weightgraph' element={<WeightGraph />} />
+            <Route path='/piechart' element={<PieChartMenu />} />
+            <Route path='/piechartparts' element={<PieChartParts />} />_
+            <Route path='/viewuploadvideo' element={<ViewUploadVideo />} />
+            <Route path='/viewvideo' element={<ViewVideo />} />
+            <Route path='/usersearch' element={<UserSearch />} />
+            <Route path='/recievefriendrequest' element={<  RecieveFriendRequest />} />
+
+          </Routes>
+        </BrowserRouter>
+      </UserContext.Provider>
+    </Box>
+
 
 
 
