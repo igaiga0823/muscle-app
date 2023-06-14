@@ -158,18 +158,24 @@ const UserSearch = () => {
 
   return (
     <Box display="flex" justifyContent="center" alignItems="center">
-      <Stack spacing={1} width={"80%"} maxWidth={"400px"} justifyContent="center">
-        <Input
-          type="text"
-          value={searchStr}
-          onChange={(e) => setSearchStr(e.target.value)}
-          placeholder="検索キーワードを入力してください"
-          style={{ color: 'white' }}
-        />
-        <Button variant="contained" onClick={handleSearch} >
-          検索
-        </Button>
+      <Stack spacing={1} width={"70vw"} maxWidth={"400px"} justifyContent="center">
+        <Stack direction="row" spacing={1} >
+          <Input
+            type="text"
+            value={searchStr}
+            onChange={(e) => setSearchStr(e.target.value)}
+            placeholder="検索キーワードを入力"
+          // style={{ color: 'white' }}
+          />
+          <Box>
+            <Button width={"50px"} variant="contained" onClick={handleSearch} >
+              検索
+            </Button>
+          </Box>
+        </Stack >
+
         <Stack>
+
           {loading ? (
             <Box display="flex" justifyContent="center" margin={10}>
               <CircularProgress />
@@ -205,7 +211,7 @@ const UserSearch = () => {
             </List>
           )}
         </Stack>
-      </Stack>
+      </Stack >
     </Box >
   );
 };

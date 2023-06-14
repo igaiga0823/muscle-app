@@ -3,6 +3,7 @@ import UploadVideo from 'components/parts/friend/UploadVideo';
 import Button from '@mui/material/Button';
 import { useMediaQuery } from '@mui/material';
 import { Box } from '@mui/material';
+
 const ViewUploadVideo = () => {
   const [isShowUploadVideo, setIsShowUploadVideo] = useState(0);
 

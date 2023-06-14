@@ -80,11 +80,11 @@ const WeightGraph = () => {
 
   return (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh', backgroundColor: 'white' }}>
-    <div style={{width: '800px', height: '600px'}}>
-      <canvas id="lineChart"
-ref={chartRef}></canvas>
-</div>
-</div>
+      <div style={{ width: '800px', height: '600px' }}>
+        <canvas id="lineChart"
+          ref={chartRef}></canvas>
+      </div>
+    </div>
   );
 };
 

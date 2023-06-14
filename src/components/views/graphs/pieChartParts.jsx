@@ -129,8 +129,11 @@ const PieChartParts = (props) => {
   return (
     <div>
       {showNotification && (
-        <div className="chart-wrapper">
-          <Doughnut data={data} options={options} plugins={[ChartDataLabels]} />
+        <div>
+          <h2>部位の割合</h2>
+          <div className="chart-wrapper">
+            <Doughnut data={data} options={options} plugins={[ChartDataLabels]} />
+          </div>
         </div>
       )}
       <style jsx>{`

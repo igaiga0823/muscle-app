@@ -2,6 +2,7 @@ import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 import During from 'components/parts/data/During';
 import PieChartParts from 'components/views/graphs/pieChartParts';
+import TransitionChart from 'components/views/graphs/TransisionChart';
 
 const Data = () => {
 
@@ -22,6 +23,7 @@ const Data = () => {
         <div>
             <During onUpdateStartDate={handleStartDate} onUpdateEndDate={handleEndDate} />
             <PieChartParts startDate={startDate} endDate={endDate} />
+            <TransitionChart />
         </div>
 
     )

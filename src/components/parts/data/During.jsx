@@ -38,7 +38,6 @@ const During = (props) => {
 
     return (
         <div>
-            <h1>部位の割合</h1>
             <LocalizationProvider dateAdapter={AdapterDayjs}>
                 <DatePicker value={selectedDate1} onChange={handleDateChange1} />
             </LocalizationProvider>

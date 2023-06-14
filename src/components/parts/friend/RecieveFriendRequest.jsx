@@ -130,10 +130,10 @@ const RecieveFriendRequest = () => {
 
     return (
         <Box display="flex" justifyContent="center" alignItems="center">
-            <Stack spacing={1} width={"80%"} maxWidth={"400px"} justifyContent="center">
+            <Stack spacing={1} width={"70vw"} maxWidth={"400px"} justifyContent="center">
 
                 <Button variant="contained" onClick={handleUpdateRequest} >
-                    更新
+                    フレンドリクエスト一覧
                 </Button>
                 <Stack>
                     {loading ? (

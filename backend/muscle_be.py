@@ -20,6 +20,7 @@ from menu_add import menu_add
 from parts_add import parts_add
 from pie_chart import PieChart
 from pie_chart_parts import PieChartParts
+from transison_chart import TransisonChart
 
 
 from GetUserInfo import GetUserInfo
@@ -186,6 +187,23 @@ def piechartparts():
         start_date = data["start_date"]
         end_date = data["end_date"]
         output = PieChartParts(user_id, start_date, end_date)
+        response = jsonify(output)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    except:
+        return jsonify({"error": "Missing JSON in request"}), 400
+
+
+@app.route("/graph/transison/parts", methods=["POST", "GET"])
+def transisonchart():
+    if not request.is_json:
+        return jsonify({"error": "Missing JSON in request1"}), 400
+    try:
+        data = request.json  # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
+        user_id = data["user_id"]
+        start_date = data["start_date"]
+        end_date = data["end_date"]
+        output = TransisonChart(user_id, start_date, end_date)
         response = jsonify(output)
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response

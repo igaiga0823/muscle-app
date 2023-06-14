@@ -10,20 +10,20 @@ const Friend = () => {
 
 
     return (
-        <div className="area" >
+        <Box justifyContent={"center"}>
 
-            <Box bgcolor={"#272533"} marginTop={7} marginX={3} paddingTop={3} paddingX={1} borderRadius={1}>
+            <Box bgcolor={""} maxWidth={"400px"} marginTop={7} marginX={3} paddingTop={3} paddingX={1} borderRadius={1}>
                 <UserSearch />
-                #302c42
+
             </Box>
-            <Box bgcolor={"#272533"} marginTop={1} marginX={3} paddingTop={1} paddingX={1} borderRadius={1}>
-                <h3>フレンドリクエスト一覧</h3>
+            <Box maxWidth={"400px"} marginTop={1} marginX={3} paddingTop={1} paddingX={1} borderRadius={1}>
+
                 < RecieveFriendRequest />
 
 
             </Box>
 
-        </div>
+        </Box>
 
 
 
