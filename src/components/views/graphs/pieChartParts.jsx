@@ -18,7 +18,7 @@ const PieChartParts = (props) => {
   const [options, setOptions] = useState({})
   const [chartContainerStyle, setChartContainerStyle] = useState({})
 
-  const handleSend = (props) => {
+  const handleSend = () => {
     setShowNotification(true);
   };
 

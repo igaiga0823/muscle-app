@@ -6,10 +6,11 @@ import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
 import { LocalizationProvider } from "@mui/x-date-pickers/LocalizationProvider";
 import { DatePicker } from "@mui/x-date-pickers/DatePicker";
 import ChartDataLabels from "chartjs-plugin-datalabels";
-import Button from "@mui/material/Button";
+import { Button, Box, Stack } from "@mui/material";
 import dayjs from "dayjs";
 
 const During = (props) => {
+    // 初期値で
     const [selectedDate1, setSelectedDate1] = useState(null);
     const [selectedDate2, setSelectedDate2] = useState(null);
 
@@ -32,22 +33,36 @@ const During = (props) => {
 
         const start_date = start_year + "-" + start_month + "-" + start_day;
         const end_date = end_year + "-" + end_month + "-" + end_day;
-        props.onUpdateStartDate(start_date);
-        props.onUpdateEndDate(end_date)
+        if (start_date == "NaN-NaN-NaN") {
+            props.onUpdateStartDate("1890-01-01");
+        } else {
+            props.onUpdateStartDate(start_date);
+        }
+        if (end_date == "NaN-NaN-NaN") {
+            props.onUpdateEndDate("2130-01-01");
+        } else {
+            props.onUpdateEndDate(end_date);
+        }
+
     };
 
     return (
-        <div>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker value={selectedDate1} onChange={handleDateChange1} />
-            </LocalizationProvider>
-            <LocalizationProvider dateAdapter={AdapterDayjs}>
-                <DatePicker value={selectedDate2} onChange={handleDateChange2} />
-            </LocalizationProvider>
-            <Button onClick={sendData} variant="contained">
-                グラフ生成
-            </Button>
-        </div>
+        <Box width={250} marginX="auto">
+            <Stack direction="column" alignItems="center" spacing={2}>
+                <Stack direction="row" spacing={2} justifyContent="center" textAlign="center">
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker value={selectedDate1} onChange={handleDateChange1} />
+                    </LocalizationProvider>
+                    <span style={{ display: "flex", alignItems: "center" }}>～</span>
+                    <LocalizationProvider dateAdapter={AdapterDayjs}>
+                        <DatePicker value={selectedDate2} onChange={handleDateChange2} />
+                    </LocalizationProvider>
+                </Stack>
+                <Button onClick={sendData} variant="contained">
+                    {props.title}
+                </Button>
+            </Stack>
+        </Box>
     );
 };
 

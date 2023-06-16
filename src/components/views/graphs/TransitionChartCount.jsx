@@ -3,7 +3,7 @@ import { Line } from "react-chartjs-2";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from 'App.js';
 
-const TransitionChart = (props) => {
+const TransitionChartCount = (props) => {
     var ans = {}
     const [showNotification, setShowNotification] = useState(false);
     const context = useContext(UserContext)
@@ -21,7 +21,7 @@ const TransitionChart = (props) => {
         ans["user_id"] = context.user_id;
         ans["start_date"] = props.startDate;
         ans["end_date"] = props.endDate;
-        ans["muscle_part_id"] = props.musclePartId;
+        ans["menu_id"] = props.menuId;
         const requestOptions = {
             method: "POST",
             headers: { "Content-Type": "application/json" },

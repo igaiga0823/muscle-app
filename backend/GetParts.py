@@ -23,12 +23,15 @@ def GetParts(user_id):
     sql1 = "select MUSCLE_PART_ID, USER_ID, MUSCLE_PART from MUSCLE_PART where USER_ID =%s AND DELETE_FLAG = 0;"
     cur.execute(sql1, (str(user_id)))
     data = cur.fetchall()
-    output = {"musclePartId":[],"userId":[],"musclePart":[]}
+    output = {"musclePartId": [], "userId": [], "musclePart": []}
     for i in data:
         output["musclePartId"].append(i[0])
         output["userId"].append(i[1])
         output["musclePart"].append(i[2])
 
+    conn.commit()
+    cur.close()
+    conn.close()
     return output
 
 

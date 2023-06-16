@@ -23,8 +23,12 @@ def GetUserInfo(user_id):
     sql1 = "select USER_ID, USER_NAME, USER_NICKNAME, PHOTO_URL  from USER where USER_ID =%s AND DELETE_FLAG = 0;"
     cur.execute(sql1, (str(user_id),))
     data = cur.fetchall()
-    output = {"userId":data[0][0],"userName":data[0][1],"userNickName":data[0][2],"photoUrl":data[0][3]}
+    output = {"userId": data[0][0], "userName": data[0][1],
+              "userNickName": data[0][2], "photoUrl": data[0][3]}
 
+    conn.commit()
+    cur.close()
+    conn.close()
     return output
 
 

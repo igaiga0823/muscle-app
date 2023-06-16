@@ -34,6 +34,9 @@ def TransisonChart(user_id, muscle_part_id, start_date, end_date):
         data["dates"].append(week_start_str)
         data["time"].append(weekly_data["time"])
 
+    conn.commit()
+    cur.close()
+    conn.close()
     return data
 
 

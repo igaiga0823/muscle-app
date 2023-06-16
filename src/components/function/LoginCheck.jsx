@@ -40,9 +40,12 @@ const LoginCheck = () => {
       console.log("クッキーがあります。");
       console.log(userIdCookie);
       console.log(userNameCookie);
-      context.setuser_id(userIdCookie);
-      context.setIsLogin(true);
-      context.setuser_name(userNameCookie);
+      if (!context.isLogin) {
+        context.setuser_id(userIdCookie);
+        context.setIsLogin(true);
+        context.setuser_name(userNameCookie);
+      }
+
       const userInfo = { "userId": userIdCookie, "userName": userNameCookie };
       setCookie(userInfo);
       console.log("ログインしています。");

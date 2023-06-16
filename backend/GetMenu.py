@@ -23,12 +23,15 @@ def GetMenu(user_id):
     sql1 = "select MENU_ID, USER_ID, MENU_NAME from MENU where USER_ID =%s AND DELETE_FLAG = 0;"
     cur.execute(sql1, (str(user_id)))
     data = cur.fetchall()
-    output = {"menuId":[],"userId":[],"menu":[]}
+    output = {"menuId": [], "userId": [], "menu": []}
     for i in data:
         output["menuId"].append(i[0])
         output["userId"].append(i[1])
         output["menu"].append(i[2])
 
+    conn.commit()
+    cur.close()
+    conn.close()
     return output
 
 

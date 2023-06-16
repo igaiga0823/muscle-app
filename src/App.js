@@ -20,6 +20,7 @@ import Register from 'components/views/Register';
 import TrainingForm from 'components/parts/data/TrainingForm';
 import Menu from 'components/parts/data/AddMenu';
 import Parts from 'components/parts/data/AddParts';
+import TransitionChart from 'components/views/graphs/TransisionChart'
 
 import WeightGraph from 'components/views/graphs/WeightGraph';
 import PieChartMenu from 'components/views/graphs/pieChartMenu';
@@ -148,6 +149,7 @@ const App = () => {
               <Route path="/login" element={<Login />} />
               <Route path="/Menu" element={<Menu />} />
               <Route path="/parts" element={<Parts />} />
+              <Route path="/tran" element={<TransitionChart />} />
 
               <Route path="/test" element={<Test />} />
 

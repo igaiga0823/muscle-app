@@ -31,6 +31,7 @@ from FriendRequest import FriendRequest
 from GetFriendList import GetFriendList
 from GetFriendRequestList import GetFriendRequestList
 from Requirefriendrequest import Requirefriendrequest
+from GetFriendTimeLapse import GetFriendTimeLapse
 
 app = Flask(__name__)
 CORS(app)
@@ -412,6 +413,24 @@ def requirefriendrequest():
         data = request.json
         friend_id = data["friend_id"]
         output = Requirefriendrequest(friend_id)
+        response = jsonify(output)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+
+    except:
+        response = jsonify({"Success": "False"})
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+
+
+@app.route('/getfriendtimelapse', methods=['POST', "GET"])
+def getfriendtimelapse():
+    try:
+        data = request.json
+        user_id = data["user_id"]
+        start_date = data["start_date"]
+        end_date = data["end_date"]
+        output = GetFriendTimeLapse(user_id, start_date, end_date)
         response = jsonify(output)
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response

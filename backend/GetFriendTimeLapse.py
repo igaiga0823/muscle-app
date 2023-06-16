@@ -19,22 +19,28 @@ conn = MySQLdb.connect(
 cur = conn.cursor()
 
 
-def GetFriendList(user_id):
+def GetFriendTimeLapse(user_id, start_date, end_date):
     sql1 = "select USER_ID1, USER_ID2  from FRIEND where (USER_ID1 =%s OR USER_ID2 =%s) AND DELETE_FLAG = 0 AND VALID_FLAG = 1;"
     cur.execute(sql1, (str(user_id), str(user_id),))
     datas = cur.fetchall()
-    output = set()
+    friendSet = set()
     for data in datas:
         if str(data[0]) != str(user_id):
-            output.add(str(data[0]))
+            friendSet.add(str(data[0]))
         if str(data[1]) != str(user_id):
-            output.add(str(data[1]))
+            friendSet.add(str(data[1]))
+    friendList = list(friendList)
+
+    output = {}
+    for friend in friendList:
+        sql2 = "select USER_ID1, USER_ID2  from FRIEND where (USER_ID1 =%s OR USER_ID2 =%s) AND DELETE_FLAG = 0 AND VALID_FLAG = 1;"
+        cur.execute(sql2, (str(user_id), str(user_id),))
+        datas = cur.fetchall()
 
     conn.commit()
     cur.close()
     conn.close()
-    return {"friendList": list(output)}
 
 
 if __name__ == "__main__":
-    print(GetFriendList(1))
+    print(GetFriendTimeLapse(1))

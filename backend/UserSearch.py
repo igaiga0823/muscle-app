@@ -21,12 +21,16 @@ cur = conn.cursor()
 
 def UserSearch(user_name):
     sql1 = "select USER_ID  from USER where ( USER_NAME =%s OR USER_NICKNAME = %s ) AND DELETE_FLAG = 0;"
-    cur.execute(sql1, (str(user_name),str(user_name),))
+    cur.execute(sql1, (str(user_name), str(user_name),))
     data = cur.fetchall()
     output = []
     for i in range(len(data)):
         output.append(data[i][0])
-    return {"data":output}
+
+    conn.commit()
+    cur.close()
+    conn.close()
+    return {"data": output}
 
 
 if __name__ == "__main__":

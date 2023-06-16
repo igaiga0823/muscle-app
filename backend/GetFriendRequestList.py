@@ -21,7 +21,7 @@ cur = conn.cursor()
 
 def GetFriendRequestList(user_id):
     sql1 = "select FRIEND_ID, USER_ID1  from FRIEND where (USER_ID2 =%s OR USER_ID2 =%s) AND DELETE_FLAG = 0 AND VALID_FLAG = 0;"
-    cur.execute(sql1, (str(user_id),str(user_id),))
+    cur.execute(sql1, (str(user_id), str(user_id),))
     datas = cur.fetchall()
     output = []
     friendIdList = []
@@ -29,7 +29,11 @@ def GetFriendRequestList(user_id):
 
         friendIdList.append(str(data[0]))
         output.append(str(data[1]))
-    return {"requestUserList":list(output),"requestFriendIdList":list(friendIdList)}
+
+    conn.commit()
+    cur.close()
+    conn.close()
+    return {"requestUserList": list(output), "requestFriendIdList": list(friendIdList)}
 
 
 if __name__ == "__main__":
