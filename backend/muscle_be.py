@@ -201,9 +201,10 @@ def transisonchart():
     try:
         data = request.json  # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
         user_id = data["user_id"]
+        muscle_part_id = data["muscle_part_id"]
         start_date = data["start_date"]
         end_date = data["end_date"]
-        output = TransisonChart(user_id, start_date, end_date)
+        output = TransisonChart(user_id, muscle_part_id, start_date, end_date)
         response = jsonify(output)
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response

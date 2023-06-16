@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Box, Stack, Alert, Button, Input } from "@mui/material";
+import { Box, Stack, Alert, Button, Input, TextField } from "@mui/material";
 
 const UploadVideo = (props) => {
   const [userId, setuserId] = useState("1");
@@ -67,41 +67,47 @@ const UploadVideo = (props) => {
   };
 
   return (
-    <div>
-      <Stack spacing={1}>
-        {showNotification ? (
-          <Alert severity="success" sx={{ m: 1 }}>
-            送信しました
-          </Alert>
-        ) : (
-          <Box component="span" sx={{ m: 1 }}>
-            ボタン
-          </Box>
-        )}
-        {showError && (
-          <Alert severity="error" sx={{ m: 1 }}>
-            適切なファイルが選択されていません
-          </Alert>
-        )}
 
-        <Input
-          type="file"
-          accept="video/mp4, video/quicktime"
-          onChange={handleFileSelect}
-        />
+    <Stack spacing={2} marginTop={2} >
+      {showNotification ? (
+        <Alert severity="success" sx={{ m: 1 }}>
+          送信しました
+        </Alert>
+      ) : (""
 
-        <Input
+      )}
+      {showError && (
+        <Alert severity="error" sx={{ m: 1 }}>
+          適切なファイルが選択されていません
+        </Alert>
+      )}
+
+      <Input
+        type="file"
+        accept="video/mp4, video/quicktime"
+        onChange={handleFileSelect}
+      />
+
+
+
+      <Box sx={{ display: "flex", flexDirection: "column" }}>
+        <TextField
           type="text"
           value={comment}
           onChange={handleCommentChange}
           placeholder="コメントを入力してください"
         />
+      </Box>
 
+
+      <Box maxWidth={"600px"}>
         <Button variant="contained" onClick={handleUpload}>
           アップロード
         </Button>
-      </Stack>
-    </div>
+      </Box>
+
+    </Stack>
+
   );
 };
 

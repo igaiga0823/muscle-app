@@ -1,13 +1,4 @@
-#!/usr/local/bin/python3.7
-# coding: utf-8
 import MySQLdb
-import requests
-import os
-import json
-import sqlite3
-from collections import defaultdict
-import sys
-from flask import Flask, current_app
 from datetime import datetime, timedelta
 
 conn = MySQLdb.connect(
@@ -19,43 +10,54 @@ conn = MySQLdb.connect(
 cur = conn.cursor()
 
 
-def TransisonChart(user_id, start_date, end_date):
-    sql1 = "select MENU_ID, TIME from TRAINDATA where USER_ID =%s AND DATE >= %s AND DATE <= %s;"
-    cur.execute(sql1, (str(user_id), start_date, end_date,))
-    values = cur.fetchall()
-    data = {"parts": [], "time": []}
-    menus = {}
+def TransisonChart(user_id, muscle_part_id, start_date, end_date):
+    data = {"dates": [], "time": []}
+    # 週ごとのデータを格納するリスト
+    weekly_data = []
 
-    for i, value in enumerate(values, 0):
-        if value[0] not in menus:
-            menus[value[0]] = value[1]
-        else:
-            menus[value[0]] += value[1]
+    # 開始日から終了日までの日数を計算
+    start = datetime.strptime(start_date, '%Y-%m-%d')
+    end = datetime.strptime(end_date, '%Y-%m-%d')
+    num_days = (end - start).days
 
-    ans = {}
+    # 週ごとにデータを取得
+    for i in range(0, num_days + 1, 7):
+        # 週の開始日と終了日を計算
+        week_start = start + timedelta(days=i)
+        week_end = week_start + timedelta(days=6)
+        week_start_str = week_start.strftime('%Y-%m-%d')
+        week_end_str = week_end.strftime('%Y-%m-%d')
 
-    for menu_id, time in menus.items():
-        sql2 = "select MUSCLE_PART_ID from MENU_PARTS where USER_ID=%s AND MENU_ID=%s;"
-        cur.execute(sql2, (str(user_id), str(menu_id)))
-        values = cur.fetchall()
-        for value in values:
-            if value[0] not in ans:
-                ans[value[0]] = time
-            else:
-                ans[value[0]] += time
-
-    for time in ans.values():
-        data["time"].append(time)
-
-    for part_id in ans.keys():
-        sql3 = "select MUSCLE_PART from MUSCLE_PART where USER_ID=%s AND MUSCLE_PART_ID=%s;"
-        cur.execute(sql3, (str(user_id), str(part_id)))
-        values = cur.fetchall()
-        for value in values:
-            data["parts"].append(value[0])
+        # 週ごとのデータを取得し、リストに追加
+        weekly_data = TransisonCharts(
+            user_id, muscle_part_id, week_start_str, week_end_str)
+        data["dates"].append(week_start_str)
+        data["time"].append(weekly_data["time"])
 
     return data
 
 
+def TransisonCharts(user_id, muscle_part_id, start_date, end_date):
+    sql = """
+    SELECT DATE, SUM(TIME)
+    FROM TRAINDATA
+    JOIN MENU_PARTS ON TRAINDATA.MENU_ID = MENU_PARTS.MENU_ID
+    JOIN MUSCLE_PART ON MENU_PARTS.MUSCLE_PART_ID = MUSCLE_PART.MUSCLE_PART_ID
+    WHERE TRAINDATA.USER_ID = %s AND MUSCLE_PART.MUSCLE_PART_ID = %s AND DATE >= %s AND DATE <= %s
+    GROUP BY DATE
+    """
+
+    cur.execute(sql, (str(user_id), muscle_part_id, start_date, end_date))
+    results = cur.fetchall()
+
+    datas = {"time": 0}
+
+    for row in results:
+        datas["time"] = row[1]
+
+    return datas
+
+
 if __name__ == "__main__":
-    print(TransisonChart(1, "2023-04-30", "2023-06-09"))
+    weekly_data = TransisonChart(1, 4, "2023-04-30", "2023-06-09")
+    print(weekly_data)
