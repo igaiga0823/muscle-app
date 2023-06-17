@@ -29,18 +29,28 @@ def GetFriendTimeLapse(user_id, start_date, end_date):
             friendSet.add(str(data[0]))
         if str(data[1]) != str(user_id):
             friendSet.add(str(data[1]))
-    friendList = list(friendList)
+    friendList = list(friendSet)
 
-    output = {}
+
+    dataTimeLapse = []
     for friend in friendList:
-        sql2 = "select USER_ID1, USER_ID2  from FRIEND where (USER_ID1 =%s OR USER_ID2 =%s) AND DELETE_FLAG = 0 AND VALID_FLAG = 1;"
-        cur.execute(sql2, (str(user_id), str(user_id),))
+        sql2 = "SELECT VIDEO_ID, VIDEO_NAME, USER_ID, COMMENT, LIKE_COUNT, DATETIME FROM USERVIDEO WHERE (USER_ID = %s AND DATETIME >= %s AND DATETIME <= %s) AND DELETE_FLAG = 0;"
+        cur.execute(sql2, (str(friend),str(start_date),str(end_date),))
         datas = cur.fetchall()
+        for data in datas:
+            dataTimeLapse.append(data)
+    dataTimeLapse.sort(key=lambda x: x[5]) #x[i]:iはとってきたSQLの中でキーとしたい位置　今回はDATETIME
+    
+    # datetime.datetimeオブジェクトを文字列に変換
+    for data in dataTimeLapse:
+        data[5] = data[5]
+    output = {"Status":"Successfully", "datas":dataTimeLapse}
 
     conn.commit()
     cur.close()
     conn.close()
+    return output
 
 
 if __name__ == "__main__":
-    print(GetFriendTimeLapse(1))
+    print(GetFriendTimeLapse(28,"2020-06-17","2024-05-12"))

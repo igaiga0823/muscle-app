@@ -32,10 +32,10 @@ const ViewVideo = (props) => {
 
   const [videoUrl, setVideoUrl] = useState("");
   const url =
-    "http://main.itigo.jp/main.itigo.jp/muscle_api/video/707234299.242032.mp4";
-  const comment = "今日の腹筋";
-  const date = "2023/06/08";
-  const userId = "1";
+    "http://main.itigo.jp/main.itigo.jp/muscle_api/video/" + props.data[1];
+  const comment = props.data[3];
+  const date = props.data[5];
+  const userId = props.data[2];
 
   const [userInfo, setUserInfo] = useState({});
 

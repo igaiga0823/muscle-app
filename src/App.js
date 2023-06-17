@@ -34,7 +34,7 @@ import Data from 'components/pages/Data';
 
 import ViewUploadVideo from 'components/parts/friend/ViewUploadVideo';
 
-import ViewVideo from 'components/views/friend/ViewVideo';
+import ViewVideo from 'components/views/video/ViewVideo';
 import UserSearch from 'components/parts/friend/UserSearch';
 import RecieveFriendRequest from 'components/parts/friend/RecieveFriendRequest';
 
