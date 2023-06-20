@@ -1,7 +1,12 @@
 const DateTimeToDate = (dateTime) => {
   console.log(dateTime);
-  const date = dateTime.split(" ")[0];
-  return date;
+  try {
+    const date = dateTime.split(" ")[0];
+    return date;
+  } catch (error) {
+
+  }
+
 };
 
 export default DateTimeToDate;

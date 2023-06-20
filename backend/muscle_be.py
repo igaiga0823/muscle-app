@@ -21,7 +21,7 @@ from parts_add import parts_add
 from pie_chart import PieChart
 from pie_chart_parts import PieChartParts
 from transison_chart import TransisonChart
-
+from transison_chart_parts import TransisonChartParts
 
 from GetUserInfo import GetUserInfo
 from GetMenu import GetMenu
@@ -197,6 +197,24 @@ def piechartparts():
 
 @app.route("/graph/transison/parts", methods=["POST", "GET"])
 def transisonchart():
+    if not request.is_json:
+        return jsonify({"error": "Missing JSON in request1"}), 400
+    try:
+        data = request.json  # request.dataをutf-8にデコードしてjsonライブラリにてディクショナリ型とする
+        user_id = data["user_id"]
+        muscle_part_id = data["muscle_part_id"]
+        start_date = data["start_date"]
+        end_date = data["end_date"]
+        output = TransisonChart(user_id, muscle_part_id, start_date, end_date)
+        response = jsonify(output)
+        response.headers.add('Access-Control-Allow-Origin', '*')
+        return response
+    except:
+        return jsonify({"error": "Missing JSON in request"}), 400
+
+
+@app.route("/graph/transison/parts/menu", methods=["POST", "GET"])
+def transisonchartparts():
     if not request.is_json:
         return jsonify({"error": "Missing JSON in request1"}), 400
     try:

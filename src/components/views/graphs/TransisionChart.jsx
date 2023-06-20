@@ -49,7 +49,7 @@ const TransitionChart = (props) => {
             labels: datas["dates"],
             datasets: [
                 {
-                    label: '時間(分)',
+                    label: props.musclePart,
                     data: datas["time"],
                     fill: false,
                     borderColor: 'rgb(75, 192, 192)',

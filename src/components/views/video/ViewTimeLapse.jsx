@@ -51,6 +51,12 @@ const ViewTimeLapse = () => {
     setEndDate(value);
   };
 
+  useEffect(() => {
+    if (context.user_id !== "") {
+      fetchTimeLapse();
+    }
+  }, [startDate, endDate]);
+
   const fetchTimeLapse = async () => {
     const url =
       "http://main.itigo.jp/main.itigo.jp/muscle_api/index.cgi/getfriendtimelapse";
@@ -75,6 +81,8 @@ const ViewTimeLapse = () => {
     }
   };
 
+
+
   return (
     <div>
       <h2>{muscleParts[0]}</h2>
@@ -83,9 +91,10 @@ const ViewTimeLapse = () => {
         onUpdateEndDate={handleEndDate}
         title={"範囲設定"}
       />
+
       {flag !== false && data && (
         <div>
-          3212
+
           {data.map((item, index) => (
             <ViewVideo data={item} key={index} />
           ))}

@@ -41,7 +41,7 @@ function AppBar(props) {
   const ref = React.useRef(null);
 
   const context = useContext(UserContext)
-
+  const appBarbgColor = "#6400B3";//'#4f4f4f'
   return (
     <>
       {context.isLogin ?
@@ -68,19 +68,19 @@ function AppBar(props) {
                 <BottomNavigationAction
                   component={Link}
                   to="/home"
-                  sx={{ color: value === 0 ? "#00ff7f" : "#f2f2f2", backgroundColor: '#4f4f4f', padding: "2px", borderRadius: "15px 0 0 15px" }} label="Home" size={2} icon={<Icon path={mdiHome} />} />
+                  sx={{ color: value === 0 ? "#00ff7f" : "#f2f2f2", backgroundColor: appBarbgColor, padding: "2px", borderRadius: "15px 0 0 15px" }} label="Home" size={2} icon={<Icon path={mdiHome} />} />
                 <BottomNavigationAction
                   component={Link}
                   to="/training"
-                  sx={{ color: value === 1 ? "#00ff7f" : "#f2f2f2", backgroundColor: '#4f4f4f', padding: "2px", borderRadius: "0 0 0 0" }} label="Trainging" icon={<Icon path={mdiArmFlex} size={2} />} />
+                  sx={{ color: value === 1 ? "#00ff7f" : "#f2f2f2", backgroundColor: appBarbgColor, padding: "2px", borderRadius: "0 0 0 0" }} label="Trainging" icon={<Icon path={mdiArmFlex} size={2} />} />
                 <BottomNavigationAction
                   component={Link}
                   to="/data"
-                  sx={{ color: value === 2 ? "#00ff7f" : "#f2f2f2", backgroundColor: '#4f4f4f', padding: "2px", borderRadius: "0 0 0 0" }} label="Data" icon={<Icon path={mdiChartBar} size={2} />} />
+                  sx={{ color: value === 2 ? "#00ff7f" : "#f2f2f2", backgroundColor: appBarbgColor, padding: "2px", borderRadius: "0 0 0 0" }} label="Data" icon={<Icon path={mdiChartBar} size={2} />} />
                 <BottomNavigationAction
                   component={Link}
                   to="/friend"
-                  sx={{ color: value === 3 ? "#00ff7f" : "#f2f2f2", backgroundColor: '#4f4f4f', padding: "2px", borderRadius: "0 15px 15px 0" }} label="Friend" icon={<Icon path={mdiAccount} size={2} />} />
+                  sx={{ color: value === 3 ? "#00ff7f" : "#f2f2f2", backgroundColor: appBarbgColor, padding: "2px", borderRadius: "0 15px 15px 0" }} label="Friend" icon={<Icon path={mdiAccount} size={2} />} />
               </BottomNavigation>
             </Paper>
           </Box>

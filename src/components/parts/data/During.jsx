@@ -15,6 +15,9 @@ const During = (props) => {
   // 初期値で
   const [selectedDate1, setSelectedDate1] = useState(null);
   const [selectedDate2, setSelectedDate2] = useState(null);
+
+  const [startDate, setStartDate] = useState("")
+  const [userInfo, setUserInfo] = useState({});
   const context = useContext(UserContext);
 
   const handleDateChange1 = (date) => {
@@ -30,7 +33,41 @@ const During = (props) => {
 
     const formattedDate = currentDate.toISOString().split("T")[0];
     props.onUpdateEndDate(formattedDate);
+
+
   }, []);
+
+
+  const fetchUserInfo = async () => {
+    try {
+      console.log("userInfoを実行");
+      const info = await GetUserInfo(context.user_id);
+      setUserInfo(info);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    if (context.user_id !== "") {
+      console.log(context.user_id);
+      fetchUserInfo();
+    }
+  }, [context.user_id]);
+
+
+  useEffect(() => {
+    try {
+      console.log(userInfo.date);
+      const d = userInfo.date;
+      const e = d.slice(0, 10);
+      console.log(e);
+      setStartDate(e);
+
+    } catch (error) {
+      console.log(error);
+    }
+  }, [userInfo]);
 
   const sendData = async () => {
     console.log(selectedDate1);
@@ -49,8 +86,7 @@ const During = (props) => {
 
     if (start_date === "NaN-NaN-NaN") {
       console.log(start_date);
-      const signUpDate = GetUserInfo(context.user_id).date;
-      const get_date = DateTimeToDate(signUpDate);
+      const get_date = startDate;
       console.log(get_date);
       props.onUpdateStartDate(get_date);
     } else {

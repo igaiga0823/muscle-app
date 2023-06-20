@@ -4,6 +4,7 @@ import { UserContext } from "App.js";
 import During from "components/parts/data/During";
 import PieChartParts from "components/views/graphs/pieChartParts";
 import TransitionChart from "components/views/graphs/TransisionChart";
+import TransitionChartParts from "components/views/graphs/TransitionChartParts";
 import GetParts from "components/function/common/GetParts";
 import GetMenu from "components/function/common/GetMenu";
 import GetUserInfo from "components/function/common/GetUserInfo";
@@ -65,7 +66,7 @@ const Data = () => {
       const e = d.slice(0, 10);
       console.log(e);
       setStartDate(e);
-      setFlag2(!flag2);
+      setFlag2(true);
     } catch (error) {
       console.log(error);
     }
@@ -83,6 +84,7 @@ const Data = () => {
 
   return (
     <div>
+
       <During
         onUpdateStartDate={handleStartDate}
         onUpdateEndDate={handleEndDate}
@@ -98,10 +100,25 @@ const Data = () => {
               startDate={startDate}
               endDate={endDate}
               musclePartId={item}
+              musclePart={muscleParts[index]}
               key={index}
             />
           </div>
         ))}
+      {/* {musclePartsId &&
+        Array.isArray(musclePartsId) &&
+        musclePartsId.length > 0 &&
+        musclePartsId.map((item, index) => (
+          <div>
+            <TransitionChart
+              startDate={startDate}
+              endDate={endDate}
+              musclePartId={item}
+              musclePart={muscleParts[index]}
+              key={index}
+            />
+          </div>
+      ))} */}
     </div>
   );
 };

@@ -3,7 +3,7 @@ import { Line } from "react-chartjs-2";
 import { useState, useEffect, useContext } from "react";
 import { UserContext } from "App.js";
 
-const TransitionChartCount = (props) => {
+const TransitionChartParts = (props) => {
   var ans = {};
   const [showNotification, setShowNotification] = useState(false);
   const context = useContext(UserContext);
@@ -133,4 +133,4 @@ const TransitionChartCount = (props) => {
   );
 };
 
-export default TransitionChartCount;
+export default TransitionChartParts;

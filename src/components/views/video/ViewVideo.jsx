@@ -39,7 +39,9 @@ const ViewVideo = (props) => {
 
   const [userInfo, setUserInfo] = useState({});
 
-  const borderColor = "34324";
+  const bgcolor = "#e4c4ff";
+  const borderColor = "#6400B3";
+  const textColor = "black"
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -59,9 +61,10 @@ const ViewVideo = (props) => {
     width: "100%",
     maxWidth: "600px",
     margin: "15px",
-    boxShadow: "0px 2px 6px rgba(0, 0, 0, 0.15)",
+    boxShadow: "0px 5px 5px rgba(0, 0, 0, 0.4)",
     borderRadius: "20px",
-    border: "2px solid {borderColor}",
+    border: "2px solid #6400B3",
+    color: "#6400B3",
   };
 
   const mediaStyle = {
@@ -88,11 +91,13 @@ const ViewVideo = (props) => {
         width: "100%",
       }}
     >
-      <Card style={cardStyle}>
+      <Card style={cardStyle}
+      >
         <CardHeader
+          sx={{ backgroundColor: bgcolor, color: textColor }} // ヘッダーの背景色とテキストの色を指定
           avatar={
             <Avatar
-              sx={{ bgcolor: red[500] }}
+              sx={{ bgcolor: "#6400B3" }}
               aria-label="recipe"
               src={userInfo.photoUrl}
             >
@@ -115,7 +120,7 @@ const ViewVideo = (props) => {
           <video src={videoUrl} controls style={videoStyle} />
         </CardMedia>
 
-        <Stack direction="row" alignItems={"center"} width={"100"}>
+        <Stack direction="row" alignItems={"center"} width={"100"} sx={{ backgroundColor: bgcolor, color: "white" }} >
           <IconButton aria-label="add to favorites">
             <FavoriteIcon />
           </IconButton>
