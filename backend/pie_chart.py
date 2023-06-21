@@ -10,13 +10,26 @@ import sys
 from flask import Flask, current_app
 from datetime import datetime, timedelta
 
+import os
+from dotenv import load_dotenv
+
+load_dotenv('.env') 
+
+# 環境変数の情報
+
+DB_HOST = os.environ.get("DB_HOST")
+DB_USER = os.environ.get("DB_USER")
+DB_PASSWORD = os.environ.get("DB_PASSWORD")
+DB = os.environ.get("DB")
+
 conn = MySQLdb.connect(
-    host='mysql213.phy.lolipop.lan',
-    user='LAA1475865',
-    passwd='wuimse2135',
-    db='LAA1475865-muscle',
+    host=DB_HOST,
+    user=DB_USER,
+    passwd=DB_PASSWORD,
+    db=DB,
     charset='utf8')
 cur = conn.cursor()
+
 
 
 def PieChart(user_id):
