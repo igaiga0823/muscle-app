@@ -84,13 +84,12 @@ const Data = () => {
 
   return (
     <div>
-
       <During
         onUpdateStartDate={handleStartDate}
         onUpdateEndDate={handleEndDate}
         title={"グラフ生成"}
       />
-      {flag2 && <PieChartParts startDate={startDate} endDate={endDate} />}
+      {/* {flag2 && <PieChartParts startDate={startDate} endDate={endDate} />}
       {musclePartsId &&
         Array.isArray(musclePartsId) &&
         musclePartsId.length > 0 &&
@@ -104,13 +103,13 @@ const Data = () => {
               key={index}
             />
           </div>
-        ))}
-      {/* {musclePartsId &&
+        ))} */}
+      {musclePartsId &&
         Array.isArray(musclePartsId) &&
         musclePartsId.length > 0 &&
         musclePartsId.map((item, index) => (
           <div>
-            <TransitionChart
+            <TransitionChartParts
               startDate={startDate}
               endDate={endDate}
               musclePartId={item}
@@ -118,7 +117,7 @@ const Data = () => {
               key={index}
             />
           </div>
-      ))} */}
+        ))}
     </div>
   );
 };

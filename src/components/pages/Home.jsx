@@ -1,30 +1,17 @@
-import React from 'react';
-import 'css/Home.css'
+import React from "react";
+import "css/Home.css";
 import { Box, TextField, Autocomplete, Button, Alert } from "@mui/material";
+import Carousel from "components/views/home/Carousel";
 
 const Home = () => {
+  const imageData = [
+    '<a href="https://px.a8.net/svt/ejp?a8mat=3TB4ET+9IYGI+45DI+6DC69" rel="nofollow">    <img border="0" width="300" height="250" alt="" src="https://www26.a8.net/svt/bgt?aid=230626325016&wid=001&eno=01&mid=s00000019359001070000&mc=1"></a>    <img border="0" width="1" height="1" src="https://www18.a8.net/0.gif?a8mat=3TB4ET+9IYGI+45DI+6DC69" alt="">',
+    '<a href="https://px.a8.net/svt/ejp?a8mat=3TB4ET+9IYGI+45DI+609HT" rel="nofollow">    <img border="0" width="300" height="250" alt="" src="https://www24.a8.net/svt/bgt?aid=230626325016&wid=001&eno=01&mid=s00000019359001009000&mc=1"></a>    <img border="0" width="1" height="1" src="https://www11.a8.net/0.gif?a8mat=3TB4ET+9IYGI+45DI+609HT" alt="">',
+  ];
   return (
-    <div>
-      <div className="bg"></div>
-      <div className="bg bg2"></div>
-      <div className="bg bg3"></div>
-      <Box
-        sx={{
-          backgroundColor: 'rgba(75, 0, 130, 0.8)',
-          borderRadius: '1.25em',
-          boxShadow: '0 0 .5em rgba(0, 0, 0, .5)',
-          boxSizing: 'border-box',
-          left: '50%',
-          padding: '6vmin',
-          position: 'fixed',
-          textAlign: 'center',
-          top: '48%',
-          transform: 'translate(-50%, -50%)',
-        }}
-      >
-        <h1 style={{ color: '#F8F8FF' }} >ようこそ Muscle Appへ!</h1>
-      </Box>
-    </div>
+    <Box>
+      <Carousel items={imageData} />
+    </Box>
   );
 };
 

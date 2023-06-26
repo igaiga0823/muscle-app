@@ -24,9 +24,10 @@ cur = conn.cursor()
 
 
 def TransisonChartParts(user_id, muscle_part_id, start_date, end_date):
-    data = {"dates": [], "menu": [], "time": []}
+    data = {"dates": [], "time": []}
     # 週ごとのデータを格納するリスト
     weekly_data = []
+    user_id = int(user_id)
 
     # 開始日から終了日までの日数を計算
     start = datetime.strptime(start_date, '%Y-%m-%d')
@@ -45,9 +46,16 @@ def TransisonChartParts(user_id, muscle_part_id, start_date, end_date):
         weekly_data = TransisonCharts(
             user_id, muscle_part_id, week_start_str, week_end_str)
         data["dates"].append(week_start_str)
-        data["time"].append(weekly_data["time"])
-        if data["menu"] == []:
-            data["menu"].append(weekly_data["menu"])
+        x = []
+        for i in range(len(weekly_data["time"])):
+            if weekly_data["time"][i] == None:
+                x.append(0)
+            else:
+                x.append(weekly_data["time"][i])
+
+        data["time"].append(x)
+        if "menu" not in data:
+            data["menu"] = weekly_data["menu"]
 
     conn.commit()
     cur.close()

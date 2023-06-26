@@ -213,7 +213,7 @@ def transisonchart():
         return jsonify({"error": "Missing JSON in request"}), 400
 
 
-@app.route("/graph/transison/parts/menu", methods=["POST", "GET"])
+@app.route("/graph/transison/parts1/menu", methods=["POST", "GET"])
 def transisonchartparts():
     if not request.is_json:
         return jsonify({"error": "Missing JSON in request1"}), 400
@@ -223,7 +223,7 @@ def transisonchartparts():
         muscle_part_id = data["muscle_part_id"]
         start_date = data["start_date"]
         end_date = data["end_date"]
-        output = TransisonChart(user_id, muscle_part_id, start_date, end_date)
+        output = TransisonChartParts(user_id, muscle_part_id, start_date, end_date)
         response = jsonify(output)
         response.headers.add('Access-Control-Allow-Origin', '*')
         return response

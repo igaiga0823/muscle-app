@@ -30,6 +30,7 @@ import Home from 'components/pages/Home';
 import Training from 'components/pages/Training';
 import Friend from 'components/pages/Friend';
 import Data from 'components/pages/Data';
+import Mypage from 'components/pages/Mypage'
 
 
 import ViewUploadVideo from 'components/parts/friend/ViewUploadVideo';
@@ -180,6 +181,7 @@ const App = () => {
               <Route path="/data" element={<Data />} />
               <Route path="/training" element={<Training />} />
               <Route path="/friend" element={<Friend />} />
+              <Route path="/mypage" element={<Mypage />} />
 
               <Route path="/register" element={<Register />} />
               <Route path="/trainingform" element={<TrainingForm />} />

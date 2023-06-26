@@ -15,19 +15,29 @@ const TransitionChartParts = (props) => {
     setShowNotification(true);
   };
 
+  const getRandomColor = () => {
+    const letters = "0123456789ABCDEF";
+    let color = "#";
+    for (let i = 0; i < 6; i++) {
+      color += letters[Math.floor(Math.random() * 16)];
+    }
+    return color;
+  };
+
   const fetchData = () => {
     const url =
-      "http://main.itigo.jp/main.itigo.jp/muscle_api/index.cgi/graph/transison/parts";
-
+      "http://main.itigo.jp/main.itigo.jp/muscle_api/index.cgi/graph/transison/parts1/menu";
     ans["user_id"] = context.user_id;
     ans["start_date"] = props.startDate;
     ans["end_date"] = props.endDate;
-    ans["menu_id"] = props.menuId;
+    ans["muscle_part_id"] = props.musclePartId;
+    console.log(ans);
     const requestOptions = {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(ans),
     };
+    console.log(ans);
     fetch(url, requestOptions)
       .then((response) => {
         if (response.ok) {
@@ -46,18 +56,34 @@ const TransitionChartParts = (props) => {
   };
 
   const ChartCraft = () => {
-    setData({
-      labels: datas["dates"],
-      datasets: [
-        {
-          label: "時間(分)",
-          data: datas["time"],
+    const datasets = [];
+
+    for (let i = 1; i <= datas["menu"].length; i++) {
+      const key = `time${i}`;
+      console.log(datas["menu"]);
+      console.log(datas["time"]);
+
+      const columnElements = [];
+
+      for (let j = 0; j < datas["dates"].length; j++) {
+        columnElements.push(datas["time"][j][i]);
+      }
+
+      if (datas["menu"] && datas["menu"].length > i - 1) {
+        datasets.push({
+          label: datas["menu"][i - 1],
+          data: columnElements,
           fill: false,
-          borderColor: "rgb(75, 192, 192)",
+          borderColor: getRandomColor(),
           tension: 0.1,
           spanGaps: true,
-        },
-      ],
+        });
+      }
+    }
+
+    setData({
+      labels: datas["dates"],
+      datasets: datasets,
     });
 
     setOptions({
