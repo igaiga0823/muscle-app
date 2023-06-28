@@ -1,9 +1,13 @@
-import 'css/App.css';
 import 'css/reset.css'
+import 'css/App.css';
+
 
 import { BrowserRouter, Route, Routes, Link } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
 import { Box } from "@mui/material";
+
+import AppBar from 'components/parts/AppBar';
+import Header from 'components/parts/Header';
 
 import None from 'components/pages/None';
 
@@ -11,10 +15,10 @@ import Fetch from 'Fetch';
 
 import Login from 'components/views/Login';
 import LoginCheck from 'components/function/LoginCheck'
-import Logout from 'components/function/Logout'
+
 
 import WeightForm from 'components/parts/WeightForm';
-import AppBar from 'components/parts/AppBar';
+
 import RateGraph from 'components/views/graphs/RateGraph';
 import Register from 'components/views/Register';
 import TrainingForm from 'components/parts/data/TrainingForm';
@@ -26,7 +30,7 @@ import WeightGraph from 'components/views/graphs/WeightGraph';
 import PieChartMenu from 'components/views/graphs/pieChartMenu';
 import PieChartParts from 'components/views/graphs/pieChartParts';
 
-import Home from 'components/pages/Home';
+import HomeContainer from 'components/pages/HomeContainer';
 import Training from 'components/pages/Training';
 import Friend from 'components/pages/Friend';
 import Data from 'components/pages/Data';
@@ -47,18 +51,22 @@ import Test from 'components/test';
 // 
 import { createContext, useContext } from 'react'
 import UserInfo from 'hooks/UserInfo'
+import Client from 'hooks/Client';
+
+
 
 
 export const UserContext = createContext()
+export const ClientContext = createContext()
 
 
 
 const theme = createTheme({
   palette: {
     mode: 'light',
+
     primary: {
       main: '#6400B3',
-
     },
   },
   typography: {
@@ -98,7 +106,7 @@ const theme = createTheme({
       fontSize: "0.85rem",
       fontWeight: 500
     },
-    fontFamily: "'Noto Sans JP', sans-serif"
+
   }
 });
 
@@ -147,7 +155,6 @@ const themeAppBar = createTheme({
       fontSize: "0.85rem",
       fontWeight: 500
     },
-    fontFamily: "'Noto Sans JP', sans-serif"
   }
 });
 
@@ -162,53 +169,60 @@ const App = () => {
     // #15171e
 
 
-    <Box bgcolor={"white"} textAlign={"center"} height={"100vh"}>
 
-      < UserContext.Provider value={UserInfo()} >
-        <BrowserRouter>
-          <LoginCheck />
-          <Logout />
+    < ClientContext.Provider value={Client()} >
+      <Box bgcolor={Client().colorTheme.bgColor} textAlign={"center"} height={"100vh"}>
 
-          <ThemeProvider theme={themeAppBar}>
-            <AppBar />
-          </ThemeProvider>
 
-          <ThemeProvider theme={theme}>
-            <Routes>
 
-              <Route path="/" element={<None />} />
-              <Route path="/home" element={<Home />} />
-              <Route path="/data" element={<Data />} />
-              <Route path="/training" element={<Training />} />
-              <Route path="/friend" element={<Friend />} />
-              <Route path="/mypage" element={<Mypage />} />
+        < UserContext.Provider value={UserInfo()} >
+          <BrowserRouter>
 
-              <Route path="/register" element={<Register />} />
-              <Route path="/trainingform" element={<TrainingForm />} />
-              <Route path="/fetch" element={<Fetch />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/Menu" element={<Menu />} />
-              <Route path="/parts" element={<Parts />} />
-              <Route path="/tran" element={<TransitionChart />} />
+            <Header />
+            <LoginCheck />
 
-              <Route path="/test" element={<Test />} />
+            <ThemeProvider theme={themeAppBar}>
+              <AppBar />
+            </ThemeProvider>
 
-              <Route path="/appbar" element={<AppBar />} />
-              <Route path="/weightForm" element={<WeightForm />} />
-              <Route path="/rategraph" element={<RateGraph />} />
-              <Route path='/weightgraph' element={<WeightGraph />} />
-              <Route path='/piechart' element={<PieChartMenu />} />
-              <Route path='/piechartparts' element={<PieChartParts />} />_
-              <Route path='/viewuploadvideo' element={<ViewUploadVideo />} />
-              <Route path='/viewvideo' element={<ViewVideo />} />
-              <Route path='/usersearch' element={<UserSearch />} />
-              <Route path='/recievefriendrequest' element={<  RecieveFriendRequest />} />
+            <ThemeProvider theme={theme}>
+              <Routes>
 
-            </Routes>
-          </ ThemeProvider>
-        </BrowserRouter>
-      </UserContext.Provider >
-    </Box >
+                <Route path="/" element={<None />} />
+                <Route path="/home" element={<HomeContainer />} />
+                <Route path="/data" element={<Data />} />
+                <Route path="/training" element={<Training />} />
+                <Route path="/friend" element={<Friend />} />
+                <Route path="/mypage" element={<Mypage />} />
+
+                <Route path="/register" element={<Register />} />
+                <Route path="/trainingform" element={<TrainingForm />} />
+                <Route path="/fetch" element={<Fetch />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/Menu" element={<Menu />} />
+                <Route path="/parts" element={<Parts />} />
+                <Route path="/tran" element={<TransitionChart />} />
+
+                <Route path="/test" element={<Test />} />
+
+                <Route path="/appbar" element={<AppBar />} />
+                <Route path="/weightForm" element={<WeightForm />} />
+                <Route path="/rategraph" element={<RateGraph />} />
+                <Route path='/weightgraph' element={<WeightGraph />} />
+                <Route path='/piechart' element={<PieChartMenu />} />
+                <Route path='/piechartparts' element={<PieChartParts />} />_
+                <Route path='/viewuploadvideo' element={<ViewUploadVideo />} />
+                <Route path='/viewvideo' element={<ViewVideo />} />
+                <Route path='/usersearch' element={<UserSearch />} />
+                <Route path='/recievefriendrequest' element={<  RecieveFriendRequest />} />
+
+              </Routes>
+            </ ThemeProvider>
+          </BrowserRouter>
+        </UserContext.Provider >
+      </Box >
+
+    </ClientContext.Provider>
 
 
 

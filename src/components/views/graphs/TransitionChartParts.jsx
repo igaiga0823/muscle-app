@@ -12,7 +12,12 @@ const TransitionChartParts = (props) => {
   const [options, setOptions] = useState({});
 
   const handleSend = () => {
-    setShowNotification(true);
+    if (datas["menu_length"] !== 0) {
+      setShowNotification(true);
+    }
+    else {
+      console.log("hello")
+    }
   };
 
   const getRandomColor = () => {
@@ -58,21 +63,22 @@ const TransitionChartParts = (props) => {
   const ChartCraft = () => {
     const datasets = [];
 
-    for (let i = 1; i <= datas["menu"].length; i++) {
+    for (let i = 1; i <= datas["menu_length"]; i++) {
       const key = `time${i}`;
       console.log(datas["menu"]);
       console.log(datas["time"]);
 
-      const columnElements = [];
+      const value_time = []
 
-      for (let j = 0; j < datas["dates"].length; j++) {
-        columnElements.push(datas["time"][j][i]);
+      for (let j = 0; j < datas["time_length"]; j++) {
+        value_time.push(datas["time"][j][i - 1])
       }
+
 
       if (datas["menu"] && datas["menu"].length > i - 1) {
         datasets.push({
           label: datas["menu"][i - 1],
-          data: columnElements,
+          data: value_time,
           fill: false,
           borderColor: getRandomColor(),
           tension: 0.1,
@@ -97,7 +103,7 @@ const TransitionChartParts = (props) => {
           },
           title: {
             display: true,
-            text: "Date",
+            text: props.musclePart,
           },
         },
         y: {

@@ -4,9 +4,8 @@ const DateTimeToDate = (dateTime) => {
     const date = dateTime.split(" ")[0];
     return date;
   } catch (error) {
-
+    return "";
   }
-
 };
 
 export default DateTimeToDate;

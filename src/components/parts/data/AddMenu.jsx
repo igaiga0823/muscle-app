@@ -1,6 +1,6 @@
 import { useState, useEffect, useContext } from "react";
 import { Box, TextField, Autocomplete, Button, Alert } from "@mui/material";
-import { UserContext } from 'App.js';
+import { UserContext, ClientContext } from 'App.js';
 import GetParts from "components/function/common/GetParts";
 
 import "css/reset.css";
@@ -10,6 +10,7 @@ const MenuSend = () => {
   const [options, setOptions] = useState([""]);
 
   const context = useContext(UserContext)
+  const client = useContext(ClientContext)
 
   const [value, setValue] = useState("");
   const [tasks, setTasks] = useState([{ parts: "" }]);
@@ -126,75 +127,97 @@ const MenuSend = () => {
   };
 
   return (
-    <div>
-      <h1>{context.user_id}</h1>
-      {showNotification ? (
-        <Alert severity="success" sx={{ m: 1 }}>
-          メニューを登録しました
-        </Alert>
-      ) : (
-        <Box component="span" sx={{ m: 1 }}>
-          メニューを登録してください
-        </Box>
-      )}
-      {showError && (
-        <Alert severity="error" sx={{ m: 1 }}>
-          メニューが入っていません
-        </Alert>
-      )}
-      {already && (
-        <Alert severity="error" sx={{ m: 1 }}>
-          同じ名前のメニューがすでに登録されています
-        </Alert>
-      )}
-      {open && (
-        <Alert severity="error" sx={{ m: 1 }}>
-          入力されていない要素があります
-        </Alert>
-      )}
-      <Box
-        component="form"
-        sx={{
-          "& > :not(style)": { m: 1, width: "25ch" },
-        }}
-        noValidate
-        autoComplete="off"
-      >
-        <TextField
-          id="outlined-basic"
-          label="種目名"
-          variant="outlined"
-          value={value}
-          onChange={handleInputChange}
-        />
-      </Box>
-      {tasks.map((task, index) => (
-        <div key={index}>
+    <div >
+      <Box sx={{ borderRadius: '8px' }}>
+        <Box component="span" sx={{ p: 2, }}>
+          {showNotification ? (
+            <Alert severity="success" sx={{ m: 1, color: "#696969", justifyContent: "center", display: "flex", }}>
+              メニューを登録しました
+            </Alert>
+          ) : (
+            <Box component="span" sx={{ m: 1, color: "#696969", justifyContent: "center", display: "flex", }}>
+              メニューを登録してください
+            </Box>
+          )}
+          {showError && (
+            <Alert severity="error" sx={{ m: 1, color: "#696969", justifyContent: "center", display: "flex", }}>
+              メニューが入っていません
+            </Alert>
+          )}
+          {already && (
+            <Alert severity="error" sx={{ m: 1, color: "#696969", justifyContent: "center", display: "flex", }}>
+              同じ名前のメニューがすでに登録されています
+            </Alert>
+          )}
+          {open && (
+            <Alert severity="error" sx={{ m: 1 }}>
+              入力されていない要素があります
+            </Alert>
+          )}
+          <Box
+            component="form"
+            sx={{
+              "& > :not(style)": { m: 1, width: "25ch", },
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+            }}
+            noValidate
+            autoComplete="off"
+          >
+            <div>
+              <TextField
+                id="outlined-basic"
+                label="種目名"
+                variant="outlined"
+                value={value}
+                onChange={handleInputChange}
+                InputLabelProps={{
+                  style: { color: "#696969" },
+                }}
+              />
+            </div>
+          </Box>
+          {tasks.map((task, index) => (
+            <div key={index}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "center",
+                  gap: "10px",
+                  marginTop: "10px",
+                  marginBottom: "10px",
+                }}
+              >
+                <Autocomplete
+                  options={options}
+                  value={task.parts !== "" ? task.parts : null}
+                  sx={{ width: "40%", display: "inline-flex", color: "#696969", "& .MuiInputLabel-root": { color: "#696969", }, }}
+                  renderInput={(params) => <TextField {...params} label="部位" />}
+                  onChange={(e, value) => handleChange(value, index, "parts")}
+                  getOptionLabel={(option) => option}
+                />
+              </div>
+            </div>
+          ))}
           <div
             style={{
               display: "flex",
               justifyContent: "center",
-              gap: "10px",
-              marginTop: "10px",
+              alignItems: "center",
             }}
           >
-            <Autocomplete
-              options={options}
-              value={task.parts !== "" ? task.parts : null}
-              sx={{ width: "40%", display: "inline-flex" }}
-              renderInput={(params) => <TextField {...params} label="部位" />}
-              onChange={(e, value) => handleChange(value, index, "parts")}
-              getOptionLabel={(option) => option}
-            />
+            <div>
+              <Button onClick={addTask} variant="contained" sx={{ marginBottom: '10px', marginRight: '10px' }}>
+                部位を追加
+              </Button>
+              <Button onClick={() => sendData(tasks)} variant="contained" sx={{ marginBottom: '10px' }}>
+                send
+              </Button>
+            </div>
           </div>
-        </div>
-      ))}
-      <Button onClick={addTask} variant="contained">
-        部位を追加
-      </Button>
-      <Button onClick={() => sendData(tasks)} variant="contained">
-        send
-      </Button>
+        </Box>
+      </Box>
     </div>
   );
 };

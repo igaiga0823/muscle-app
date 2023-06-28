@@ -22,7 +22,8 @@ function TrainingForm() {
 
   const [time, setTimes] = useState('')
   const [options, setOptions] = useState([])
-  const [menu, setValue] = useState(null)
+  const [menuId, setMenuId] = useState([])
+  const [menu, setMenu] = useState(null)
   const [date, setDates] = useState(null)
   const [user_name, setUserName] = useState('')
   const context = useContext(UserContext)
@@ -38,6 +39,7 @@ function TrainingForm() {
         const info = await GetMenu(Number(context.user_id));
         console.log(info)
         setOptions(info["menu"]);
+        setMenuId(info["menuId"]);
       } catch (error) {
         console.log(error);
       }
@@ -130,7 +132,8 @@ function TrainingForm() {
     data['repData'] = value_rep
     data['date'] = date
     data['time'] = time
-    data['menu_id'] = "2"
+    const index = options.indexOf(menu)
+    data['menu_id'] = menuId[index]
     console.log(data)
     fetch('https://iganami1106.com/muscle_api/index.cgi/traindata/post', {
       method: 'POST',
@@ -149,8 +152,15 @@ function TrainingForm() {
   }
 
   return (
-    <div className="task-form">
+    <div className="task-form" style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+      justifyContent: "center",
+      color: "#696969",
+    }}>
       <div className=''>
+        <h3>トレーニング登録</h3>
         <div>
           <Autocomplete
             options={timeSlots.map((slot) => slot.label)}
@@ -164,18 +174,18 @@ function TrainingForm() {
         <div>
           <Autocomplete
             value={menu}
-            onChange={(event, newValue) => { setValue(newValue); }}
+            onChange={(event, newValue) => { setMenu(newValue); }}
             id="controllable-states-demo"
             options={options}
-            sx={{ width: 300 }}
+            sx={{ width: 300, marginTop: '10px', }}
             renderInput={(params) => <TextField {...params} label="" />}
           />
         </div>
       </div>
       <div className=''>
         <div>
-          <LocalizationProvider dateAdapter={AdapterDayjs}>
-            <DatePicker value={date} onChange={handleDateChange1} />
+          <LocalizationProvider dateAdapter={AdapterDayjs} sx={{ marginTop: '10px', }}>
+            <DatePicker value={date} onChange={handleDateChange1} sx={{ marginTop: '10px', }} />
           </LocalizationProvider>
         </div>
       </div>
@@ -185,22 +195,24 @@ function TrainingForm() {
             <Autocomplete
               options={kgSlots}
               value={kgSlots.find((slot) => slot.label === task.kgData) || null}
-              sx={{ width: '40%', display: 'inline-flex' }}
+              sx={{ width: '40%', display: 'inline-flex', }}
               renderInput={(params) => <TextField {...params} label="kg" />}
               onChange={(e, value) => handleChange(value, index, 'kgData')}
             />
             <Autocomplete
               options={repSlots}
               value={repSlots.find((slot) => slot.label === task.repData) || null}
-              sx={{ width: '40%', display: 'inline-flex' }}
+              sx={{ width: '40%', display: 'inline-flex', }}
               renderInput={(params) => <TextField {...params} label="回" />}
               onChange={(e, value) => handleChange(value, index, 'repData')}
             />
           </div>
         </div>
       ))}
-      <Button onClick={addTask} variant="contained" >Add Task</Button>
-      <Button onClick={() => sendData(tasks)} variant="contained" >send</Button>
+      <div>
+        <Button onClick={addTask} variant="contained" sx={{ marginTop: '10px', marginRight: '10px' }}>Add Task</Button>
+        <Button onClick={() => sendData(tasks)} variant="contained" sx={{ marginTop: '10px', }}>send</Button>
+      </div>
     </div>
   );
 }

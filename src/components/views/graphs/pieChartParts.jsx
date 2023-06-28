@@ -86,6 +86,14 @@ const PieChartParts = (props) => {
       responsive: true,
       maintainAspectRatio: false,
       plugins: {
+        title: {
+          display: true,
+          text: "部位の割合",
+          font: {
+            size: 16,
+            weight: "bold",
+          },
+        },
         legend: {
           position: "bottom",
           labels: {
@@ -130,7 +138,6 @@ const PieChartParts = (props) => {
     <div>
       {showNotification && (
         <div>
-          <h2>部位の割合</h2>
           <div className="chart-wrapper">
             <Doughnut data={data} options={options} plugins={[ChartDataLabels]} />
           </div>

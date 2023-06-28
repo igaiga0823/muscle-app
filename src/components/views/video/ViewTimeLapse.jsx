@@ -6,12 +6,39 @@ import {
   useNavigate,
 } from "react-router-dom";
 import React, { useState, useEffect, useContext } from "react";
-import { Box, Stack, Alert, Button, Input } from "@mui/material";
+import {
+  Box,
+  Stack,
+  Alert,
+  Button,
+  Input,
+  SpeedDial,
+  SpeedDialIcon,
+  SpeedDialAction,
+  Typography,
+  Modal,
+} from "@mui/material";
 // 以下の相対パスは適宜変更して使ってください。
+
+import MenuIcon from '@mui/icons-material/Menu';
 
 import During from "components/parts/data/During";
 import ViewVideo from "./ViewVideo";
 import { UserContext } from "App.js";
+
+
+const style = {
+  position: 'absolute',
+  top: '50%',
+  left: '50%',
+  transform: 'translate(-50%, -50%)',
+  width: 400,
+  bgcolor: 'background.paper',
+  border: '2px solid #000',
+  borderRadius: '8px', // 角を丸くする
+  boxShadow: 24,
+  p: 4,
+};
 
 const ViewTimeLapse = () => {
   const context = useContext(UserContext);
@@ -24,6 +51,9 @@ const ViewTimeLapse = () => {
   const [muscleParts, setMuscleParts] = useState([]);
   const [musclePartsId, setMusclePartsId] = useState([]);
   const [flag, setFlag] = useState(false);
+  const [open, setOpen] = React.useState(false);
+  const handleOpen = () => setOpen(true);
+  const handleClose = () => setOpen(false);
 
   const fetchUserInfo = async () => {
     try {
@@ -85,12 +115,42 @@ const ViewTimeLapse = () => {
 
   return (
     <div>
-      <h2>{muscleParts[0]}</h2>
-      <During
-        onUpdateStartDate={handleStartDate}
-        onUpdateEndDate={handleEndDate}
-        title={"範囲設定"}
-      />
+
+      <Modal
+        open={open}
+        onClose={handleClose}
+        aria-labelledby="modal-modal-title"
+        aria-describedby="modal-modal-description"
+      >
+        <Box sx={style}>
+          <During
+            onUpdateStartDate={handleStartDate}
+            onUpdateEndDate={handleEndDate}
+            title={"範囲設定"}
+          />
+        </Box>
+      </Modal>
+
+      <Box
+        sx={{
+          position: 'fixed',
+          bottom: 70,
+          right: 310,
+          zIndex: 9999,
+        }}
+      >
+        <SpeedDial
+          ariaLabel="SpeedDial basic example"
+          icon={<SpeedDialIcon />}
+        >
+          <SpeedDialAction
+            key={"menu"}
+            icon={<MenuIcon />}
+            tooltipTitle={"menu"}
+            onClick={handleOpen}
+          />
+        </SpeedDial>
+      </Box>
 
       {flag !== false && data && (
         <div>

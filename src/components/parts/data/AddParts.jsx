@@ -5,7 +5,7 @@ import GetParts from "components/function/common/GetParts";
 
 import "css/reset.css";
 
-const MenuSend = () => {
+const PartsSend = () => {
     var data = {};
     const context = useContext(UserContext)
     const [value, setValue] = useState("");
@@ -61,24 +61,30 @@ const MenuSend = () => {
     };
 
     return (
-        <div>
-            <h1>{context.user_id}</h1>
+        <div
+            style={{
+                display: "flex",
+                flexDirection: "column",
+                alignItems: "center",
+                justifyContent: "center",
+                color: "#696969",
+            }}>
             {showNotification ? (
-                <Alert severity="success" sx={{ m: 1 }}>
+                <Alert severity="success" sx={{ m: 1, color: "#696969", justifyContent: "center", display: "flex", }}>
                     部位を登録しました
                 </Alert>
             ) : (
-                <Box component="span" sx={{ m: 1 }}>
+                <Box component="span" sx={{ m: 1, color: "#696969", justifyContent: "center", display: "flex", }}>
                     部位を登録してください
                 </Box>
             )}
             {showError && (
-                <Alert severity="error" sx={{ m: 1 }}>
+                <Alert severity="error" sx={{ m: 1, color: "#696969", justifyContent: "center", display: "flex", }}>
                     部位が入っていません
                 </Alert>
             )}
             {already && (
-                <Alert severity="error" sx={{ m: 1 }}>
+                <Alert severity="error" sx={{ m: 1, color: "#696969", justifyContent: "center", display: "flex", }}>
                     同じ部位のメニューがすでに登録されています
                 </Alert>
             )}
@@ -105,4 +111,4 @@ const MenuSend = () => {
     );
 };
 
-export default MenuSend;
+export default PartsSend;

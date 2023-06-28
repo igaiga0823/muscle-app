@@ -92,6 +92,7 @@ const During = (props) => {
     } else {
       props.onUpdateStartDate(start_date);
     }
+
     if (end_date === "NaN-NaN-NaN") {
       const currentDate = new Date();
 
@@ -103,8 +104,9 @@ const During = (props) => {
   };
 
   return (
-    <Box width={250} marginX="auto">
+    <Box width={250} marginX="auto" backgroundColor="white">
       <Stack direction="column" alignItems="center" spacing={2}>
+        <h3>グラフの期間設定</h3>
         <Stack
           direction="row"
           spacing={2}

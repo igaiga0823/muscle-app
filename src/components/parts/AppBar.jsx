@@ -45,7 +45,7 @@ function AppBar(props) {
   const ref = React.useRef(null);
 
   const context = useContext(UserContext);
-  const appBarbgColor = "#6400B3"; //'#4f4f4f'
+  const appBarbgColor = "#4B555C";//"#6400B3"; //'#4f4f4f'
   return (
     <>
       {context.isLogin ? (

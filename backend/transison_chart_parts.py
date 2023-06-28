@@ -4,7 +4,7 @@ from datetime import datetime, timedelta
 import os
 from dotenv import load_dotenv
 
-load_dotenv('.env') 
+load_dotenv('.env')
 
 # 環境変数の情報
 
@@ -20,7 +20,6 @@ conn = MySQLdb.connect(
     db=DB,
     charset='utf8')
 cur = conn.cursor()
-
 
 
 def TransisonChartParts(user_id, muscle_part_id, start_date, end_date):
@@ -57,6 +56,8 @@ def TransisonChartParts(user_id, muscle_part_id, start_date, end_date):
         if "menu" not in data:
             data["menu"] = weekly_data["menu"]
 
+    data["menu_length"] = len(data["menu"])
+    data["time_length"] = len(data["time"])
     conn.commit()
     cur.close()
     conn.close()

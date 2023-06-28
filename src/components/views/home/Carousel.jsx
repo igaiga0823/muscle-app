@@ -19,17 +19,18 @@ import {
 } from "@mui/material";
 
 // 以下の相対パスは適宜変更して使ってください。
-import { UserContext } from "App.js";
+import { ClientContext, UserContext } from "App.js";
 
 const Carousel = (props) => {
   const context = useContext(UserContext);
+  const client = useContext(ClientContext)
   const navigate = useNavigate();
 
   // context.user_idでuserのIDが取れるよ
 
   // navigate("移動したいパス")
 
-  const [autoScrollInterval, setAutoScrollInterval] = useState(3000);
+  const [autoScrollInterval, setAutoScrollInterval] = useState(4000);
   const [currentIndex, setCurrentIndex] = useState(0);
   const totalItems = props.items.length;
 
@@ -52,24 +53,39 @@ const Carousel = (props) => {
   };
 
   return (
-    <Box display="flex" alignItems="center">
-      <IconButton onClick={handlePrev}>{"<"}</IconButton>
 
-      <Box display="flex" overflow="hidden">
-        {props.items.map((item, index) => (
-          <Box
-            key={index}
-            flexShrink={0}
-            minWidth="100%"
-            display={index === currentIndex ? "block" : "none"}
-          >
-            <div dangerouslySetInnerHTML={{ __html: item }} />
-          </Box>
-        ))}
+    <Stack spacing={0}>
+
+      <Box>
+        {/* <IconButton onClick={handlePrev}>{"<"}</IconButton> */}
+
+        <Box
+          minWidth="300px"
+          maxWidth="500px"
+          overflow="hidden"
+          bgcolor={client.colorTheme.frameBgColor}
+          borderRadius={"10px"}
+
+          color={"white"}>
+
+          <Box margin={1}>トレーニングセール特集</Box >
+          {props.items.map((item, index) => (
+            <Box
+              key={index}
+              flexShrink={0}
+
+              display={index === currentIndex ? "block" : "none"}
+            >
+              <div dangerouslySetInnerHTML={{ __html: item }} />
+            </Box>
+          ))}
+        </Box>
+
+        {/* <IconButton onClick={handleNext}>{">"}</IconButton> */}
       </Box>
 
-      <IconButton onClick={handleNext}>{">"}</IconButton>
-    </Box>
+
+    </Stack>
   );
 };
 
